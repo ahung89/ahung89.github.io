@@ -59,13 +59,13 @@ Phaser.Sprite.prototype.checkForCliff = function(side) {
     // Sprite position is top-left corner of sprite, so check to the left (negative offset) if looking for left cliff and check right cliff by
     // adding body width to sprite position to get an x point to the right of the sprite.
     if(side == 'left') {
-        offsetX = -1; 
+        offsetX = -3; 
     } else if(side == 'right') {
-        offsetX = this.body.width;
+        offsetX = this.body.width + 2;
     }
     var tile = level.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
     if(this.isTouchingGround() && tile && emptySpaceTiles.indexOf(tile.index) > -1) {
-        console.log("YOU AT THE CLIFF DAWG");
+        console.log("You are at the cliff.");
         return true;
     } else {
         return false;

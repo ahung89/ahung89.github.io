@@ -31,10 +31,14 @@ Enemies.prototype = {
 	update : function() {
 		//	Notice the second argument to forEach is 'this' - this makes sure that the context is preserved.
 		this.enemies.forEach(function(enemy) {
-			if(enemy.previousXPosition == enemy.body.position.x || enemy.checkForCliff('left') || enemy.checkForCliff('right')) {
+			if(enemy.previousXPosition == enemy.body.position.x
+				|| (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))
+				|| (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))) {
 				this.changeDirection(enemy);
 			}
+
 			enemy.previousXPosition = enemy.body.position.x;
+
 			if(enemy.currentDirection == 'left') {
 				enemy.body.velocity.x = -150;
 				enemy.animations.play('left');
@@ -42,7 +46,6 @@ Enemies.prototype = {
 				enemy.body.velocity.x = 150;
 				enemy.animations.play('right');
 			}
-			//enemy.checkForCliff('right')
 		}, this);
 	},
 
