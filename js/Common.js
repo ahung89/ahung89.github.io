@@ -1,3 +1,6 @@
+// Indices of tile types that represent empty space
+var emptySpaceTiles = [21];
+
 function disableLowerWorldBoundsCheck(sprite) {
 	    sprite.body.checkWorldBounds = function () {
             if (this.position.x < this.game.physics.arcade.bounds.x && this.game.physics.arcade.checkCollision.left)
@@ -47,7 +50,7 @@ Phaser.Sprite.prototype.checkWorldBounds = function () {
 
 Phaser.Sprite.prototype.isTouchingGround = function() {
     var tile = level.map.getTileWorldXY(this.body.position.x, this.body.position.y + this.body.height);
-    return tile && tile.index != 21;
+    return tile && emptySpaceTiles.indexOf(tile.index) == -1;
 };
 
 Phaser.Sprite.prototype.checkForCliff = function(side) {
@@ -58,10 +61,10 @@ Phaser.Sprite.prototype.checkForCliff = function(side) {
     if(side == 'left') {
         offsetX = -1; 
     } else if(side == 'right') {
-        offsetX = enemy.body.width;
+        offsetX = this.body.width;
     }
     var tile = level.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
-    if(enemy.isTouchingGround() && tile && tile.index == 21) {
+    if(this.isTouchingGround() && tile && emptySpaceTiles.indexOf(tile.index) > -1) {
         console.log("YOU AT THE CLIFF DAWG");
         return true;
     } else {
