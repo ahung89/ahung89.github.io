@@ -20,14 +20,16 @@ Player.prototype = {
  
  		this.game.physics.arcade.enable(this.sprite);
 
-        //  Player physics properties. Give the little guy a slight bounce.
-        //this.sprite.body.bounce.y = 0.2;
         this.sprite.body.gravity.y = 400;
 
-        //If this is false, then the little fucker can go offscreen.
         this.sprite.body.collideWorldBounds = true;
- 
-        //  Our two animations, walking left and right.
+
+        this.sprite.body.checkWorldBounds = true;
+
+        this.sprite.events.onOutOfBounds.add(this.killPlayer, this);
+
+        disableLowerWorldBoundsCheck(this.sprite);
+
         this.sprite.animations.add('left', [0, 1, 2, 3], 10, true);
         this.sprite.animations.add('right', [5, 6, 7, 8], 10, true);
  
@@ -42,11 +44,6 @@ Player.prototype = {
     },
  
     update: function() {
-    	 //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    	 //  The callback function "collectStar" takes the first two arguments as its own arguments. The 'this'
-    	 //  is the callback context.
-    	game.physics.arcade.overlap(this.sprite, level.stars, this.collectStar, null, this);
-
         game.physics.arcade.collide(this.sprite, enemies.enemies, this.killPlayer, null, this);
  
  		//  Collide the player and the stars with the platforms
@@ -55,6 +52,8 @@ Player.prototype = {
         game.physics.arcade.collide(this.sprite, level.collisionLayer);
 
         this.sprite.body.velocity.x = 0;
+
+        this.sprite.checkWorldBounds = true;
  
         if(this.cursors.left.isDown)
         {
@@ -80,25 +79,10 @@ Player.prototype = {
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }
-
-        if(this.sprite.body.position.y == 0) {
-            console.log("You dead, yo");
-            this.killPlayer();
-        }
-
     },
- 	
- 	collectStar: function(player, star) {
-    
-    // Removes the star from the screen
-    star.kill();
-
-    //  Add and update the score
-    hud.score += 10;
-    hud.scoreText.text = 'Score: ' + hud.score;
-	},
 
     killPlayer: function() {
+        console.log("Killed yo bitch ass.");
         this.sprite.kill();
     }
 };
