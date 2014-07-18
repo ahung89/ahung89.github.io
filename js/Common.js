@@ -1,8 +1,12 @@
 // Indices of tile types that represent empty space
 var emptySpaceTiles = [21];
 
-function disableLowerWorldBoundsCheck(sprite) {
-	    sprite.body.checkWorldBounds = function () {
+var baddieSpawnLocationsX = [400, 640];
+
+//Fill this shit out
+var baddieSpawnLocations = [{}];
+
+Phaser.Physics.Arcade.Body.prototype.checkWorldBounds = function () {
             if (this.position.x < this.game.physics.arcade.bounds.x && this.game.physics.arcade.checkCollision.left)
             {
                 this.position.x = this.game.physics.arcade.bounds.x;
@@ -23,7 +27,6 @@ function disableLowerWorldBoundsCheck(sprite) {
                 this.blocked.up = true;
             }
         };
-}
 
 // Allow the sprite to fall off screen
 Phaser.Sprite.prototype.checkWorldBounds = function () {

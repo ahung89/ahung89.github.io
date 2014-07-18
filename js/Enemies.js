@@ -11,11 +11,11 @@ Enemies.prototype = {
 	create: function() {
 		this.enemies = game.add.group();
 		this.enemies.enableBody = true;
-		for(var i = 1; i < 2; i++) {
-			var baddieXLocation = i * 640;
-			var baddie = this.enemies.create(baddieXLocation, 200, 'baddie');
-			this.createBaddie(baddie, baddieXLocation);
-		}
+		baddieSpawnLocationsX.forEach(function(xLocation) {
+			var baddie = this.enemies.create(xLocation, 200, 'baddie');
+			this.createBaddie(baddie, xLocation);
+			}, this
+		);
 	},
 
 	createBaddie: function(baddie, xLocation) {
