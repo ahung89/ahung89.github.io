@@ -10,7 +10,8 @@ Level = function(game) {
     this.collisionLayer = null;
     this.movingPlatforms = null;
 
-    this.movingPlatformCoordinates = [{x:98, y:6}];
+    //Territory size is the number of tiles that the platform will move before turning around.
+    this.movingPlatformSettings = [{x:98, y:6, territorySize:6}];
 }
 
 Level.prototype = {
@@ -43,12 +44,11 @@ Level.prototype = {
 	createPaddles: function() {
 		 this.movingPlatforms = game.add.group();
 
-		 this.movingPlatformCoordinates.forEach(function(coordinates) {
-		 	var platform = this.movingPlatforms.create(TILE_SIZE * coordinates.x, TILE_SIZE * coordinates.y, 'platform');
-		 	platform.name = 'platformOne'; //Do I need to name them?
+		 this.movingPlatformSettings.forEach(function(settings) {
+		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
 		 	this.game.physics.arcade.enable(platform);
 		 	platform.leftBounds = platform.body.x;
-		 	platform.rightBounds = platform.body.x + (TILE_SIZE * 6);
+		 	platform.rightBounds = platform.body.x + (TILE_SIZE * settings.territorySize);
 		 	platform.body.velocity.x = 100; //Extract
 		 	platform.body.immovable = true; //So that it doesn't fall when you jump on it.
 		 }, this);
