@@ -10,7 +10,7 @@ Level = function(game) {
     this.collisionLayer = null;
     this.movingPlatforms = null;
 
-    this.movingPlatformCoordinates = [{x:8, y:10}];
+    this.movingPlatformCoordinates = [{x:98, y:6}];
 }
 
 Level.prototype = {
@@ -42,13 +42,16 @@ Level.prototype = {
 
 	createPaddles: function() {
 		 this.movingPlatforms = game.add.group();
-		 platform = this.movingPlatforms.create(8 * TILE_SIZE, 10 * TILE_SIZE, 'platform');
-		 platform.name = 'platformOne';
-		 this.game.physics.arcade.enable(platform);
-		 platform.leftBounds = platform.body.x;
-		 platform.rightBounds = platform.body.x + 80;
-		 platform.body.velocity.x = 100;
-		 platform.body.immovable = true;
+
+		 this.movingPlatformCoordinates.forEach(function(coordinates) {
+		 	var platform = this.movingPlatforms.create(TILE_SIZE * coordinates.x, TILE_SIZE * coordinates.y, 'platform');
+		 	platform.name = 'platformOne'; //Do I need to name them?
+		 	this.game.physics.arcade.enable(platform);
+		 	platform.leftBounds = platform.body.x;
+		 	platform.rightBounds = platform.body.x + (TILE_SIZE * 6);
+		 	platform.body.velocity.x = 100; //Extract
+		 	platform.body.immovable = true; //So that it doesn't fall when you jump on it.
+		 }, this);
 	},
 
 	setTileCollisions: function() {
@@ -68,15 +71,21 @@ Level.prototype = {
 		game.physics.arcade.collide(this.stars, this.layer);
 		game.physics.arcade.collide(enemies.enemies, this.layer);
 		game.physics.arcade.collide(enemies.enemies, this.collisionLayer);
-		this.movePlatform(platform);
+		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
 		game.physics.arcade.collide(enemies.enemies, this.movingPlatforms);
 	},
 
-	movePlatform: function(platform) {
-		if(platform.body.position.x < platform.leftBounds
-			|| platform.body.position.x > platform.rightBounds) {
+	movePlatforms: function() {
+		this.movingPlatforms.forEach(function(platform) {
+		if(platform.body.position.x < platform.leftBounds) {
 			platform.body.velocity.x *= -1;
+			platform.body.position.x += 1;
+		}	
+		if(platform.body.position.x > platform.rightBounds) {
+			platform.body.velocity.x *= -1;
+			platform.body.position.x -= 1;
 		} 
+	})
 	}
 }

@@ -74,7 +74,7 @@ Player.prototype = {
         //  Allow the player to jump if they are touching the ground.
         if (this.jumpButton.isDown && this.sprite.isTouchingGround()){
             console.log("jumping!");
-            this.sprite.body.position.y -= 10;
+            this.sprite.body.position.y -= 5;
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }

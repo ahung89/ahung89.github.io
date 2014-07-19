@@ -21,8 +21,7 @@ Phaser.Physics.Arcade.Body.prototype.checkWorldBounds = function () {
         };
 
 Phaser.Sprite.prototype.isTouchingGround = function() {
-    var tile = level.map.getTileWorldXY(this.body.position.x, this.body.position.y + this.body.height);
-    return (tile && EMPTY_SPACE_TILES.indexOf(tile.index) == -1) || this.body.wasTouching.down === true;
+    return this.body.onFloor() || this.body.wasTouching.down === true;
 };
 
 Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
@@ -52,11 +51,6 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
     //If the sprite isn't about to step onto a platform, check if it's about to step onto an empty space tile. If so, then it is at a cliff.
     var tile = level.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
     if(this.isTouchingGround() && tile && EMPTY_SPACE_TILES.indexOf(tile.index) > -1)     {
-        console.log("first clause");
         return true;
     }
 };
-
-Phaser.Physics.Arcade.Body.prototype.hitTest = function (x, y) {
-        return Phaser.Rectangle.contains(this, x, y);
-    };
