@@ -24,9 +24,9 @@ Player.prototype = {
 
         this.sprite.body.collideWorldBounds = true;
 
-        this.sprite.events.onOutOfBounds.add(this.killPlayer, this);
+        this.sprite.body.checkCollision.down = true;
 
-        //disableLowerWorldBoundsCheck(this.sprite);
+        this.sprite.events.onOutOfBounds.add(this.killPlayer, this);
 
         this.sprite.animations.add('left', [0, 1, 2, 3], 10, true);
         this.sprite.animations.add('right', [5, 6, 7, 8], 10, true);
@@ -72,15 +72,16 @@ Player.prototype = {
         }
  
         //  Allow the player to jump if they are touching the ground.
-        if (this.jumpButton.isDown && this.sprite.body.onFloor())
-        {
+        if (this.jumpButton.isDown && this.sprite.isTouchingGround()){
+            console.log("jumping!");
+            this.sprite.body.position.y -= 10;
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }
     },
 
     killPlayer: function() {
-        console.log("Killed yo bitch ass.");
         this.sprite.kill();
+        restartGame();
     }
 };

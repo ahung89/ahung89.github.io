@@ -1,11 +1,16 @@
+// Indices of tile types that represent empty space
+var EMPTY_SPACE_TILES = [21];
+
 Level = function(game) {
-	//These lines are unnecessary.
 	this.game = game;
     this.stars = null;
  
     this.map = null;
     this.layer = null;
     this.collisionLayer = null;
+    this.movingPlatforms = null;
+
+    this.movingPlatformCoordinates = [{x:8, y:10}];
 }
 
 Level.prototype = {
@@ -13,6 +18,7 @@ Level.prototype = {
 		this.game.load.image('star', 'assets/star.png');
 		this.game.load.tilemap('levelOne', 'assets/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('levelOneTiles', 'assets/platformer_tiles_doubled.png');
+		this.game.load.image('platform', 'assets/paddle-small.png');
 	},
 
 	create: function() {
@@ -29,7 +35,20 @@ Level.prototype = {
 		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
 		this.layer = this.map.createLayer('World');
 
+		this.createPaddles();
+
 		this.layer.resizeWorld();
+	},
+
+	createPaddles: function() {
+		 this.movingPlatforms = game.add.group();
+		 platform = this.movingPlatforms.create(8 * TILE_SIZE, 10 * TILE_SIZE, 'platform');
+		 platform.name = 'platformOne';
+		 this.game.physics.arcade.enable(platform);
+		 platform.leftBounds = platform.body.x;
+		 platform.rightBounds = platform.body.x + 80;
+		 platform.body.velocity.x = 100;
+		 platform.body.immovable = true;
 	},
 
 	setTileCollisions: function() {
@@ -49,5 +68,15 @@ Level.prototype = {
 		game.physics.arcade.collide(this.stars, this.layer);
 		game.physics.arcade.collide(enemies.enemies, this.layer);
 		game.physics.arcade.collide(enemies.enemies, this.collisionLayer);
+		this.movePlatform(platform);
+		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
+		game.physics.arcade.collide(enemies.enemies, this.movingPlatforms);
+	},
+
+	movePlatform: function(platform) {
+		if(platform.body.position.x < platform.leftBounds
+			|| platform.body.position.x > platform.rightBounds) {
+			platform.body.velocity.x *= -1;
+		} 
 	}
 }

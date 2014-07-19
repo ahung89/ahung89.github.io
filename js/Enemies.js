@@ -1,5 +1,10 @@
 // Declare the enemies class
-function Enemies() {}
+function Enemies() {
+	this.baddieSpawnLocations = [];
+	// , {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
+	// {x:43, y:10}, {x: 72, y:5}];
+	this.baddieSpeed = 150;
+}
 
 Enemies.prototype = {
 	numEnemies: 25,
@@ -11,9 +16,9 @@ Enemies.prototype = {
 	create: function() {
 		this.enemies = game.add.group();
 		this.enemies.enableBody = true;
-		baddieSpawnLocationsX.forEach(function(xLocation) {
-			var baddie = this.enemies.create(xLocation, 200, 'baddie');
-			this.createBaddie(baddie, xLocation);
+		this.baddieSpawnLocations.forEach(function(location) {
+			var baddie = this.enemies.create(location.x * TILE_SIZE, location.y * TILE_SIZE, 'baddie');
+			this.createBaddie(baddie, location.x * TILE_SIZE);
 			}, this
 		);
 	},
@@ -32,18 +37,18 @@ Enemies.prototype = {
 		//	Notice the second argument to forEach is 'this' - this makes sure that the context is preserved.
 		this.enemies.forEach(function(enemy) {
 			if(enemy.previousXPosition == enemy.body.position.x
-				|| (enemy.currentDirection == 'left' && enemy.checkForCliff('left'))
-				|| (enemy.currentDirection == 'right' && enemy.checkForCliff('right'))) {
+				|| (enemy.currentDirection == 'left' && enemy.checkForCliff('left', level.movingPlatforms))
+				|| (enemy.currentDirection == 'right' && enemy.checkForCliff('right', level.movingPlatforms))) {
 				this.changeDirection(enemy);
 			}
 
 			enemy.previousXPosition = enemy.body.position.x;
 
 			if(enemy.currentDirection == 'left') {
-				enemy.body.velocity.x = -150;
+				enemy.body.velocity.x = -1 * this.baddieSpeed;
 				enemy.animations.play('left');
 			} else {
-				enemy.body.velocity.x = 150;
+				enemy.body.velocity.x = this.baddieSpeed;
 				enemy.animations.play('right');
 			}
 		}, this);
@@ -55,5 +60,11 @@ Enemies.prototype = {
 		} else {
 			enemy.currentDirection = 'left';
 		}
+	},
+
+	killAll : function() {
+		this.enemies.forEach(function(enemy) {
+			enemy.kill();
+		});
 	}
 }

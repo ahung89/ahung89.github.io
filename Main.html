@@ -42,8 +42,10 @@ var level;
 var hud;
 var enemies;
 
+var TILE_SIZE = 32;
+
 function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.P2JS);
 
     level.create();
     player.create();
@@ -55,6 +57,16 @@ function update() {
    player.update();
    level.update();
    enemies.update();
+}
+
+function restartGame() {
+    player.create();
+    enemies.killAll();
+    enemies.create();
+
+    //Reset camera to initial position
+    game.camera.x = 0;
+    game.camera.y = 0;
 }
 
 </script>
