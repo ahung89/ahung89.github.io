@@ -1,5 +1,6 @@
 // Indices of tile types that represent empty space
 var EMPTY_SPACE_TILES = [21];
+var PADDLE_SPEED = 120;
 
 Level = function(game) {
 	this.game = game;
@@ -11,7 +12,12 @@ Level = function(game) {
     this.movingPlatforms = null;
 
     //Territory size is the number of tiles that the platform will move before turning around.
-    this.movingPlatformSettings = [{x:98, y:6, territorySize:6}];
+    this.movingPlatformSettings = [{x:98, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+    {x:121, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
+    {x:125, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+    {x:141, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
+    {x:145, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+    {x:161, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
 }
 
 Level.prototype = {
@@ -36,20 +42,28 @@ Level.prototype = {
 		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
 		this.layer = this.map.createLayer('World');
 
-		this.createPaddles();
+		this.createPlatforms();
 
 		this.layer.resizeWorld();
 	},
 
-	createPaddles: function() {
+	createPlatforms: function() {
 		 this.movingPlatforms = game.add.group();
 
 		 this.movingPlatformSettings.forEach(function(settings) {
 		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
 		 	this.game.physics.arcade.enable(platform);
-		 	platform.leftBounds = platform.body.x;
-		 	platform.rightBounds = platform.body.x + (TILE_SIZE * settings.territorySize);
-		 	platform.body.velocity.x = 100; //Extract
+		 	platform.enableBody = true;
+		 	if(settings.initialDirection === 'right') {
+		 		platform.leftBounds = platform.body.x;
+		 		platform.rightBounds = platform.body.x + (TILE_SIZE * settings.territorySize);
+		 		platform.body.velocity.x = settings.speed;
+		 	} else if(settings.initialDirection === 'left') {
+		 		platform.leftBounds = platform.body.x - (TILE_SIZE * settings.territorySize);
+		 		platform.rightBounds = platform.body.x;
+		 		platform.body.velocity.x = settings.speed * -1;
+		 	}
+
 		 	platform.body.immovable = true; //So that it doesn't fall when you jump on it.
 		 }, this);
 	},
@@ -87,5 +101,11 @@ Level.prototype = {
 			platform.body.position.x -= 1;
 		} 
 	})
+	},
+
+	killAllPlatforms: function() {
+		this.movingPlatforms.forEach(function(platform) {
+			platform.kill();
+		});
 	}
 }

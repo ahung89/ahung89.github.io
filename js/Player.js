@@ -17,7 +17,7 @@ Player.prototype = {
  
     create: function () {
         this.sprite = this.game.add.sprite(32, 150, 'dude');
- 
+
  		this.game.physics.arcade.enable(this.sprite);
 
         this.sprite.body.gravity.y = 400;
@@ -73,7 +73,6 @@ Player.prototype = {
  
         //  Allow the player to jump if they are touching the ground.
         if (this.jumpButton.isDown && this.sprite.isTouchingGround()){
-            console.log("jumping!");
             this.sprite.body.position.y -= 5;
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();

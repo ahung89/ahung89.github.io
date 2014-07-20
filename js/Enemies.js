@@ -1,7 +1,7 @@
 // Declare the enemies class
 function Enemies() {
 	this.baddieSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
-	{x:43, y:10}, {x: 72, y:5}];
+	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
 	this.baddieSpeed = 150;
 }
 
