@@ -1,6 +1,6 @@
 // Indices of tile types that represent empty space
 var EMPTY_SPACE_TILES = [21];
-var PADDLE_SPEED = 120;
+var PADDLE_SPEED = 130;
 
 Level = function(game) {
 	this.game = game;
