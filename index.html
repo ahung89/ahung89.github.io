@@ -46,10 +46,10 @@ var TILE_SIZE = 32;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.Arcade);
+    game.time.advancedTiming = true;
 
     level.create();
     player.create();
-    hud.create();
     enemies.create();
 }
 
@@ -57,6 +57,11 @@ function update() {
    player.update();
    level.update();
    enemies.update();
+   displayFps();
+}
+
+function displayFps() {
+    console.log('Fps: ' + game.time.fps);
 }
 
 function restartGame() {

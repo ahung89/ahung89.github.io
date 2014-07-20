@@ -13,11 +13,11 @@ Level = function(game) {
 
     //Territory size is the number of tiles that the platform will move before turning around.
     this.movingPlatformSettings = [{x:98, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:121, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
-    {x:125, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:141, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
-    {x:145, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:161, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
+    {x:120, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
+    {x:124, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+    {x:140, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
+    {x:144, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+    {x:160, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
 }
 
 Level.prototype = {
