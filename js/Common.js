@@ -30,9 +30,9 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
     // Sprite position is top-left corner of sprite, so check to the left (negative offset) if looking for left cliff and check right cliff by
     // adding body width to sprite position to get an x point to the right of the sprite.
     if(side == 'left') {
-        offsetX = -10; 
+        offsetX = -6; 
     } else if(side == 'right') {
-        offsetX = this.body.width + 9;
+        offsetX = this.body.width + 5;
     }
 
     var nextToPlatform;
