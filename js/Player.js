@@ -1,5 +1,4 @@
 Player = function(game) {
- 
     this.game = game;
     this.sprite = null;
     this.cursors = null;
@@ -17,6 +16,9 @@ Player.prototype = {
  
     create: function () {
         this.sprite = this.game.add.sprite(32, 150, 'dude');
+
+        //Uncomment the line below to test the platforms.
+        //this.sprite = this.game.add.sprite(90 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
 
         this.initializePlayerPhysics();
         this.initializePlayerAnimations();
@@ -59,8 +61,11 @@ Player.prototype = {
     },
 
     updateCollisions: function() {
-        game.physics.arcade.collide(this.sprite, enemies.enemies, this.killPlayer, null, this);
         game.physics.arcade.collide(this.sprite, level.layer);
+        // For each enemy type, add collisions to player.
+        enemies.forEach(function(enemy) {
+            game.physics.arcade.collide(this.sprite, enemy.enemies, this.killPlayer, null, this);
+        }, this);
     },
 
     updateMovement: function() {
@@ -86,6 +91,6 @@ Player.prototype = {
 
     killPlayer: function() {
         this.sprite.kill();
-        restartGame();
+        restartCurrentLevel();
     }
 };

@@ -2,9 +2,10 @@
 var EMPTY_SPACE_TILES = [21];
 var PADDLE_SPEED = 130;
 
-Level = function(game) {
+LevelOne = function(game, landDogs) {
 	this.game = game;
     this.stars = null;
+    this.landDogs = landDogs;
  
     this.map = null;
     this.layer = null;
@@ -20,17 +21,14 @@ Level = function(game) {
     {x:160, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
 }
 
-Level.prototype = {
+LevelOne.prototype = {
 	preload: function() {
-		this.game.load.image('star', 'assets/star.png');
 		this.game.load.tilemap('levelOne', 'assets/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('levelOneTiles', 'assets/platformer_tiles_doubled.png');
 		this.game.load.image('platform', 'assets/paddle-small.png');
 	},
 
 	create: function() {
-		this.game.stage.backgroundColor = '#787878';
-
 		this.game.physics.arcade.setBoundsToWorld();
 
 		this.map = this.game.add.tilemap('levelOne');
@@ -83,11 +81,11 @@ Level.prototype = {
 
 	update: function() {
 		game.physics.arcade.collide(this.stars, this.layer);
-		game.physics.arcade.collide(enemies.enemies, this.layer);
-		game.physics.arcade.collide(enemies.enemies, this.collisionLayer);
+		game.physics.arcade.collide(this.landDogs.enemies, this.layer);
+		game.physics.arcade.collide(this.landDogs.enemies, this.collisionLayer);
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
-		game.physics.arcade.collide(enemies.enemies, this.movingPlatforms);
+		game.physics.arcade.collide(this.landDogs.enemies, this.movingPlatforms);
 	},
 
 	movePlatforms: function() {

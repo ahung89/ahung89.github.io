@@ -1,11 +1,10 @@
 // Declare the enemies class
-function Enemies() {
-	this.baddieSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
-	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
-	this.baddieSpeed = 150;
+function LandDogs(spawnLocations) {
+	this.spawnLocations = spawnLocations;
+	this.dogSpeed = 150;
 }
 
-Enemies.prototype = {
+LandDogs.prototype = {
 	numEnemies: 25,
 
 	preload: function() {
@@ -15,7 +14,7 @@ Enemies.prototype = {
 	create: function() {
 		this.enemies = game.add.group();
 		this.enemies.enableBody = true;
-		this.baddieSpawnLocations.forEach(function(location) {
+		this.spawnLocations.forEach(function(location) {
 			var baddie = this.enemies.create(location.x * TILE_SIZE, location.y * TILE_SIZE, 'baddie');
 			this.createBaddie(baddie, location.x * TILE_SIZE);
 			}, this
@@ -44,10 +43,10 @@ Enemies.prototype = {
 			enemy.previousXPosition = enemy.body.position.x;
 
 			if(enemy.currentDirection == 'left') {
-				enemy.body.velocity.x = -1 * this.baddieSpeed;
+				enemy.body.velocity.x = -1 * this.dogSpeed;
 				enemy.animations.play('left');
 			} else {
-				enemy.body.velocity.x = this.baddieSpeed;
+				enemy.body.velocity.x = this.dogSpeed;
 				enemy.animations.play('right');
 			}
 		}, this);
