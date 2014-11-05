@@ -12,9 +12,11 @@ LandDogs.prototype = {
 	},
 
 	create: function() {
+		// .add gets the GameObjectFactory.
 		this.enemies = game.add.group();
 		this.enemies.enableBody = true;
 		this.spawnLocations.forEach(function(location) {
+			// .create creates a new Phaser.Sprite object and adds it to the top of this group.
 			var baddie = this.enemies.create(location.x * TILE_SIZE, location.y * TILE_SIZE, 'baddie');
 			this.createBaddie(baddie, location.x * TILE_SIZE);
 			}, this

@@ -39,6 +39,7 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
 
     //First, check if the sprite is about to walk onto a platform.
     platforms.forEach(function(platform) {
+        // hitTest tests if a point lies within a body.
         if(platform.body.hitTest(this.body.position.x + offsetX, this.body.position.y + this.body.height)) {
             nextToPlatform = true;
         }

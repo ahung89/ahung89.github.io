@@ -9,7 +9,6 @@ LevelOne = function(game, landDogs) {
  
     this.map = null;
     this.layer = null;
-    this.collisionLayer = null;
     this.movingPlatforms = null;
 
     //Territory size is the number of tiles that the platform will move before turning around.
@@ -82,7 +81,6 @@ LevelOne.prototype = {
 	update: function() {
 		game.physics.arcade.collide(this.stars, this.layer);
 		game.physics.arcade.collide(this.landDogs.enemies, this.layer);
-		game.physics.arcade.collide(this.landDogs.enemies, this.collisionLayer);
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
 		game.physics.arcade.collide(this.landDogs.enemies, this.movingPlatforms);

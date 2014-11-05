@@ -34,7 +34,8 @@ startLevelOne();
 
 function startLevelOne() {
     currentState = new LevelOneState();
-    game.state.add('LevelOne', currentState);
+    // game.state gets the StateManager object for the game (naming is a bit misleading)
+    game.state.add('LevelOne', currentState); // Adds the state to the game and assigns it a key.
     game.state.start('LevelOne');
 }
 
