@@ -45,5 +45,4 @@ LevelOneState.prototype = {
 
 		resetCamera();
 	}
-
 };
