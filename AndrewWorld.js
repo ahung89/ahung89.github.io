@@ -107,8 +107,8 @@ Player.prototype = {
  
     preload: function () {
         //  The dimensions are the dimensions of each frame in the spritesheet.
-        this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-        this.game.load.audio('jump', 'assets/jump.wav'); 
+        this.game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
+        this.game.load.audio('jump', 'assets/sounds/jump.wav'); 
     },
  
     create: function () {
@@ -201,7 +201,7 @@ LandDogs.prototype = {
 	numEnemies: 25,
 
 	preload: function() {
-		game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
+		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
 	},
 
 	create: function() {
@@ -285,9 +285,9 @@ LevelOne = function(game, landDogs) {
 
 LevelOne.prototype = {
 	preload: function() {
-		this.game.load.tilemap('levelOne', 'assets/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelOneTiles', 'assets/platformer_tiles_doubled.png');
-		this.game.load.image('platform', 'assets/paddle-small.png');
+		this.game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
+		this.game.load.image('platform', 'assets/sprites/paddle-small.png');
 	},
 
 	create: function() {

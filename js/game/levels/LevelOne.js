@@ -22,9 +22,9 @@ LevelOne = function(game, landDogs) {
 
 LevelOne.prototype = {
 	preload: function() {
-		this.game.load.tilemap('levelOne', 'assets/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelOneTiles', 'assets/platformer_tiles_doubled.png');
-		this.game.load.image('platform', 'assets/paddle-small.png');
+		this.game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
+		this.game.load.image('platform', 'assets/sprites/paddle-small.png');
 	},
 
 	create: function() {

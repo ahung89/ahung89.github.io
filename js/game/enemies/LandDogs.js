@@ -8,7 +8,7 @@ LandDogs.prototype = {
 	numEnemies: 25,
 
 	preload: function() {
-		game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
+		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
 	},
 
 	create: function() {
