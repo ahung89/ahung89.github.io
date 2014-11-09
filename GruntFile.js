@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				files: [
-					{expand: true, src:['index.html', 'assets/**/*'], dest: 'deploy/'}
+					{expand: true, src:['index.html', 'assets/**/*', '<%= pkg.name %>.js'], dest: 'deploy/'}
 				]
 			}
 		},
@@ -42,5 +42,5 @@ module.exports = function(grunt) {
 	});
 
 	// Sets the default grunt task (which is those four tasks in sequence).
-	grunt.registerTask('default', ['copy', 'concat', 'connect', 'open', 'watch']);
+	grunt.registerTask('default', ['concat', 'copy', 'connect', 'open', 'watch']);
 }
