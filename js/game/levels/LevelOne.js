@@ -66,7 +66,7 @@ LevelOne.prototype = {
 	},
 
 	setTileCollisions: function() {
-		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID
+		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID (inclusive at both ends of the range)
 		//	These numbers refer to the gid, or the index of the tile in the tileset (where the first tile is 1)
 		this.map.setCollisionBetween(4, 7);
 		this.map.setCollisionBetween(8, 12);

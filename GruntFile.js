@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 				dest: './<%= pkg.name %>.js' // pkg.name is from package.json (Remember pkg was set using package.json just above.)
 			}
 		},
-		watch: { // This task causes the code to be recompiled (via the concat function) each time files matched by the expressions below are modified.
+		watch: { // This task causes the specified tasks to be run each time files matched by the expressions below are modified.
 			files: ['js/**/*.js'],
 			tasks: ['concat', 'copy']
 		},
@@ -41,6 +41,6 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Sets the default grunt task (which is those four tasks in sequence).
+	// Sets the default grunt task (which is those five tasks in sequence).
 	grunt.registerTask('default', ['concat', 'copy', 'connect', 'open', 'watch']);
 }
