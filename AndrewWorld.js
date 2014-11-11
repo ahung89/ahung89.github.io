@@ -331,7 +331,7 @@ LevelOne.prototype = {
 	},
 
 	setTileCollisions: function() {
-		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID
+		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID (inclusive at both ends of the range)
 		//	These numbers refer to the gid, or the index of the tile in the tileset (where the first tile is 1)
 		this.map.setCollisionBetween(4, 7);
 		this.map.setCollisionBetween(8, 12);
@@ -370,6 +370,45 @@ LevelOne.prototype = {
 		});
 	}
 }
+LevelTwo = function(game) {
+	this.game = game;
+};
+
+LevelTwo.prototype = {
+	preload: function() {
+		this.game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
+	},
+
+	create: function() {
+		this.game.physics.arcade.setBoundsToWorld();
+
+		this.map = this.game.add.tilemap('levelTwo');
+		this.map.addTilesetImage('area01_level_tiles', 'levelTwoTiles');
+
+		this.setTileCollisions();
+
+		this.layer = this.map.createLayer('World');
+
+		this.layer.resizeWorld();
+	},
+
+	update: function() {
+
+	},
+
+	setTileCollisions: function() {
+		this.map.setCollisionBetween(2, 8);
+		this.map.setCollisionBetween(24, 27);
+		this.map.setCollisionBetween(41, 45);
+		this.map.setCollisionBetween(51, 53);
+		this.map.setCollisionBetween(61, 62);
+		this.map.setCollisionBetween(70, 72);
+		this.map.setCollisionBetween(112, 114);
+		this.map.setCollisionBetween(121, 125);
+	}
+};
+
 LevelOneState = function(){
 	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
 	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
@@ -425,13 +464,16 @@ LevelOneState.prototype = {
 	}
 };
 LevelTwoState = function() {
-	this.xSpawnPos = 0;
-	this.ySpawnPos = 0;
-}
+	this.xCameraPos = 0;
+	this.yCameraPos = 0;
+
+	this.xSpawnPos = 224;
+	this.ySpawnPos = 1440;
+};
 
 LevelTwoState.prototype = {
 	preload: function() {
-		player = new Player(game);
+		player = new Player(game, this.xSpawnPos, this.ySpawnPos);
 		player.preload();
 
 		level = new LevelTwo(game);
@@ -453,6 +495,6 @@ LevelTwoState.prototype = {
 
 	restart: function() {
 		player.create();
-		resetCamera(xSpawnPos, ySpawnPos);
+		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
-}
+};

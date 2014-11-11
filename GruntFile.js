@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: { // This task causes the specified tasks to be run each time files matched by the expressions below are modified.
-			files: ['js/**/*.js'],
+			files: ['js/**/*.js', 'index.html', 'assets/**/*'],
 			tasks: ['concat', 'copy']
 		},
 		open: { // This task causes the game to be launched when the task is run.

@@ -2,13 +2,13 @@ LevelTwoState = function() {
 	this.xCameraPos = 0;
 	this.yCameraPos = 0;
 
-	this.xSpawnPos = 256;
+	this.xSpawnPos = 224;
 	this.ySpawnPos = 1440;
 };
 
 LevelTwoState.prototype = {
 	preload: function() {
-		player = new Player(game);
+		player = new Player(game, this.xSpawnPos, this.ySpawnPos);
 		player.preload();
 
 		level = new LevelTwo(game);
@@ -30,6 +30,6 @@ LevelTwoState.prototype = {
 
 	restart: function() {
 		player.create();
-		resetCamera(xCameraPos, yCameraPos);
+		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
 };

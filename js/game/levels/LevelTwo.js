@@ -5,7 +5,7 @@ LevelTwo = function(game) {
 LevelTwo.prototype = {
 	preload: function() {
 		this.game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelOneTiles', 'assets/tiles/area01_level_tiles.png');
+		this.game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 	},
 
 	create: function() {
@@ -15,6 +15,10 @@ LevelTwo.prototype = {
 		this.map.addTilesetImage('area01_level_tiles', 'levelTwoTiles');
 
 		this.setTileCollisions();
+
+		this.layer = this.map.createLayer('World');
+
+		this.layer.resizeWorld();
 	},
 
 	update: function() {
