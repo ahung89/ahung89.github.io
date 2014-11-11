@@ -1,9 +1,11 @@
-Player = function(game) {
+Player = function(game, xSpawnPos, ySpawnPos) {
     this.game = game;
     this.sprite = null;
     this.cursors = null;
     this.jumpButton = null;
     this.jumpSound = null;
+    this.xSpawnPos = xSpawnPos;
+    this.ySpawnPos = ySpawnPos;
 };
  
 Player.prototype = {
@@ -15,7 +17,7 @@ Player.prototype = {
     },
  
     create: function () {
-        this.sprite = this.game.add.sprite(32, 150, 'dude');
+        this.sprite = this.game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
         //this.sprite = this.game.add.sprite(90 * TILE_SIZE, 4 * TILE_SIZE, 'dude');

@@ -3,13 +3,16 @@ LevelOneState = function(){
 	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
 	this.landDogs;
 
-	this.xSpawnPos = 0;
-	this.ySpawnPos = 0;
+	this.xCameraPos = 0;
+	this.yCameraPos = 0;
+
+	this.xSpawnPos = 32;
+	this.ySpawnPos = 150;
 };
 
 LevelOneState.prototype = {
 	preload: function() {
-	    player = new Player(game);
+	    player = new Player(game, this.xSpawnPos, this.ySpawnPos);
 	    player.preload();
 
 	    hud = new HUD();
@@ -46,6 +49,6 @@ LevelOneState.prototype = {
 		level.killAllPlatforms(); //Wrap these into a single generic method. Also, learn inheritance.
 		level.createPlatforms();
 
-		resetCamera(xSpawnPos, ySpawnPos);
+		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
 };

@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 		},
 		watch: { // This task causes the code to be recompiled (via the concat function) each time files matched by the expressions below are modified.
 			files: ['js/**/*.js'],
-			tasks: ['concat']
+			tasks: ['concat', 'copy']
 		},
 		open: { // This task causes the game to be launched when the task is run.
 			dev: {

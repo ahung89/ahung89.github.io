@@ -95,12 +95,14 @@ HUD.prototype = {
 		this.scoreText = game.add.text(16, 16, 'FPS: ' + game.time.fps, { fontSize: '32px', fill: '#000'});
 	}
 }
-Player = function(game) {
+Player = function(game, xSpawnPos, ySpawnPos) {
     this.game = game;
     this.sprite = null;
     this.cursors = null;
     this.jumpButton = null;
     this.jumpSound = null;
+    this.xSpawnPos = xSpawnPos;
+    this.ySpawnPos = ySpawnPos;
 };
  
 Player.prototype = {
@@ -112,7 +114,7 @@ Player.prototype = {
     },
  
     create: function () {
-        this.sprite = this.game.add.sprite(32, 150, 'dude');
+        this.sprite = this.game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
         //this.sprite = this.game.add.sprite(90 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
@@ -372,11 +374,17 @@ LevelOneState = function(){
 	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
 	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
 	this.landDogs;
+
+	this.xCameraPos = 0;
+	this.yCameraPos = 0;
+
+	this.xSpawnPos = 32;
+	this.ySpawnPos = 150;
 };
 
 LevelOneState.prototype = {
 	preload: function() {
-	    player = new Player(game);
+	    player = new Player(game, this.xSpawnPos, this.ySpawnPos);
 	    player.preload();
 
 	    hud = new HUD();
@@ -413,6 +421,38 @@ LevelOneState.prototype = {
 		level.killAllPlatforms(); //Wrap these into a single generic method. Also, learn inheritance.
 		level.createPlatforms();
 
-		resetCamera();
+		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
 };
+LevelTwoState = function() {
+	this.xSpawnPos = 0;
+	this.ySpawnPos = 0;
+}
+
+LevelTwoState.prototype = {
+	preload: function() {
+		player = new Player(game);
+		player.preload();
+
+		level = new LevelTwo(game);
+		level.preload();
+	},
+
+	create: function() {
+		game.physics.startSystem(Phaser.Physics.Arcade);
+		game.time.advancedTiming = true;
+
+		level.create();
+		player.create();
+	},
+
+	update: function() {
+		player.update();
+		level.update();
+	},
+
+	restart: function() {
+		player.create();
+		resetCamera(xSpawnPos, ySpawnPos);
+	}
+}
