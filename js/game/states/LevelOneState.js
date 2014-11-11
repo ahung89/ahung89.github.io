@@ -2,6 +2,9 @@ LevelOneState = function(){
 	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
 	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
 	this.landDogs;
+
+	this.xSpawnPos = 0;
+	this.ySpawnPos = 0;
 };
 
 LevelOneState.prototype = {
@@ -43,6 +46,6 @@ LevelOneState.prototype = {
 		level.killAllPlatforms(); //Wrap these into a single generic method. Also, learn inheritance.
 		level.createPlatforms();
 
-		resetCamera();
+		resetCamera(xSpawnPos, ySpawnPos);
 	}
 };
