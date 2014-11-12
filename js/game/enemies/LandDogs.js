@@ -9,6 +9,7 @@ LandDogs.prototype = {
 
 	preload: function() {
 		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
+		// game.load.spritesheet('baddie', 'assets/sprites/bluebirdsprite.png', 48, 32);
 	},
 
 	create: function() {
