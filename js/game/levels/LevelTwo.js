@@ -1,5 +1,6 @@
-LevelTwo = function(game) {
+LevelTwo = function(game, birds) {
 	this.game = game;
+	this.birds = birds;
 };
 
 LevelTwo.prototype = {
@@ -24,7 +25,7 @@ LevelTwo.prototype = {
 	},
 
 	update: function() {
-
+		game.physics.arcade.collide(this.birds.enemies, this.layer);
 	},
 
 	setTileCollisions: function() {
