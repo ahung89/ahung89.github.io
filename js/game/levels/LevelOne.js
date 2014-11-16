@@ -79,7 +79,6 @@ LevelOne.prototype = {
 	},
 
 	update: function() {
-		game.physics.arcade.collide(this.stars, this.layer);
 		game.physics.arcade.collide(this.landDogs.enemies, this.layer);
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);

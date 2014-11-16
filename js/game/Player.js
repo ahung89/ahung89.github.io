@@ -35,7 +35,6 @@ Player.prototype = {
         this.sprite.body.gravity.y = 400;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.checkCollision.down = true;
-        this.sprite.events.onOutOfBounds.add(this.killPlayer, this);
 
         //  Linear damping = resistance/friction on the body as it moves through the world.
         this.sprite.body.linearDamping = 1;
@@ -60,6 +59,9 @@ Player.prototype = {
         this.updateMovement();
 
         this.sprite.checkWorldBounds = true;
+        if(this.sprite.position.y > this.game.world.height) {
+            this.killPlayer();
+        }
     },
 
     updateCollisions: function() {

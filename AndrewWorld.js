@@ -132,7 +132,6 @@ Player.prototype = {
         this.sprite.body.gravity.y = 400;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.checkCollision.down = true;
-        this.sprite.events.onOutOfBounds.add(this.killPlayer, this);
 
         //  Linear damping = resistance/friction on the body as it moves through the world.
         this.sprite.body.linearDamping = 1;
@@ -157,6 +156,9 @@ Player.prototype = {
         this.updateMovement();
 
         this.sprite.checkWorldBounds = true;
+        if(this.sprite.position.y > this.game.world.height) {
+            this.killPlayer();
+        }
     },
 
     updateCollisions: function() {
@@ -254,6 +256,69 @@ Birds.prototype = {
 		});
 	}
 };
+function GunDogs(spawnLocations) {
+	this.spawnLocations = spawnLocations;
+
+	this.fireRate = 1000;
+	this.nextFire = 0;
+};
+
+GunDogs.prototype = {
+	preload: function() {
+		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
+	},
+
+	create: function() {
+		this.enemies = game.add.group();
+		this.enemies.enableBody = true;
+		this.spawnLocations.forEach(function(location) {
+			// .create creates a new Phaser.Sprite object and adds it to the top of this group.
+			var baddie = this.enemies.create(location.x * TILE_SIZE, location.y * TILE_SIZE, 'baddie');
+			this.createGunDog(baddie, location.x * TILE_SIZE);
+			}, this
+		);
+
+		this.bullets = game.add.group();
+		game.physics.enable(this.bullets, Phaser.Physics.ARCADE);	
+	},
+
+	createGunDog: function(baddie, xLocation) {
+		baddie.body.gravity.y = 300;
+		baddie.previousXPosition = xLocation;
+		baddie.animations.add('left', [0, 1], 10, true);
+		baddie.animations.add('right', [2, 3], 10, true);
+		baddie.frame = 1;
+		baddie.body.collideWorldBounds = true;
+		baddie.currentDirection = 'left';
+		baddie.anchor.set(0.5);
+	},
+
+	update: function() {
+		this.enemies.forEach(function(enemy) {
+			if(game.time.now > this.nextFire) {
+				this.nextFire = game.time.now + this.fireRate;
+				this.fire(enemy);
+			}
+		}, this);
+
+
+	},
+
+	fire: function(enemy) {
+		var bullet = this.bullets.create(enemy.body.position.x, enemy.body.position.y + enemy.body.height / 2, 'baddie');
+		
+		game.physics.enable(bullet, Phaser.Physics.ARCADE); //What the hell does this do?
+		bullet.checkWorldBounds = true;
+		bullet.outOfBoundsKill = true;
+		bullet.anchor.set(0.5);
+
+		if(enemy.currentDirection == 'left') {
+			bullet.body.velocity.x = -400;
+		} else {
+			bullet.body.velocity.x = 400;
+		}
+	}
+};
 // Declare the enemies class
 function LandDogs(spawnLocations) {
 	this.spawnLocations = spawnLocations;
@@ -265,7 +330,6 @@ LandDogs.prototype = {
 
 	preload: function() {
 		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
-		// game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
 	},
 
 	create: function() {
@@ -406,7 +470,6 @@ LevelOne.prototype = {
 	},
 
 	update: function() {
-		game.physics.arcade.collide(this.stars, this.layer);
 		game.physics.arcade.collide(this.landDogs.enemies, this.layer);
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
@@ -432,9 +495,10 @@ LevelOne.prototype = {
 		});
 	}
 }
-LevelTwo = function(game, birds) {
+LevelTwo = function(game, birds, gunDogs) {
 	this.game = game;
 	this.birds = birds;
+	this.gunDogs = gunDogs;
 };
 
 LevelTwo.prototype = {
@@ -460,6 +524,8 @@ LevelTwo.prototype = {
 
 	update: function() {
 		game.physics.arcade.collide(this.birds.enemies, this.layer);
+		game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
+		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
 	},
 
 	setTileCollisions: function() {
@@ -528,9 +594,12 @@ LevelOneState.prototype = {
 		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
 };
+Level = {
+	
+};
 LevelTwoState = function() {
 	this.birdSpawnLocations = [{x: 3, y:45}];
-	this.birds;
+	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
 	this.xCameraPos = 0;
 	this.yCameraPos = 0;
@@ -548,7 +617,11 @@ LevelTwoState.prototype = {
 		enemies.push(this.birds);
 		this.birds.preload();
 
-		level = new LevelTwo(game, this.birds);
+		this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
+		enemies.push(this.gunDogs);
+		this.gunDogs.preload();
+
+		level = new LevelTwo(game, this.birds, this.gunDogs);
 		level.preload();
 	},
 
@@ -559,12 +632,14 @@ LevelTwoState.prototype = {
 		level.create();
 		player.create();
 		this.birds.create();
+		this.gunDogs.create();
 	},
 
 	update: function() {
 		player.update();
 		level.update();
 		this.birds.update();
+		this.gunDogs.update();
 	},
 
 	restart: function() {

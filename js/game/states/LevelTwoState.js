@@ -1,6 +1,6 @@
 LevelTwoState = function() {
 	this.birdSpawnLocations = [{x: 3, y:45}];
-	this.birds;
+	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
 	this.xCameraPos = 0;
 	this.yCameraPos = 0;
@@ -18,7 +18,11 @@ LevelTwoState.prototype = {
 		enemies.push(this.birds);
 		this.birds.preload();
 
-		level = new LevelTwo(game, this.birds);
+		this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
+		enemies.push(this.gunDogs);
+		this.gunDogs.preload();
+
+		level = new LevelTwo(game, this.birds, this.gunDogs);
 		level.preload();
 	},
 
@@ -29,12 +33,14 @@ LevelTwoState.prototype = {
 		level.create();
 		player.create();
 		this.birds.create();
+		this.gunDogs.create();
 	},
 
 	update: function() {
 		player.update();
 		level.update();
 		this.birds.update();
+		this.gunDogs.update();
 	},
 
 	restart: function() {
