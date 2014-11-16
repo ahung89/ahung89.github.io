@@ -27,7 +27,6 @@ LevelTwoState.prototype = {
 	},
 
 	create: function() {
-		game.physics.startSystem(Phaser.Physics.Arcade);
 		game.time.advancedTiming = true;
 
 		level.create();

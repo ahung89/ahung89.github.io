@@ -307,7 +307,7 @@ GunDogs.prototype = {
 	fire: function(enemy) {
 		var bullet = this.bullets.create(enemy.body.position.x, enemy.body.position.y + enemy.body.height / 2, 'baddie');
 		
-		game.physics.enable(bullet, Phaser.Physics.ARCADE); //What the hell does this do?
+		game.physics.enable(bullet, Phaser.Physics.ARCADE); //Creates a default physics body on the object. The object cannot have velocity otherwise.
 		bullet.checkWorldBounds = true;
 		bullet.outOfBoundsKill = true;
 		bullet.anchor.set(0.5);
@@ -568,7 +568,6 @@ LevelOneState.prototype = {
 	},
 
 	create: function() {
-	    game.physics.startSystem(Phaser.Physics.Arcade);
 	    game.time.advancedTiming = true;
 
 	    level.create();
@@ -626,7 +625,6 @@ LevelTwoState.prototype = {
 	},
 
 	create: function() {
-		game.physics.startSystem(Phaser.Physics.Arcade);
 		game.time.advancedTiming = true;
 
 		level.create();
