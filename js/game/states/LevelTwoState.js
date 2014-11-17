@@ -51,3 +51,24 @@ LevelTwoState.prototype = {
 		resetCamera(this.xCameraPos, this.yCameraPos);
 	}
 };
+
+// LevelTwoState = function() {
+// 	this.birdSpawnLocations = [{x: 3, y:45}];
+// 	this.gunDogSpawnLocations = [{x: 15, y:45}];
+
+// 	this.startingCameraPosX = 0;
+// 	this.startingCameraPosY = 0;
+
+// 	this.spawnPosX = 224;
+// 	this.spawnPosY = 1440;
+
+// 	this.birds = new Birds(this.birdSpawnLocations);
+// 	this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
+
+// 	enemies.push(this.birds);
+// 	enemies.push(this.gunDogs);
+
+// 	level = new LevelTwo(game, this.birds, this.gunDogs);
+// };
+
+// LevelTwoState.prototype = Object.create(LevelState.prototype);

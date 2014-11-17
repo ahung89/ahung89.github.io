@@ -98,6 +98,11 @@ LevelOne.prototype = {
 	})
 	},
 
+	restart: function() {
+		this.killAllPlatforms();
+		this.createPlatforms();
+	},
+
 	killAllPlatforms: function() {
 		this.movingPlatforms.forEach(function(platform) {
 			platform.kill();
