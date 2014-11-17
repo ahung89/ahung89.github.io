@@ -14,7 +14,8 @@ LevelState.prototype = {
 	},
 
 	create: function() {
-		game.time.advancedTiming = true; //what the heck does this do?
+		//Turn this on to enable advanced profiling (fps rate, etc.)
+		//game.time.advancedTiming = true;
 
 		level.create();
 		player.create();

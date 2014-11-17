@@ -39,7 +39,8 @@ LevelState.prototype = {
 	},
 
 	create: function() {
-		game.time.advancedTiming = true; //what the heck does this do?
+		//Turn this on to enable advanced profiling (fps rate, etc.)
+		//game.time.advancedTiming = true;
 
 		level.create();
 		player.create();
@@ -421,7 +422,6 @@ var PADDLE_SPEED = 130;
 
 LevelOne = function(game, landDogs) {
 	this.game = game;
-    this.stars = null;
     this.landDogs = landDogs;
  
     this.map = null;
@@ -557,6 +557,10 @@ LevelTwo.prototype = {
 		game.physics.arcade.collide(this.birds.enemies, this.layer);
 		game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
 		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
+	},
+
+	restart: function() {
+
 	},
 
 	setTileCollisions: function() {

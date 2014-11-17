@@ -31,6 +31,10 @@ LevelTwo.prototype = {
 		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
 	},
 
+	restart: function() {
+
+	},
+
 	setTileCollisions: function() {
 		this.map.setCollisionBetween(2, 8);
 		this.map.setCollisionBetween(24, 27);

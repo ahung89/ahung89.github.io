@@ -4,7 +4,6 @@ var PADDLE_SPEED = 130;
 
 LevelOne = function(game, landDogs) {
 	this.game = game;
-    this.stars = null;
     this.landDogs = landDogs;
  
     this.map = null;
