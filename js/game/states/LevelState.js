@@ -3,7 +3,7 @@ LevelState = function() {
 
 LevelState.prototype = {
 	preload: function() {
-		player = new Player(game, this.xSpawnPos, this.ySpawnPos);
+		player = new Player(game, this.spawnPosX, this.spawnPosY);
 
 		player.preload();
 		level.preload();
