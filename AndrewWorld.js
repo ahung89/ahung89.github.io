@@ -327,8 +327,6 @@ GunDogs.prototype = {
 				this.fire(enemy);
 			}
 		}, this);
-
-
 	},
 
 	fire: function(enemy) {
@@ -572,6 +570,8 @@ LevelTwo.prototype = {
 		this.map.setCollisionBetween(70, 72);
 		this.map.setCollisionBetween(112, 114);
 		this.map.setCollisionBetween(121, 125);
+
+		this.map.setTileIndexCallback(92, player.killPlayer, player);
 	}
 };
 

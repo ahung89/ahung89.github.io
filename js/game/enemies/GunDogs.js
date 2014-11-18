@@ -42,8 +42,6 @@ GunDogs.prototype = {
 				this.fire(enemy);
 			}
 		}, this);
-
-
 	},
 
 	fire: function(enemy) {
