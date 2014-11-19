@@ -45,6 +45,14 @@ LevelTwo.prototype = {
 		this.map.setCollisionBetween(112, 114);
 		this.map.setCollisionBetween(121, 125);
 
+		// Spikes
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
+
+		// Vines
+		this.map.setTileIndexCallbackTileContext([36, 37, 56, 57], this.map.getLayerIndex('Foreground'), this.vineCheck);
+	},
+
+	vineCheck: function() {
+		console.log("YOU JUST HIT DA VINE, DAWG.");
 	}
 };

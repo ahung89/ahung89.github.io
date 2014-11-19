@@ -122,12 +122,25 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
         return true;
     }
 };
+
+Phaser.Tilemap.prototype.setTileIndexCallbackTileContext = function(indices, layer, callback) {
+    layer = this.getLayer(layer);
+
+    if(typeof indices === 'number') {
+        this.layers[layer].callbacks[indices] = { callback: callback };
+    } else {
+        for(var i = 0, len = indices.length; i < len; i++) {
+            this.layers[layer].callbacks[indices[i]] = { callback: callback };
+        }
+    }
+};
 Player = function(game, xSpawnPos, ySpawnPos) {
     this.game = game;
     this.sprite = null;
     this.cursors = null;
     this.jumpButton = null;
     this.jumpSound = null;
+    this.climbing = false;
     this.xSpawnPos = xSpawnPos;
     this.ySpawnPos = ySpawnPos;
 };
@@ -190,6 +203,9 @@ Player.prototype = {
 
     updateCollisions: function() {
         game.physics.arcade.collide(this.sprite, level.layer);
+        if(level.foreground != null && level.foreground != undefined) {
+            game.physics.arcade.collide(this.sprite, level.foreground);    
+        }
         // For each enemy type, add collisions to player.
         enemies.forEach(function(enemy) {
             game.physics.arcade.collide(this.sprite, enemy.enemies, this.killPlayer, null, this);
@@ -215,6 +231,12 @@ Player.prototype = {
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }
+    },
+
+    initiateClimbState: function() {
+        // TODO: Change the animation
+        this.climbing = true;
+        this.sprite.body.gravity.y = 0;
     },
 
     killPlayer: function() {
@@ -571,7 +593,15 @@ LevelTwo.prototype = {
 		this.map.setCollisionBetween(112, 114);
 		this.map.setCollisionBetween(121, 125);
 
+		// Spikes
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
+
+		// Vines
+		this.map.setTileIndexCallbackTileContext([36, 37, 56, 57], this.map.getLayerIndex('Foreground'), this.vineCheck);
+	},
+
+	vineCheck: function() {
+		console.log("YOU JUST HIT DA VINE, DAWG.");
 	}
 };
 

@@ -4,6 +4,7 @@ Player = function(game, xSpawnPos, ySpawnPos) {
     this.cursors = null;
     this.jumpButton = null;
     this.jumpSound = null;
+    this.climbing = false;
     this.xSpawnPos = xSpawnPos;
     this.ySpawnPos = ySpawnPos;
 };
@@ -66,6 +67,9 @@ Player.prototype = {
 
     updateCollisions: function() {
         game.physics.arcade.collide(this.sprite, level.layer);
+        if(level.foreground != null && level.foreground != undefined) {
+            game.physics.arcade.collide(this.sprite, level.foreground);    
+        }
         // For each enemy type, add collisions to player.
         enemies.forEach(function(enemy) {
             game.physics.arcade.collide(this.sprite, enemy.enemies, this.killPlayer, null, this);
@@ -91,6 +95,12 @@ Player.prototype = {
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }
+    },
+
+    initiateClimbState: function() {
+        // TODO: Change the animation
+        this.climbing = true;
+        this.sprite.body.gravity.y = 0;
     },
 
     killPlayer: function() {

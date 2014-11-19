@@ -55,3 +55,15 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
         return true;
     }
 };
+
+Phaser.Tilemap.prototype.setTileIndexCallbackTileContext = function(indices, layer, callback) {
+    layer = this.getLayer(layer);
+
+    if(typeof indices === 'number') {
+        this.layers[layer].callbacks[indices] = { callback: callback };
+    } else {
+        for(var i = 0, len = indices.length; i < len; i++) {
+            this.layers[layer].callbacks[indices[i]] = { callback: callback };
+        }
+    }
+};
