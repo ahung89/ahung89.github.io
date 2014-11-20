@@ -230,10 +230,10 @@ Player.prototype = {
         this.sprite.body.velocity.y = 0;
 
         if(this.cursors.left.isDown) {
-            this.sprite.body.x -= TILE_SIZE;
+            this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.right.isDown) {
-            this.sprite.body.x += TILE_SIZE;
+            this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
             this.sprite.body.velocity.y = -150;
@@ -589,6 +589,8 @@ LevelTwo = function(game, birds, gunDogs) {
 	this.game = game;
 	this.birds = birds;
 	this.gunDogs = gunDogs;
+	this.vineThresholdX = 15;
+	this.vineThresholdY = 10;
 };
 
 LevelTwo.prototype = {
@@ -643,8 +645,7 @@ LevelTwo.prototype = {
 	},
 
 	vineCheck: function() {
-		var vineThreshold = 50;
-		var withinVineThreshold = Math.abs(player.sprite.body.x - this.worldX) <= vineThreshold && Math.abs(player.sprite.body.y - this.worldY) <= vineThreshold;
+		var withinVineThreshold = Math.abs(player.sprite.body.x - this.worldX) < level.vineThresholdX && Math.abs(player.sprite.body.y - this.worldY) < level.vineThresholdY;
 
 
 		if(!player.climbing && withinVineThreshold) {

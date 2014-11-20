@@ -86,10 +86,10 @@ Player.prototype = {
         this.sprite.body.velocity.y = 0;
 
         if(this.cursors.left.isDown) {
-            this.sprite.body.x -= TILE_SIZE;
+            this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.right.isDown) {
-            this.sprite.body.x += TILE_SIZE;
+            this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
             this.sprite.body.velocity.y = -150;
