@@ -83,15 +83,19 @@ Player.prototype = {
     },
 
     updateMovementOnVine: function() {
+        this.sprite.body.velocity.y = 0;
+
         if(this.cursors.left.isDown) {
             this.sprite.body.x -= TILE_SIZE;
-            this.climbing = false;
-            this.sprite.body.gravity.y = this.yGravity;
+            this.endClimb();
         } else if(this.cursors.right.isDown) {
             this.sprite.body.x += TILE_SIZE;
-            this.climbing = false;
-            this.sprite.body.gravity.y = this.yGravity;
-        }
+            this.endClimb();
+        } else if(this.cursors.up.isDown) {
+            this.sprite.body.velocity.y = -150;
+        } else if(this.cursors.down.isDown) {
+            this.sprite.body.velocity.y = 150;
+        } 
     },
 
     updateMovement: function() {
@@ -119,6 +123,15 @@ Player.prototype = {
         // TODO: Change the animation
         this.climbing = true;
         this.sprite.body.gravity.y = 0;
+        this.sprite.body.velocity.y = 0;
+        this.sprite.body.velocity.x = 0;
+
+    },
+
+    endClimb: function() {
+        this.climbing = false;
+        this.sprite.body.gravity.y = this.yGravity;
+
     },
 
     killPlayer: function() {

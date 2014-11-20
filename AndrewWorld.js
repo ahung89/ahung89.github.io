@@ -227,15 +227,19 @@ Player.prototype = {
     },
 
     updateMovementOnVine: function() {
+        this.sprite.body.velocity.y = 0;
+
         if(this.cursors.left.isDown) {
             this.sprite.body.x -= TILE_SIZE;
-            this.climbing = false;
-            this.sprite.body.gravity.y = this.yGravity;
+            this.endClimb();
         } else if(this.cursors.right.isDown) {
             this.sprite.body.x += TILE_SIZE;
-            this.climbing = false;
-            this.sprite.body.gravity.y = this.yGravity;
-        }
+            this.endClimb();
+        } else if(this.cursors.up.isDown) {
+            this.sprite.body.velocity.y = -150;
+        } else if(this.cursors.down.isDown) {
+            this.sprite.body.velocity.y = 150;
+        } 
     },
 
     updateMovement: function() {
@@ -263,6 +267,15 @@ Player.prototype = {
         // TODO: Change the animation
         this.climbing = true;
         this.sprite.body.gravity.y = 0;
+        this.sprite.body.velocity.y = 0;
+        this.sprite.body.velocity.x = 0;
+
+    },
+
+    endClimb: function() {
+        this.climbing = false;
+        this.sprite.body.gravity.y = this.yGravity;
+
     },
 
     killPlayer: function() {
@@ -630,16 +643,17 @@ LevelTwo.prototype = {
 	},
 
 	vineCheck: function() {
-		if(!player.climbing) {
-			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
-			player.climbing = true;
-			player.sprite.body.gravity.y = 0;
-			player.sprite.body.velocity.y = 0;
-			player.sprite.body.velocity.x = 0;
+		var vineThreshold = 50;
+		var withinVineThreshold = Math.abs(player.sprite.body.x - this.worldX) <= vineThreshold && Math.abs(player.sprite.body.y - this.worldY) <= vineThreshold;
 
+
+		if(!player.climbing && withinVineThreshold) {
+			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
 			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
 			player.sprite.body.x = this.worldX;
 			player.sprite.body.y = this.worldY;
+
+			player.initiateClimbState();
 		}
 	}
 };
