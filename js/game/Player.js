@@ -85,18 +85,15 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
-        if(this.ignoreLateralUntilLeftRelease && this.game.input.keyboard.justReleased(Phaser.Keyboard.LEFT)) {
-            this.ignoreLateralUntilLeftRelease = false;
+        if(this.ignoreLateral && !this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+            this.ignoreLateral = false;
         }
 
-        if(this.ignoreLateralUntilRightRelease && this.game.input.keyboard.justReleased(Phaser.Keyboard.RIGHT)) {
-            this.ignoreLateralUntilRightRelease = false;
-        }
 
-        if(!this.ignoreLateralUntilLeftRelease && !this.ignoreLateralUntilRightRelease && this.cursors.left.isDown) {
+        if(!this.ignoreLateral && this.cursors.left.isDown) {
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
-        } else if(!this.ignoreLateralUntilLeftRelease && !this.ignoreLateralUntilRightRelease && this.cursors.right.isDown) {
+        } else if(!this.ignoreLateral && this.cursors.right.isDown) {
             this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
@@ -131,8 +128,7 @@ Player.prototype = {
         // TODO: Change the animation
         this.climbing = true;
 
-        this.ignoreLateralUntilLeftRelease = this.cursors.left.isDown;
-        this.ignoreLateralUntilRightRelease = this.cursors.right.isDown;
+        this.ignoreLateral = this.cursors.left.isDown || this.cursors.right.isDown;
 
         this.sprite.body.gravity.y = 0;
         this.sprite.body.velocity.y = 0;
