@@ -229,10 +229,18 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
-        if(this.cursors.left.isDown) {
+        if(this.ignoreLateralUntilLeftRelease && this.game.input.keyboard.justReleased(Phaser.Keyboard.LEFT)) {
+            this.ignoreLateralUntilLeftRelease = false;
+        }
+
+        if(this.ignoreLateralUntilRightRelease && this.game.input.keyboard.justReleased(Phaser.Keyboard.RIGHT)) {
+            this.ignoreLateralUntilRightRelease = false;
+        }
+
+        if(!this.ignoreLateralUntilLeftRelease && !this.ignoreLateralUntilRightRelease && this.cursors.left.isDown) {
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
-        } else if(this.cursors.right.isDown) {
+        } else if(!this.ignoreLateralUntilLeftRelease && !this.ignoreLateralUntilRightRelease && this.cursors.right.isDown) {
             this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
@@ -266,6 +274,10 @@ Player.prototype = {
     initiateClimbState: function() {
         // TODO: Change the animation
         this.climbing = true;
+
+        this.ignoreLateralUntilLeftRelease = this.cursors.left.isDown;
+        this.ignoreLateralUntilRightRelease = this.cursors.right.isDown;
+
         this.sprite.body.gravity.y = 0;
         this.sprite.body.velocity.y = 0;
         this.sprite.body.velocity.x = 0;
@@ -675,8 +687,6 @@ LevelOneState = function() {
 }
 
 LevelOneState.prototype = Object.create(LevelState.prototype);
-
-LevelOneState.prototype.constructor = LevelOneState;
 LevelTwoState = function() {
 	// Pro tip: If the parent (LevelState) had properties set in its constructor and I wanted to inherit them, I'd call
 	// LevelState.call(this). This would basically just run the function called LevelState. I could also pass in additional args

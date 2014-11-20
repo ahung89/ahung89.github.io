@@ -14,5 +14,3 @@ LevelOneState = function() {
 }
 
 LevelOneState.prototype = Object.create(LevelState.prototype);
-
-LevelOneState.prototype.constructor = LevelOneState;
