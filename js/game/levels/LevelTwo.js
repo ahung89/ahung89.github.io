@@ -65,7 +65,22 @@ LevelTwo.prototype = {
 			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
 			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
 			player.sprite.body.x = this.worldX;
-			player.sprite.body.y = this.worldY;
+			// player.sprite.body.y = this.worldY;
+
+			var tileIsVine = true;
+			var lowestVine;
+			var currentTile = this;
+
+			while(true) {
+				var tileBelow = level.map.getTile(currentTile.x, currentTile.y + 1, level.map.getLayerIndex('Foreground'));
+				if(tileBelow == null || [36, 37, 56, 57].indexOf(tileBelow.index) < 0) {
+					lowestVine = currentTile;
+					break;
+				}
+				currentTile = tileBelow;
+			}
+
+			console.log("lowest tile found at " + lowestVine.x + ", " + lowestVine.y);
 
 			player.initiateClimbState();
 		}
