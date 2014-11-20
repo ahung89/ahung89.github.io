@@ -56,6 +56,16 @@ LevelTwo.prototype = {
 	},
 
 	vineCheck: function() {
-		console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
+		if(!player.climbing) {
+			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
+			player.climbing = true;
+			player.sprite.body.gravity.y = 0;
+			player.sprite.body.velocity.y = 0;
+			player.sprite.body.velocity.x = 0;
+
+			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
+			player.sprite.body.x = this.worldX;
+			player.sprite.body.y = this.worldY;
+		}
 	}
 };

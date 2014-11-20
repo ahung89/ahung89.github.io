@@ -7,6 +7,7 @@ Player = function(game, xSpawnPos, ySpawnPos) {
     this.climbing = false;
     this.xSpawnPos = xSpawnPos;
     this.ySpawnPos = ySpawnPos;
+    this.yGravity = 400;
 };
  
 Player.prototype = {
@@ -33,7 +34,7 @@ Player.prototype = {
 
     initializePlayerPhysics: function() {
         this.game.physics.arcade.enable(this.sprite);
-        this.sprite.body.gravity.y = 400;
+        this.sprite.body.gravity.y = this.yGravity;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.checkCollision.down = true;
 
@@ -57,7 +58,12 @@ Player.prototype = {
  
     update: function() {
         this.updateCollisions();
-        this.updateMovement();
+
+        if(this.climbing) {
+            this.updateMovementOnVine();
+        } else {
+            this.updateMovement();
+        }
 
         this.sprite.checkWorldBounds = true;
         if(this.sprite.position.y > this.game.world.height) {
@@ -74,6 +80,18 @@ Player.prototype = {
         enemies.forEach(function(enemy) {
             game.physics.arcade.collide(this.sprite, enemy.enemies, this.killPlayer, null, this);
         }, this);
+    },
+
+    updateMovementOnVine: function() {
+        if(this.cursors.left.isDown) {
+            this.sprite.body.x -= TILE_SIZE;
+            this.climbing = false;
+            this.sprite.body.gravity.y = this.yGravity;
+        } else if(this.cursors.right.isDown) {
+            this.sprite.body.x += TILE_SIZE;
+            this.climbing = false;
+            this.sprite.body.gravity.y = this.yGravity;
+        }
     },
 
     updateMovement: function() {
