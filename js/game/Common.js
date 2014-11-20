@@ -56,14 +56,22 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
     }
 };
 
-Phaser.Tilemap.prototype.setTileIndexCallbackTileContext = function(indices, layer, callback) {
-    layer = this.getLayer(layer);
+Phaser.Tilemap.prototype.getTilesWithIndex = function(layer, indices) {
+    var result = [];
+    var layer = this.layers[layer];
 
-    if(typeof indices === 'number') {
-        this.layers[layer].callbacks[indices] = { callback: callback };
-    } else {
-        for(var i = 0, len = indices.length; i < len; i++) {
-            this.layers[layer].callbacks[indices[i]] = { callback: callback };
+    if(indices.length == 1) {
+        indices = [indices]; //not sure if this works, lawl.
+    }
+
+    for(var row = 0; row < this.height; row++) {
+        for(var col = 0; col < this.width; col++) {
+            var tile = layer.data[row][col];
+            if(indices.indexOf(tile.index) > -1) {
+                result.push(tile);
+            }
         }
     }
+
+    return result;
 };

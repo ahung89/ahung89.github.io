@@ -49,10 +49,13 @@ LevelTwo.prototype = {
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
 
 		// Vines
-		this.map.setTileIndexCallbackTileContext([36, 37, 56, 57], this.map.getLayerIndex('Foreground'), this.vineCheck);
+		var vineTiles = this.map.getTilesWithIndex(this.map.getLayerIndex('Foreground'), [36, 37, 56, 57]);
+		vineTiles.forEach(function(vineTile) {
+			vineTile.setCollisionCallback(this.vineCheck, vineTile);
+		}, this);
 	},
 
 	vineCheck: function() {
-		console.log("YOU JUST HIT DA VINE, DAWG.");
+		console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
 	}
 };
