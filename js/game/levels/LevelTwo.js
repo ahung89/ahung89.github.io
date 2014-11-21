@@ -62,10 +62,8 @@ LevelTwo.prototype = {
 
 
 		if(!player.climbing && withinVineThreshold) {
-			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
 			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
 			player.sprite.body.x = this.worldX;
-			// player.sprite.body.y = this.worldY;
 
 			var tileIsVine = true;
 			var lowestVine;
@@ -80,9 +78,7 @@ LevelTwo.prototype = {
 				currentTile = tileBelow;
 			}
 
-			console.log("lowest tile found at " + lowestVine.x + ", " + lowestVine.y);
-
-			player.initiateClimbState();
+			player.initiateClimbState(lowestVine.worldY);
 		}
 	}
 };

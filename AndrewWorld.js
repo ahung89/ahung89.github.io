@@ -245,6 +245,16 @@ Player.prototype = {
         } else if(this.cursors.down.isDown) {
             this.sprite.body.velocity.y = 150;
         } 
+
+        if (this.jumpButton.isDown && (this.cursors.left.isDown || this.cursors.right.isDown)) {
+            this.sprite.body.position.y -= 5;
+            this.sprite.body.velocity.y = -300;
+            this.jumpSound.play();
+        }
+
+        if(this.sprite.body.y > this.lowestVineY + level.vineThresholdY) {
+            this.endClimb();
+        }
     },
 
     updateMovement: function() {
@@ -261,16 +271,17 @@ Player.prototype = {
             this.sprite.frame = 4;
         }
  
-        if (this.jumpButton.isDown && this.sprite.isTouchingGround()){
+        if (this.jumpButton.isDown && this.sprite.isTouchingGround()) {
             this.sprite.body.position.y -= 5;
             this.sprite.body.velocity.y = -300;
             this.jumpSound.play();
         }
     },
 
-    initiateClimbState: function() {
+    initiateClimbState: function(lowestVineY) {
         // TODO: Change the animation
         this.climbing = true;
+        this.lowestVineY = lowestVineY;
 
         this.ignoreLateral = this.cursors.left.isDown || this.cursors.right.isDown;
 
@@ -657,10 +668,8 @@ LevelTwo.prototype = {
 
 
 		if(!player.climbing && withinVineThreshold) {
-			console.log("YOU JUST HIT DA VINE, DAWG. worldX, worldY is " + this.worldX + ", " + this.worldY + ". player is at " + player.sprite.body.x + ", " + player.sprite.body.y);
 			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
 			player.sprite.body.x = this.worldX;
-			// player.sprite.body.y = this.worldY;
 
 			var tileIsVine = true;
 			var lowestVine;
@@ -675,9 +684,7 @@ LevelTwo.prototype = {
 				currentTile = tileBelow;
 			}
 
-			console.log("lowest tile found at " + lowestVine.x + ", " + lowestVine.y);
-
-			player.initiateClimbState();
+			player.initiateClimbState(lowestVine.worldY);
 		}
 	}
 };
