@@ -85,12 +85,22 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
+        var endClimb = false;
+
         if(this.ignoreLateral && !this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
             this.ignoreLateral = false;
         }
 
-
-        if(!this.ignoreLateral && this.cursors.left.isDown) {
+        if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.left.isDown) {
+            this.jump();
+            this.sprite.body.x -= level.vineThresholdX;
+            this.endClimb();
+        } else if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.right.isDown) {
+            this.jump();
+            this.sprite.body.x += level.vineThresholdX;
+            this.endClimb();
+        }  
+        else if(!this.ignoreLateral && this.cursors.left.isDown) {
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
         } else if(!this.ignoreLateral && this.cursors.right.isDown) {
@@ -102,13 +112,7 @@ Player.prototype = {
             this.sprite.body.velocity.y = 150;
         } 
 
-        if (this.jumpButton.isDown && (this.cursors.left.isDown || this.cursors.right.isDown)) {
-            this.sprite.body.position.y -= 5;
-            this.sprite.body.velocity.y = -300;
-            this.jumpSound.play();
-        }
-
-        if(this.sprite.body.y > this.lowestVineY + level.vineThresholdY) {
+        if(this.sprite.body.y > level.lowestPointOnCurrentVine + level.vineThresholdY) {
             this.endClimb();
         }
     },
@@ -128,16 +132,13 @@ Player.prototype = {
         }
  
         if (this.jumpButton.isDown && this.sprite.isTouchingGround()) {
-            this.sprite.body.position.y -= 5;
-            this.sprite.body.velocity.y = -300;
-            this.jumpSound.play();
+            this.jump();
         }
     },
 
-    initiateClimbState: function(lowestVineY) {
+    initiateClimbState: function() {
         // TODO: Change the animation
         this.climbing = true;
-        this.lowestVineY = lowestVineY;
 
         this.ignoreLateral = this.cursors.left.isDown || this.cursors.right.isDown;
 
@@ -145,6 +146,12 @@ Player.prototype = {
         this.sprite.body.velocity.y = 0;
         this.sprite.body.velocity.x = 0;
 
+    },
+
+    jump: function() {
+        this.sprite.body.position.y -= 5;
+        this.sprite.body.velocity.y = -300;
+        this.jumpSound.play();
     },
 
     endClimb: function() {

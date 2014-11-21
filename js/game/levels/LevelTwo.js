@@ -1,9 +1,12 @@
+var VINE_TILE_INDICES = [36, 37, 56, 57];
+
 LevelTwo = function(game, birds, gunDogs) {
 	this.game = game;
 	this.birds = birds;
 	this.gunDogs = gunDogs;
 	this.vineThresholdX = 15;
 	this.vineThresholdY = 10;
+	this.lowestPointOnCurrentVine = null;
 };
 
 LevelTwo.prototype = {
@@ -51,7 +54,7 @@ LevelTwo.prototype = {
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
 
 		// Vines
-		var vineTiles = this.map.getTilesWithIndex(this.map.getLayerIndex('Foreground'), [36, 37, 56, 57]);
+		var vineTiles = this.map.getTilesWithIndex(this.map.getLayerIndex('Foreground'), VINE_TILE_INDICES);
 		vineTiles.forEach(function(vineTile) {
 			vineTile.setCollisionCallback(this.vineCheck, vineTile);
 		}, this);
@@ -71,14 +74,16 @@ LevelTwo.prototype = {
 
 			while(true) {
 				var tileBelow = level.map.getTile(currentTile.x, currentTile.y + 1, level.map.getLayerIndex('Foreground'));
-				if(tileBelow == null || [36, 37, 56, 57].indexOf(tileBelow.index) < 0) {
+				if(tileBelow == null || VINE_TILE_INDICES.indexOf(tileBelow.index) < 0) {
 					lowestVine = currentTile;
 					break;
 				}
 				currentTile = tileBelow;
 			}
 
-			player.initiateClimbState(lowestVine.worldY);
+			level.lowestPointOnCurrentVine = lowestVine.worldY;
+
+			player.initiateClimbState();
 		}
 	}
 };

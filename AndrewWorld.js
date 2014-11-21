@@ -229,12 +229,22 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
+        var endClimb = false;
+
         if(this.ignoreLateral && !this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
             this.ignoreLateral = false;
         }
 
-
-        if(!this.ignoreLateral && this.cursors.left.isDown) {
+        if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.left.isDown) {
+            this.jump();
+            this.sprite.body.x -= level.vineThresholdX;
+            this.endClimb();
+        } else if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.right.isDown) {
+            this.jump();
+            this.sprite.body.x += level.vineThresholdX;
+            this.endClimb();
+        }  
+        else if(!this.ignoreLateral && this.cursors.left.isDown) {
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
         } else if(!this.ignoreLateral && this.cursors.right.isDown) {
@@ -246,13 +256,7 @@ Player.prototype = {
             this.sprite.body.velocity.y = 150;
         } 
 
-        if (this.jumpButton.isDown && (this.cursors.left.isDown || this.cursors.right.isDown)) {
-            this.sprite.body.position.y -= 5;
-            this.sprite.body.velocity.y = -300;
-            this.jumpSound.play();
-        }
-
-        if(this.sprite.body.y > this.lowestVineY + level.vineThresholdY) {
+        if(this.sprite.body.y > level.lowestPointOnCurrentVine + level.vineThresholdY) {
             this.endClimb();
         }
     },
@@ -272,16 +276,13 @@ Player.prototype = {
         }
  
         if (this.jumpButton.isDown && this.sprite.isTouchingGround()) {
-            this.sprite.body.position.y -= 5;
-            this.sprite.body.velocity.y = -300;
-            this.jumpSound.play();
+            this.jump();
         }
     },
 
-    initiateClimbState: function(lowestVineY) {
+    initiateClimbState: function() {
         // TODO: Change the animation
         this.climbing = true;
-        this.lowestVineY = lowestVineY;
 
         this.ignoreLateral = this.cursors.left.isDown || this.cursors.right.isDown;
 
@@ -289,6 +290,12 @@ Player.prototype = {
         this.sprite.body.velocity.y = 0;
         this.sprite.body.velocity.x = 0;
 
+    },
+
+    jump: function() {
+        this.sprite.body.position.y -= 5;
+        this.sprite.body.velocity.y = -300;
+        this.jumpSound.play();
     },
 
     endClimb: function() {
@@ -604,12 +611,15 @@ LevelOne.prototype = {
 		});
 	}
 }
+var VINE_TILE_INDICES = [36, 37, 56, 57];
+
 LevelTwo = function(game, birds, gunDogs) {
 	this.game = game;
 	this.birds = birds;
 	this.gunDogs = gunDogs;
 	this.vineThresholdX = 15;
 	this.vineThresholdY = 10;
+	this.lowestPointOnCurrentVine = null;
 };
 
 LevelTwo.prototype = {
@@ -657,7 +667,7 @@ LevelTwo.prototype = {
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
 
 		// Vines
-		var vineTiles = this.map.getTilesWithIndex(this.map.getLayerIndex('Foreground'), [36, 37, 56, 57]);
+		var vineTiles = this.map.getTilesWithIndex(this.map.getLayerIndex('Foreground'), VINE_TILE_INDICES);
 		vineTiles.forEach(function(vineTile) {
 			vineTile.setCollisionCallback(this.vineCheck, vineTile);
 		}, this);
@@ -677,14 +687,16 @@ LevelTwo.prototype = {
 
 			while(true) {
 				var tileBelow = level.map.getTile(currentTile.x, currentTile.y + 1, level.map.getLayerIndex('Foreground'));
-				if(tileBelow == null || [36, 37, 56, 57].indexOf(tileBelow.index) < 0) {
+				if(tileBelow == null || VINE_TILE_INDICES.indexOf(tileBelow.index) < 0) {
 					lowestVine = currentTile;
 					break;
 				}
 				currentTile = tileBelow;
 			}
 
-			player.initiateClimbState(lowestVine.worldY);
+			level.lowestPointOnCurrentVine = lowestVine.worldY;
+
+			player.initiateClimbState();
 		}
 	}
 };
