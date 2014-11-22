@@ -85,25 +85,12 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
-        var endClimb = false;
-
-        if(this.ignoreLateral && !this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            this.ignoreLateral = false;
-        }
-
         if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.left.isDown) {
             this.jump();
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
         } else if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.right.isDown) {
             this.jump();
-            this.sprite.body.x += level.vineThresholdX;
-            this.endClimb();
-        }  
-        else if(!this.ignoreLateral && this.cursors.left.isDown) {
-            this.sprite.body.x -= level.vineThresholdX;
-            this.endClimb();
-        } else if(!this.ignoreLateral && this.cursors.right.isDown) {
             this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
@@ -140,12 +127,9 @@ Player.prototype = {
         // TODO: Change the animation
         this.climbing = true;
 
-        this.ignoreLateral = this.cursors.left.isDown || this.cursors.right.isDown;
-
         this.sprite.body.gravity.y = 0;
         this.sprite.body.velocity.y = 0;
         this.sprite.body.velocity.x = 0;
-
     },
 
     jump: function() {
