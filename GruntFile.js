@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 		concat: { // This task creates the concatenated js file in the deploy folder.
 			dist: {
 				//Even though js/game/**/*.js matches LevelState.js, it does not get concatenated twice... which is AWESOME.
-				src: ['js/lib/**/*.js', 'js/game/states/LevelState.js', 'js/game/**/*.js'], //** means partial path match. So the *.js is for anything under the js directory or any of its subdirectories.
+				src: ['js/lib/**/*.js', 'js/game/states/LevelState.js', 'js/game/**/*.js', 'js/Main.js'], //** means partial path match. So the *.js is for anything under the js directory or any of its subdirectories.
 				dest: './<%= pkg.name %>.js' // pkg.name is from package.json (Remember pkg was set using package.json just above.)
 			}
 		},
