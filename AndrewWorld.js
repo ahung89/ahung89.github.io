@@ -300,7 +300,7 @@ function Birds(spawnLocations) {
 
 Birds.prototype = {
 	preload: function() {
-		game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
+		game.load.spritesheet('bird', 'assets/sprites/phoenixsprite.png', 48, 32);
 	},
 
 	create: function() {
@@ -484,6 +484,9 @@ LandDogs.prototype = {
 			enemy.kill();
 		});
 	}
+}
+Phoenixes = function() {
+	
 }
 // Indices of tile types that represent empty space
 var EMPTY_SPACE_TILES = [21];

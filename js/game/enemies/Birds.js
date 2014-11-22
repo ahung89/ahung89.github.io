@@ -5,7 +5,7 @@ function Birds(spawnLocations) {
 
 Birds.prototype = {
 	preload: function() {
-		game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
+		game.load.spritesheet('bird', 'assets/sprites/phoenixsprite.png', 48, 32);
 	},
 
 	create: function() {
