@@ -1,9 +1,10 @@
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
-LevelTwo = function(game, birds, gunDogs) {
+LevelTwo = function(game, birds, gunDogs, phoenixes) {
 	this.game = game;
 	this.birds = birds;
 	this.gunDogs = gunDogs;
+	this.phoenixes = phoenixes;
 	this.vineThresholdX = 15;
 	this.vineThresholdY = 10;
 	this.lowestPointOnCurrentVine = null;
@@ -32,6 +33,7 @@ LevelTwo.prototype = {
 
 	update: function() {
 		game.physics.arcade.collide(this.birds.enemies, this.layer);
+		game.physics.arcade.collide(this.phoenixes.enemies, this.layer);
 		game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
 		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
 	},

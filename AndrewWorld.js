@@ -300,7 +300,7 @@ function Birds(spawnLocations) {
 
 Birds.prototype = {
 	preload: function() {
-		game.load.spritesheet('bird', 'assets/sprites/phoenixsprite.png', 48, 32);
+		game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
 	},
 
 	create: function() {
@@ -485,9 +485,83 @@ LandDogs.prototype = {
 		});
 	}
 }
-Phoenixes = function() {
-	
-}
+function Phoenixes(spawnLocations) {
+	this.spawnLocations = spawnLocations;
+	this.phoenixSpeed = 150;
+	this.fireRate = 1000;
+	this.nextFire = 0;
+};
+
+Phoenixes.prototype = {
+	preload: function() {
+		game.load.spritesheet('phoenix', 'assets/sprites/phoenixsprite.png', 48, 32);
+		game.load.image('fireball', 'assets/sprites/fireball.png');
+	},
+
+	create: function() {
+		this.enemies = game.add.group();
+		this.enemies.enableBody = true;
+		this.spawnLocations.forEach(function(location) {
+			var phoenix = this.enemies.create(location.x * TILE_SIZE, location.y * TILE_SIZE, 'phoenix');
+			this.createPhoenix(phoenix, location.x * TILE_SIZE);
+			}, this
+		);
+
+		this.fireballs = game.add.group();
+		game.physics.enable(this.fireballs, Phaser.Physics.ARCADE);
+	},
+
+	createPhoenix: function(phoenix, xLocation) {
+		phoenix.previousXPosition = xLocation;
+		phoenix.animations.add('left', [2, 3], 10, true);
+		phoenix.animations.add('right', [6, 7], 10, true);
+		phoenix.frame = 1;
+		phoenix.body.collideWorldBounds = true;
+		phoenix.currentDirection = 'left';
+	},
+
+	update: function() {
+		this.enemies.forEach(function(enemy) {
+			if(enemy.previousXPosition == enemy.body.position.x) {
+				this.changeDirection(enemy);
+			}
+
+			enemy.previousXPosition = enemy.body.position.x;
+
+			if(enemy.currentDirection == 'left') {
+				enemy.body.velocity.x = -1 * this.phoenixSpeed;
+				enemy.animations.play('left');
+			} else {
+				enemy.body.velocity.x = this.phoenixSpeed;
+				enemy.animations.play('right');
+			}
+
+			if(game.time.now > this.nextFire) {
+				this.nextFire = game.time.now + this.fireRate;
+				this.fire(enemy);
+			}
+		}, this);
+	},
+
+	changeDirection: function(enemy) {
+		if(enemy.currentDirection == 'left') {
+			enemy.currentDirection = 'right';
+		} else {
+			enemy.currentDirection = 'left';
+		}
+	},
+
+	fire: function(enemy) {
+		var fireball = this.fireballs.create(enemy.body.position.x + enemy.body.width / 2, enemy.body.position.y + enemy.body.height, 'fireball');
+		
+		game.physics.enable(fireball, Phaser.Physics.ARCADE); //Creates a default physics body on the object. The object cannot have velocity otherwise.
+		fireball.checkWorldBounds = true;
+		fireball.outOfBoundsKill = true;
+		fireball.anchor.set(0.5);
+
+		fireball.body.velocity.y = 300;
+	}
+};
 // Indices of tile types that represent empty space
 var EMPTY_SPACE_TILES = [21];
 var PADDLE_SPEED = 130;
@@ -600,10 +674,11 @@ LevelOne.prototype = {
 }
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
-LevelTwo = function(game, birds, gunDogs) {
+LevelTwo = function(game, birds, gunDogs, phoenixes) {
 	this.game = game;
 	this.birds = birds;
 	this.gunDogs = gunDogs;
+	this.phoenixes = phoenixes;
 	this.vineThresholdX = 15;
 	this.vineThresholdY = 10;
 	this.lowestPointOnCurrentVine = null;
@@ -632,6 +707,7 @@ LevelTwo.prototype = {
 
 	update: function() {
 		game.physics.arcade.collide(this.birds.enemies, this.layer);
+		game.physics.arcade.collide(this.phoenixes.enemies, this.layer);
 		game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
 		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
 	},
@@ -710,6 +786,7 @@ LevelTwoState = function() {
 	// after 'this', if the function took arguments.
 
 	this.birdSpawnLocations = [{x: 3, y:45}];
+	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
 	this.startingCameraPosX = 0;
@@ -720,11 +797,13 @@ LevelTwoState = function() {
 
 	this.birds = new Birds(this.birdSpawnLocations);
 	this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
+	this.phoenixes = new Phoenixes(this.phoenixSpawnLocations);
 
 	enemies.push(this.birds);
 	enemies.push(this.gunDogs);
+	enemies.push(this.phoenixes);
 
-	level = new LevelTwo(game, this.birds, this.gunDogs);
+	level = new LevelTwo(game, this.birds, this.gunDogs, this.phoenixes);
 };
 
 LevelTwoState.prototype = Object.create(LevelState.prototype);

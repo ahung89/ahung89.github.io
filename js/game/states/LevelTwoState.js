@@ -4,6 +4,7 @@ LevelTwoState = function() {
 	// after 'this', if the function took arguments.
 
 	this.birdSpawnLocations = [{x: 3, y:45}];
+	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
 	this.startingCameraPosX = 0;
@@ -14,11 +15,13 @@ LevelTwoState = function() {
 
 	this.birds = new Birds(this.birdSpawnLocations);
 	this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
+	this.phoenixes = new Phoenixes(this.phoenixSpawnLocations);
 
 	enemies.push(this.birds);
 	enemies.push(this.gunDogs);
+	enemies.push(this.phoenixes);
 
-	level = new LevelTwo(game, this.birds, this.gunDogs);
+	level = new LevelTwo(game, this.birds, this.gunDogs, this.phoenixes);
 };
 
 LevelTwoState.prototype = Object.create(LevelState.prototype);
