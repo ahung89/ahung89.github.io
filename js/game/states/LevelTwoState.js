@@ -2,6 +2,7 @@ var LevelState = require('./LevelState');
 var Birds = require('../enemies/Birds')
 var GunDogs = require('../enemies/GunDogs')
 var Phoenixes = require('../enemies/Phoenixes')
+var LevelTwo = require('../levels/LevelTwo')
 
 LevelTwoState = function() {
 	// Pro tip: If the parent (LevelState) had properties set in its constructor and I wanted to inherit them, I'd call

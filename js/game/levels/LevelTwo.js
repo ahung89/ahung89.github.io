@@ -89,3 +89,5 @@ LevelTwo.prototype = {
 		}
 	}
 };
+
+module.exports = LevelTwo;

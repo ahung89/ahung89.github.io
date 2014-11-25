@@ -149,3 +149,5 @@ Player.prototype = {
         //restartCurrentLevel();
     }
 };
+
+module.exports = Player

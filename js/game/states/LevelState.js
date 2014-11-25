@@ -1,3 +1,5 @@
+var Player = require('../Player');
+
 LevelState = function() {
 };
 

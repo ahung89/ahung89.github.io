@@ -1,12 +1,11 @@
-var player;
-var level;
-var hud;
-var enemies = [];
-var currentState;
+window.player;
+window.level;
+window.enemies = [];
+window.currentState;
 
-var TILE_SIZE = 32;
+window.TILE_SIZE = 32;
 
-var game = new Phaser.Game(800, 480, Phaser.AUTO, '');
+window.game = new Phaser.Game(800, 480, Phaser.AUTO, '');
 
 startLevelOne();
 

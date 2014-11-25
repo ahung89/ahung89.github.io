@@ -30,7 +30,7 @@ gulp.task('compile', function() {
 			.bundle()
 			.pipe(source('AndrewWorld.min.js'))
 			.pipe(buffer())
-			.pipe(uglify())
+			//.pipe(uglify())
 			.pipe(gulp.dest(paths.dist))
 	}
 
