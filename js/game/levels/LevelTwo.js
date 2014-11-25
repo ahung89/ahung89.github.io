@@ -1,3 +1,5 @@
+require('../Common');
+
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
 LevelTwo = function(game, birds, gunDogs, phoenixes) {
