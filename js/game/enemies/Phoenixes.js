@@ -75,3 +75,5 @@ Phoenixes.prototype = {
 		fireball.body.velocity.y = 300;
 	}
 };
+
+module.exports = Phoenixes;

@@ -40,3 +40,5 @@ LevelState.prototype = {
 		resetCamera(this.startingCameraPosX, this.startingCameraPosY);
 	}
 };
+
+module.exports = LevelState;

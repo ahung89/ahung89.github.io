@@ -12,7 +12,7 @@ startLevelOne();
 
 function startLevelOne() {
     // currentState = new LevelOneState();
-    currentState = new LevelTwoState();
+    currentState = require('./game/states/LevelTwoState');
 
     // game.state gets the StateManager object for the game (naming is a bit misleading)
     game.state.add('LevelOne', currentState); // Adds the state to the game and assigns it a key.

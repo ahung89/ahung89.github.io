@@ -59,3 +59,5 @@ GunDogs.prototype = {
 		}
 	}
 };
+
+module.exports = GunDogs;

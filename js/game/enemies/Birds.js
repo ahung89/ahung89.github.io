@@ -59,3 +59,5 @@ Birds.prototype = {
 		});
 	}
 };
+
+module.exports = Birds;
