@@ -7,29 +7,25 @@ var gulp = require('gulp'),
 	source = require('vinyl-source-stream'),
 	jshint = require('gulp-jshint');
 
-gulp.task('default', ['connect', 'copy', 'copylibs', 'compile']);
+gulp.task('default', ['connect', 'copylibs', 'compile']);
 
 paths = {
-	assets: 'assets/**/*',
 	libs: [
-		'bower_components/phaser/build/phaser.js'
+		'js/lib/phaser.min.js'
 	],
-	js: ['js/Main.js', 'js/game/**/*.js'],
 	entry: './js/Main.js',
 	dist: './dist/'
 };
 
 gulp.task('compile', function() {
-	var bundler = browserify({
-		cache: {}, packageCache: {}, fullPaths: true,
-		entries:[paths.entry]
-	});
+	var bundler = browserify(paths.entry, watchify.args);
 
 	var bundle = function() {
 		return bundler
 			.bundle()
 			.pipe(source('AndrewWorld.min.js'))
 			.pipe(buffer())
+			// Uncomment the line below once releasing
 			//.pipe(uglify())
 			.pipe(gulp.dest(paths.dist))
 	}
@@ -45,15 +41,10 @@ gulp.task('copylibs', function() {
 		.pipe(gulp.dest(paths.dist + 'js/lib'))
 });
 
-gulp.task('copy', function() {
-	gulp.src(paths.assets)
-		.pipe(gulp.dest(paths.dist + 'assets'))
-});
-
 gulp.task('connect', function() {
 	connect.server({
 		root: [__dirname],
 		port: 9000,
-		livereload: true
+		livereload: true // TODO: download livereload chrome extension.
 	});
 });
