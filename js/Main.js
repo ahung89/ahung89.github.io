@@ -1,11 +1,11 @@
+// Globals
 window.player;
 window.level;
 window.enemies = [];
 window.currentState;
-
 window.TILE_SIZE = 32;
-
 window.game = new Phaser.Game(800, 480, Phaser.AUTO, '');
+window.$ = require('jquery');
 
 startLevelOne();
 

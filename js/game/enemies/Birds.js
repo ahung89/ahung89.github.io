@@ -1,6 +1,8 @@
+var EnemyFunctions = require('./mixins/EnemyFunctions');
+
 function Birds(spawnLocations) {
 	this.spawnLocations = spawnLocations;
-	this.birdSpeed = 150;
+	this.speed = 150;
 };
 
 Birds.prototype = {
@@ -29,35 +31,11 @@ Birds.prototype = {
 
 	update: function() {
 		this.enemies.forEach(function(enemy) {
-			if(enemy.previousXPosition == enemy.body.position.x) {
-				this.changeDirection(enemy);
-			}
-
-			enemy.previousXPosition = enemy.body.position.x;
-
-			if(enemy.currentDirection == 'left') {
-				enemy.body.velocity.x = -1 * this.birdSpeed;
-				enemy.animations.play('left');
-			} else {
-				enemy.body.velocity.x = this.birdSpeed;
-				enemy.animations.play('right');
-			}
+			this.moveLaterally(enemy);
 		}, this);
 	},
-
-	changeDirection: function(enemy) {
-		if(enemy.currentDirection == 'left') {
-			enemy.currentDirection = 'right';
-		} else {
-			enemy.currentDirection = 'left';
-		}
-	},
-
-	killAll : function() {
-		this.enemies.forEach(function(enemy) {
-			enemy.kill();
-		});
-	}
 };
+
+$.extend(Birds.prototype, EnemyFunctions);
 
 module.exports = Birds;

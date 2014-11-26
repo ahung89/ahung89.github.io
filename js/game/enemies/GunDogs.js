@@ -1,3 +1,6 @@
+var EnemyFunctions = require('./mixins/EnemyFunctions');
+var ProjectileEnemy = require('./mixins/ProjectileEnemy');
+
 function GunDogs(spawnLocations) {
 	this.spawnLocations = spawnLocations;
 
@@ -20,8 +23,8 @@ GunDogs.prototype = {
 			}, this
 		);
 
-		this.bullets = game.add.group();
-		game.physics.enable(this.bullets, Phaser.Physics.ARCADE);	
+		this.projectiles = game.add.group();
+		game.physics.enable(this.projectiles, Phaser.Physics.ARCADE);	
 	},
 
 	createGunDog: function(baddie, xLocation) {
@@ -38,26 +41,14 @@ GunDogs.prototype = {
 	update: function() {
 		this.enemies.forEach(function(enemy) {
 			if(game.time.now > this.nextFire) {
-				this.nextFire = game.time.now + this.fireRate;
-				this.fire(enemy);
+				var xBulletVelocity = enemy.currentDirection == 'left' ? -400 : 400;
+				this.fire(enemy.body.position.x, enemy.body.position.y + enemy.body.height / 2, 'baddie', xBulletVelocity, 0);
 			}
 		}, this);
-	},
-
-	fire: function(enemy) {
-		var bullet = this.bullets.create(enemy.body.position.x, enemy.body.position.y + enemy.body.height / 2, 'baddie');
-		
-		game.physics.enable(bullet, Phaser.Physics.ARCADE); //Creates a default physics body on the object. The object cannot have velocity otherwise.
-		bullet.checkWorldBounds = true;
-		bullet.outOfBoundsKill = true;
-		bullet.anchor.set(0.5);
-
-		if(enemy.currentDirection == 'left') {
-			bullet.body.velocity.x = -400;
-		} else {
-			bullet.body.velocity.x = 400;
-		}
 	}
 };
+
+$.extend(GunDogs.prototype, EnemyFunctions);
+$.extend(GunDogs.prototype, ProjectileEnemy);
 
 module.exports = GunDogs;

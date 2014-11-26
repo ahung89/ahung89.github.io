@@ -1,3 +1,5 @@
+var EnemyFunctions = require('./mixins/EnemyFunctions');
+
 // Declare the enemies class
 function LandDogs(spawnLocations) {
 	this.spawnLocations = spawnLocations;
@@ -52,19 +54,9 @@ LandDogs.prototype = {
 				enemy.animations.play('right');
 			}
 		}, this);
-	},
-
-	changeDirection : function(enemy) {
-		if(enemy.currentDirection == 'left') {
-			enemy.currentDirection = 'right';
-		} else {
-			enemy.currentDirection = 'left';
-		}
-	},
-
-	killAll : function() {
-		this.enemies.forEach(function(enemy) {
-			enemy.kill();
-		});
 	}
 }
+
+$.extend(LandDogs.prototype, EnemyFunctions);
+
+module.exports = LandDogs;

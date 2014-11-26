@@ -46,6 +46,6 @@ gulp.task('connect', function() {
 	connect.server({
 		root: [__dirname],
 		port: 9000,
-		livereload: true // TODO: download livereload chrome extension.
+		livereload: true
 	});
 });
