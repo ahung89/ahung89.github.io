@@ -1,4 +1,4 @@
-var EnemyFunctions = {
+var Enemy = {
 	changeDirection: function(enemy) {
 		if(enemy.currentDirection == 'left') {
 			enemy.currentDirection = 'right';
@@ -30,4 +30,4 @@ var EnemyFunctions = {
 	}
 };
 
-module.exports = EnemyFunctions;
+module.exports = Enemy;

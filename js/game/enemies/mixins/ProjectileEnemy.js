@@ -1,3 +1,5 @@
+var Enemy = require('./Enemy');
+
 var ProjectileEnemy = {
 	fire: function(xPos, yPos, imageName, xVelocity, yVelocity) {
 		this.nextFire = game.time.now + this.fireRate;
@@ -14,5 +16,7 @@ var ProjectileEnemy = {
 		projectile.body.velocity.y = yVelocity;
 	}
 };
+
+$.extend(ProjectileEnemy, Enemy);
 
 module.exports = ProjectileEnemy;

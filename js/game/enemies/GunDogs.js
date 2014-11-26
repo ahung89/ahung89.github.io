@@ -1,4 +1,3 @@
-var EnemyFunctions = require('./mixins/EnemyFunctions');
 var ProjectileEnemy = require('./mixins/ProjectileEnemy');
 
 function GunDogs(spawnLocations) {
@@ -48,7 +47,6 @@ GunDogs.prototype = {
 	}
 };
 
-$.extend(GunDogs.prototype, EnemyFunctions);
 $.extend(GunDogs.prototype, ProjectileEnemy);
 
 module.exports = GunDogs;

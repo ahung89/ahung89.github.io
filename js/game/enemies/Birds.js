@@ -1,4 +1,4 @@
-var EnemyFunctions = require('./mixins/EnemyFunctions');
+var Enemy = require('./mixins/Enemy');
 
 function Birds(spawnLocations) {
 	this.spawnLocations = spawnLocations;
@@ -36,6 +36,6 @@ Birds.prototype = {
 	},
 };
 
-$.extend(Birds.prototype, EnemyFunctions);
+$.extend(Birds.prototype, Enemy);
 
 module.exports = Birds;

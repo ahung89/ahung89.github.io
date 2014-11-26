@@ -1,4 +1,3 @@
-var EnemyFunctions = require('./mixins/EnemyFunctions');
 var ProjectileEnemy = require('./mixins/ProjectileEnemy');
 
 function Phoenixes(spawnLocations) {
@@ -51,7 +50,6 @@ Phoenixes.prototype = {
 	}
 };
 
-$.extend(Phoenixes.prototype, EnemyFunctions);
 $.extend(Phoenixes.prototype, ProjectileEnemy);
 
 module.exports = Phoenixes;
