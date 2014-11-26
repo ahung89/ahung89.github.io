@@ -17,7 +17,7 @@ paths = {
 	dist: './dist/'
 };
 
-gulp.task('compile', function() {
+gulp.task('compile', function() { // Split watchify into separate step?
 	var bundler = browserify(paths.entry, watchify.args);
 
 	var bundle = function() {
@@ -27,6 +27,7 @@ gulp.task('compile', function() {
 			.pipe(buffer())
 			// Uncomment the line below once releasing
 			//.pipe(uglify())
+			.pipe(connect.reload())
 			.pipe(gulp.dest(paths.dist))
 	}
 
