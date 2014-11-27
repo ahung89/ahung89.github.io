@@ -6,7 +6,7 @@ function Bird(x, y) {
 
 Bird.prototype = {
 	update: function() {
-		game.physics.arcade.collide(this.sprite, level.layer);
+		this.handleCollisions();
 		this.moveLaterally();
 	}
 }

@@ -76,10 +76,6 @@ Player.prototype = {
         if(level.foreground != null && level.foreground != undefined) {
             game.physics.arcade.collide(this.sprite, level.foreground);    
         }
-        // For each enemy type, add collisions to player.
-        enemies.forEach(function(enemy) {
-            game.physics.arcade.collide(this.sprite, enemy.enemies, this.killPlayer, null, this);
-        }, this);
     },
 
     updateMovementOnVine: function() {

@@ -13,18 +13,17 @@ Enemy = function(x, y, direction, image, leftAnimations, rightAnimations, speed)
 }
 
 Enemy.prototype = {
+	handleCollisions: function() {
+		game.physics.arcade.collide(this.sprite, level.layer);
+		game.physics.arcade.overlap(this.sprite, player.sprite, player.killPlayer, null, player);
+	},
+
 	changeDirection: function() {
 		if(this.currentDirection == 'left') {
 			this.currentDirection = 'right';
 		} else {
 			this.currentDirection = 'left';
 		}
-	},
-
-	killAll : function() {
-		this.enemies.forEach(function(enemy) {
-			enemy.kill();
-		});
 	},
 
 	moveLaterally : function() {

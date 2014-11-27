@@ -10,7 +10,9 @@ function GunDog(x, y) {
 
 GunDog.prototype = {
 	update: function() {
-		game.physics.arcade.collide(this.sprite, level.layer);
+		this.handleCollisions();
+		this.handleProjectileCollisions();
+
 		if(game.time.now > this.nextFire) {
 			var xBulletVelocity = this.currentDirection == 'left' ? -400 : 400;
 			this.fire(this.sprite.body.position.x, 

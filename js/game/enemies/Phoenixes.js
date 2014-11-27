@@ -9,7 +9,9 @@ function Phoenix(x, y) {
 
 Phoenix.prototype = {
 	update: function() {
-		game.physics.arcade.collide(this.sprite, level.layer);
+		this.handleCollisions();
+		this.handleProjectileCollisions();
+		
 		this.moveLaterally();
 
 			if(game.time.now > this.nextFire) {

@@ -23,6 +23,10 @@ ProjectileEnemy.prototype = {
 
 		projectile.body.velocity.x = xVelocity;
 		projectile.body.velocity.y = yVelocity;
+	},
+
+	handleProjectileCollisions: function() {
+		game.physics.arcade.overlap(this.projectiles, player.sprite, player.killPlayer, null, player);
 	}
 };
 
