@@ -1,9 +1,23 @@
-var Enemy = {
-	changeDirection: function(enemy) {
-		if(enemy.currentDirection == 'left') {
-			enemy.currentDirection = 'right';
+Enemy = function(x, y, direction, image, leftAnimations, rightAnimations, speed) {
+	this.sprite = game.add.sprite(x, y, image);
+	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+
+	this.sprite.animations.add('left', leftAnimations, 10, true);
+	this.sprite.animations.add('right', rightAnimations, 10, true);
+	this.sprite.frame = 1;
+	this.sprite.body.collideWorldBounds = true;
+
+	this.previousXPosition = x;
+	this.currentDirection = direction;
+	this.speed = speed;
+}
+
+Enemy.prototype = {
+	changeDirection: function() {
+		if(this.currentDirection == 'left') {
+			this.currentDirection = 'right';
 		} else {
-			enemy.currentDirection = 'left';
+			this.currentDirection = 'left';
 		}
 	},
 
@@ -13,19 +27,19 @@ var Enemy = {
 		});
 	},
 
-	moveLaterally : function(enemy) {
-		if(enemy.previousXPosition == enemy.body.position.x) {
-			this.changeDirection(enemy);
+	moveLaterally : function() {
+		if(this.previousXPosition == this.sprite.body.position.x) {
+			this.changeDirection();
 		}
 
-		enemy.previousXPosition = enemy.body.position.x;
+		this.previousXPosition = this.sprite.body.position.x;
 
-		if(enemy.currentDirection == 'left') {
-			enemy.body.velocity.x = -1 * this.speed;
-			enemy.animations.play('left');
+		if(this.currentDirection == 'left') {
+			this.sprite.body.velocity.x = -1 * this.speed;
+			this.sprite.animations.play('left');
 		} else {
-			enemy.body.velocity.x = this.speed;
-			enemy.animations.play('right');
+			this.sprite.body.velocity.x = this.speed;
+			this.sprite.animations.play('right');
 		}
 	}
 };

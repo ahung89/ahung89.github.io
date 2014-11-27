@@ -1,7 +1,7 @@
 var LevelState = require('./LevelState');
-var Birds = require('../enemies/Birds')
-var GunDogs = require('../enemies/GunDogs')
-var Phoenixes = require('../enemies/Phoenixes')
+var Bird = require('../enemies/Birds')
+var GunDog = require('../enemies/GunDogs')
+var Phoenix = require('../enemies/Phoenixes')
 var LevelTwo = require('../levels/LevelTwo')
 
 LevelTwoState = function() {
@@ -9,9 +9,11 @@ LevelTwoState = function() {
 	// LevelState.call(this). This would basically just run the function called LevelState. I could also pass in additional args
 	// after 'this', if the function took arguments.
 
-	this.birdSpawnLocations = [{x: 3, y:45}];
+	this.birdSpawnLocations = [{x: 4, y:45}];
 	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
+
+	this.enemies = [];
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
@@ -19,17 +21,45 @@ LevelTwoState = function() {
 	this.spawnPosX = 224;
 	this.spawnPosY = 1440;
 
-	this.birds = new Birds(this.birdSpawnLocations);
-	this.gunDogs = new GunDogs(this.gunDogSpawnLocations);
-	this.phoenixes = new Phoenixes(this.phoenixSpawnLocations);
-
-	enemies.push(this.birds);
-	enemies.push(this.gunDogs);
-	enemies.push(this.phoenixes);
-
-	level = new LevelTwo(game, this.birds, this.gunDogs, this.phoenixes);
+	level = new LevelTwo();
 };
 
+
 LevelTwoState.prototype = Object.create(LevelState.prototype);
+
+LevelTwoState.prototype.preload = function() {
+	game.load.spritesheet('phoenix', 'assets/sprites/phoenixsprite.png', 48, 32);
+	game.load.image('fireball', 'assets/sprites/fireball.png');
+	game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
+	game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
+
+	player = new Player(game, this.spawnPosX, this.spawnPosY);
+	player.preload();
+	level.preload();
+}
+
+LevelTwoState.prototype.create = function() {
+	level.create();
+	player.create();
+
+	this.createEnemies(Bird, this.birdSpawnLocations);
+	this.createEnemies(Phoenix, this.phoenixSpawnLocations);
+	this.createEnemies(GunDog, this.gunDogSpawnLocations);
+}
+
+LevelTwoState.prototype.createEnemies = function(EnemyType, spawnLocations) {
+	spawnLocations.forEach(function(location) {
+		this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
+	}, this);
+}
+
+LevelTwoState.prototype.update = function() {
+		player.update();
+		level.update();
+		
+		this.enemies.forEach(function(enemy) {
+			enemy.update();
+		});
+	};
 
 module.exports = LevelTwoState;

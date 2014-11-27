@@ -2,11 +2,10 @@ require('../Common');
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
-LevelTwo = function(game, birds, gunDogs, phoenixes) {
-	this.game = game;
-	this.birds = birds;
-	this.gunDogs = gunDogs;
-	this.phoenixes = phoenixes;
+LevelTwo = function() {
+	// this.birds = birds;
+	// this.gunDogs = gunDogs;
+	// this.phoenixes = phoenixes;
 	this.vineThresholdX = 15;
 	this.vineThresholdY = 10;
 	this.lowestPointOnCurrentVine = null;
@@ -14,14 +13,14 @@ LevelTwo = function(game, birds, gunDogs, phoenixes) {
 
 LevelTwo.prototype = {
 	preload: function() {
-		this.game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
+		game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 	},
 
 	create: function() {
-		this.game.physics.arcade.setBoundsToWorld();
+		game.physics.arcade.setBoundsToWorld();
 
-		this.map = this.game.add.tilemap('levelTwo');
+		this.map = game.add.tilemap('levelTwo');
 		this.map.addTilesetImage('area01_level_tiles', 'levelTwoTiles');
 
 		this.setTileCollisions();
@@ -34,10 +33,10 @@ LevelTwo.prototype = {
 	},
 
 	update: function() {
-		game.physics.arcade.collide(this.birds.enemies, this.layer);
-		game.physics.arcade.collide(this.phoenixes.enemies, this.layer);
-		game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
-		game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
+		//game.physics.arcade.collide(this.birds.enemies, this.layer);
+		//game.physics.arcade.collide(this.phoenixes.enemies, this.layer);
+		//game.physics.arcade.collide(this.gunDogs.enemies, this.layer);
+		//game.physics.arcade.overlap(this.gunDogs.bullets, player.sprite, player.killPlayer, null, player);
 	},
 
 	restart: function() {
