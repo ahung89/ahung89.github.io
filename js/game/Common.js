@@ -1,3 +1,5 @@
+var EMPTY_SPACE_TILES = [21];
+
 Phaser.Physics.Arcade.Body.prototype.checkWorldBounds = function () {
             if (this.position.x < this.game.physics.arcade.bounds.x && this.game.physics.arcade.checkCollision.left)
             {

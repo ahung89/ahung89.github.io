@@ -106,7 +106,6 @@ LevelTwoState.prototype = {
 	vineCheck: function() {
 		var withinVineThreshold = Math.abs(player.sprite.body.x - this.worldX) < level.vineThresholdX && Math.abs(player.sprite.body.y - this.worldY) < level.vineThresholdY;
 
-
 		if(!player.climbing && withinVineThreshold) {
 			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
 			player.sprite.body.x = this.worldX;

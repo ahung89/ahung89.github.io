@@ -11,15 +11,11 @@ startLevelOne();
 
 function startLevelOne() {
     // currentState = new LevelOneState();
-    currentState = require('./game/states/LevelTwoState');
+    currentState = require('./game/states/LevelOneState');
 
     // game.state gets the StateManager object for the game (naming is a bit misleading)
     game.state.add('LevelOne', currentState); // Adds the state to the game and assigns it a key.
     game.state.start('LevelOne');
-}
-
-function displayFps() {
-    console.log('Fps: ' + game.time.fps);
 }
 
 function restartGame() {
