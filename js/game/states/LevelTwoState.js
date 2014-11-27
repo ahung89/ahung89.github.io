@@ -39,7 +39,7 @@ LevelTwoState.prototype = {
 		game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
 		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
 
-		player = new Player(game, this.spawnPosX, this.spawnPosY);
+		player = new Player(this.spawnPosX, this.spawnPosY);
 		player.preload();
 	},
 

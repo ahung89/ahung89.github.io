@@ -1,5 +1,5 @@
-Player = function(game, xSpawnPos, ySpawnPos) {
-    this.game = game;
+Player = function(xSpawnPos, ySpawnPos) {
+    game = game;
     this.sprite = null;
     this.cursors = null;
     this.jumpButton = null;
@@ -14,26 +14,26 @@ Player.prototype = {
  
     preload: function () {
         //  The dimensions are the dimensions of each frame in the spritesheet.
-        this.game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
-        this.game.load.audio('jump', 'assets/sounds/jump.wav'); 
+        game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
+        game.load.audio('jump', 'assets/sounds/jump.wav'); 
     },
  
     create: function () {
-        this.sprite = this.game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
+        this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
-        //this.sprite = this.game.add.sprite(90 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
+        //this.sprite = game.add.sprite(90 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
 
         this.initializePlayerPhysics();
         this.initializePlayerAnimations();
         this.initializePlayerControls();
         this.initializePlayerAudio();
         
-        this.game.camera.follow(player.sprite);
+        game.camera.follow(player.sprite);
     },
 
     initializePlayerPhysics: function() {
-        this.game.physics.arcade.enable(this.sprite);
+        game.physics.arcade.enable(this.sprite);
         this.sprite.body.gravity.y = this.yGravity;
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.checkCollision.down = true;
@@ -48,12 +48,12 @@ Player.prototype = {
     },
 
     initializePlayerControls: function() {
-        this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.cursors = game.input.keyboard.createCursorKeys();
         this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);        
     },
 
     initializePlayerAudio: function() {
-        this.jumpSound = this.game.add.audio('jump');
+        this.jumpSound = game.add.audio('jump');
     },
  
     update: function() {
@@ -66,7 +66,7 @@ Player.prototype = {
         }
 
         this.sprite.checkWorldBounds = true;
-        if(this.sprite.position.y > this.game.world.height) {
+        if(this.sprite.position.y > game.world.height) {
             this.killPlayer();
         }
     },
@@ -81,11 +81,11 @@ Player.prototype = {
     updateMovementOnVine: function() {
         this.sprite.body.velocity.y = 0;
 
-        if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.left.isDown) {
+        if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.left.isDown) {
             this.jump();
             this.sprite.body.x -= level.vineThresholdX;
             this.endClimb();
-        } else if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.right.isDown) {
+        } else if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.cursors.right.isDown) {
             this.jump();
             this.sprite.body.x += level.vineThresholdX;
             this.endClimb();

@@ -4,7 +4,6 @@ var Player = require('../Player');
 var LandDog = require('../enemies/LandDogs');
 
 // Indices of tile types that represent empty space
-var EMPTY_SPACE_TILES = [21];
 var PADDLE_SPEED = 130;
 
 LevelOneState = function() {
@@ -29,27 +28,28 @@ LevelOneState = function() {
     {x:140, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
     {x:144, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
     {x:160, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
-
-	level = this;
 }
 
 LevelOneState.prototype = {
 	preload: function() {
-		this.game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
-		this.game.load.image('platform', 'assets/sprites/paddle-small.png');
+		game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
+		game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
+
+		// game.load.image('platform', 'assets/sprites/paddle-small.png');
 		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
 
-		player = new Player(game, this.spawnPosX, this.spawnPosY);
+		player = new Player(this.spawnPosX, this.spawnPosY);
 		player.preload();
 	},
 
 	create: function() {
-		player.create();
+		level = this;
 
 		game.physics.arcade.setBoundsToWorld();
 
-		this.map = this.game.add.tilemap('levelOne');
+		this.map = game.add.tilemap('levelOne');
 		this.map.addTilesetImage('platformer_tiles_doubled', 'levelOneTiles');
 
 		this.setTileCollisions();
@@ -63,6 +63,7 @@ LevelOneState.prototype = {
 		this.layer.resizeWorld();
 
 		this.createEnemies(LandDog, this.landDogSpawnLocations);
+		player.create();
 	},
 
 	createEnemies: function(EnemyType, spawnLocations) {
@@ -106,11 +107,10 @@ LevelOneState.prototype = {
 	},
 
 	update: function() {
+		player.update();
+
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
-		//game.physics.arcade.collide(this.landDogs.enemies, this.movingPlatforms);
-
-		player.update();
 		
 		this.enemies.forEach(function(enemy) {
 			enemy.update();
