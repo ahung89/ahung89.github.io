@@ -10,8 +10,7 @@ window.$ = require('jquery');
 startLevelOne();
 
 function startLevelOne() {
-    // currentState = new LevelOneState();
-    currentState = require('./game/states/LevelOneState');
+    currentState = require('./game/states/LevelOne');
 
     // game.state gets the StateManager object for the game (naming is a bit misleading)
     game.state.add('LevelOne', currentState); // Adds the state to the game and assigns it a key.

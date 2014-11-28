@@ -2,11 +2,12 @@ require('../Common');
 
 var Player = require('../Player');
 var LandDog = require('../enemies/LandDogs');
+var Level = require('./Level');
 
 // Indices of tile types that represent empty space
 var PADDLE_SPEED = 130;
 
-LevelOneState = function() {
+LevelOne = function() {
 	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
 	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
 
@@ -30,14 +31,12 @@ LevelOneState = function() {
     {x:160, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
 }
 
-LevelOneState.prototype = {
+LevelOne.prototype = {
 	preload: function() {
 		game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
-		game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
-		game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 
-		// game.load.image('platform', 'assets/sprites/paddle-small.png');
+		game.load.image('platform', 'assets/sprites/paddle-small.png');
 		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
 
 		player = new Player(this.spawnPosX, this.spawnPosY);
@@ -45,24 +44,18 @@ LevelOneState.prototype = {
 	},
 
 	create: function() {
-		level = this;
-
-		game.physics.arcade.setBoundsToWorld();
-
-		this.map = game.add.tilemap('levelOne');
-		this.map.addTilesetImage('platformer_tiles_doubled', 'levelOneTiles');
+		this.initLevel('levelOne', 'platformer_tiles_doubled', 'levelOneTiles');
 
 		this.setTileCollisions();
 
 		//	The argument must match the layers.name field in your json file.
 		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
 		this.layer = this.map.createLayer('World');
-
-		this.createPlatforms();
-
 		this.layer.resizeWorld();
 
+		this.createPlatforms();
 		this.createEnemies(LandDog, this.landDogSpawnLocations);
+
 		player.create();
 	},
 
@@ -113,8 +106,9 @@ LevelOneState.prototype = {
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
 		
 		this.enemies.forEach(function(enemy) {
+			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
 			enemy.update();
-		});
+		}, this);
 	},
 
 	movePlatforms: function() {
@@ -142,4 +136,6 @@ LevelOneState.prototype = {
 	}
 };
 
-module.exports = LevelOneState;
+$.extend(LevelOne.prototype, Level.prototype);
+
+module.exports = LevelOne;

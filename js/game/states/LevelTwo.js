@@ -7,7 +7,7 @@ var Phoenix = require('../enemies/Phoenixes')
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
-LevelTwoState = function() {
+LevelTwo= function() {
 	// Pro tip: If the parent (LevelState) had properties set in its constructor and I wanted to inherit them, I'd call
 	// LevelState.call(this). This would basically just run the function called LevelState. I could also pass in additional args
 	// after 'this', if the function took arguments.
@@ -30,7 +30,7 @@ LevelTwoState = function() {
 };
 
 
-LevelTwoState.prototype = {
+LevelTwo.prototype = {
 	preload: function() {
 		game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
@@ -130,4 +130,4 @@ LevelTwoState.prototype = {
 	}
 }
 
-module.exports = LevelTwoState;
+module.exports = LevelTwo;
