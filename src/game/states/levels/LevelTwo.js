@@ -17,7 +17,7 @@ LevelTwo= function() {
 	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
-	this.fallingPlatformLocations = [{x: 15, y:42}];
+	this.fallingPlatformLocations = [{x: 15, y:44}];
 
 	FallingPlatformLevel.call(this, this.fallingPlatformLocations);
 
@@ -64,6 +64,8 @@ LevelTwo.prototype = {
 		this.enemies.forEach(function(enemy) {
 			enemy.update();
 		});
+
+		this.checkFallingPlatformCollisions();
 	},
 
 	setTileCollisions: function() {
@@ -80,6 +82,10 @@ LevelTwo.prototype = {
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
 
 		this.setVineCollisions();
+	},
+
+	tearDownLevelComponents: function() {
+		this.fallingPlatforms.destroy();
 	},
 
 	buildLevelComponents: function() {
