@@ -29,19 +29,25 @@ LevelTwo.prototype = {
 		player.create();
 
 		this.initLevel('levelTwo', 'area01_level_tiles', 'levelTwoTiles');
+		this.createLayers();
+		this.createEnemies();
+	},
 
+	createLayers: function() {
 		this.layer = this.map.createLayer('World');
 		this.foreground = this.map.createLayer('Foreground');
 
 		this.layer.resizeWorld();
 		this.foreground.resizeWorld();
-
-		this.createEnemies(Bird, this.birdSpawnLocations);
-		this.createEnemies(Phoenix, this.phoenixSpawnLocations);
-		this.createEnemies(GunDog, this.gunDogSpawnLocations);
 	},
 
-	createEnemies: function(EnemyType, spawnLocations) {
+	createEnemies: function() {
+		this.spawnEnemies(Bird, this.birdSpawnLocations);
+		this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
+		this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
+	},
+
+	spawnEnemies: function(EnemyType, spawnLocations) {
 		spawnLocations.forEach(function(location) {
 			this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
 		}, this);

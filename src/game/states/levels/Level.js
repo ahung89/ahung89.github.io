@@ -35,7 +35,9 @@ Level.prototype = {
 			this.tearDownLevelComponents();
 		}
 		
-		this.create();
+		this.enemies = [];
+		player.create();
+		this.createEnemies();
 	},
 
 	resetCamera: function() {

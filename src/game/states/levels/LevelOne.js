@@ -15,8 +15,6 @@ LevelOne = function() {
 	this.spawnPosX = 32;
 	this.spawnPosY = 150;
 
-	this.enemies = [];
-
 	this.map = null;
     this.layer = null;
     this.movingPlatforms = null;
