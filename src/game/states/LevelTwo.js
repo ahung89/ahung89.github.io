@@ -16,8 +16,6 @@ LevelTwo= function() {
 	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
-	this.enemies = [];
-
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
 
@@ -36,16 +34,9 @@ LevelTwo.prototype = {
 	},
 
 	create: function() {
-		level = this;
-
 		player.create();
 
-		game.physics.arcade.setBoundsToWorld();
-
-		this.map = game.add.tilemap('levelTwo');
-		this.map.addTilesetImage('area01_level_tiles', 'levelTwoTiles');
-
-		this.setTileCollisions();
+		this.initLevel('levelTwo', 'area01_level_tiles', 'levelTwoTiles');
 
 		this.layer = this.map.createLayer('World');
 		this.foreground = this.map.createLayer('Foreground');
@@ -121,5 +112,7 @@ LevelTwo.prototype = {
 		}
 	}
 }
+
+$.extend(LevelTwo.prototype, Level.prototype);
 
 module.exports = LevelTwo;

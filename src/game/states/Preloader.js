@@ -42,7 +42,7 @@ Preloader.prototype = {
 
   update: function () {
     if (!!this.ready) { // !! is "bang bang you're a boolean". Not sure why it's necessary here....
-      this.game.state.start('LevelOne');
+      this.game.state.start('LevelTwo');
     }
   },
 

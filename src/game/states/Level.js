@@ -11,10 +11,14 @@ Level.prototype = {
 	initLevel: function(tilemapKey, tilesetImage, tilesetImageKey) {
 		level = this;
 
+		this.enemies = [];
+
 		game.physics.arcade.setBoundsToWorld();
 
 		this.map = game.add.tilemap(tilemapKey);
 		this.map.addTilesetImage(tilesetImage, tilesetImageKey);
+
+		this.setTileCollisions();
 	},
 
 	restart: function() {
@@ -22,6 +26,9 @@ Level.prototype = {
 
 		this.enemies.forEach(function(enemy) {
 			enemy.sprite.kill();
+
+			if('killProjectiles' in enemy) 
+				enemy.killProjectiles();
 		}, this);
 
 		if(typeof tearDownLevelComponents == 'function') {
