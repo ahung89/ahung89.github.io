@@ -1,4 +1,4 @@
-var Player = require('../Player');
+var Player = require('../../Player');
 
 Level = function() {
 };
@@ -31,7 +31,7 @@ Level.prototype = {
 				enemy.killProjectiles();
 		}, this);
 
-		if(typeof tearDownLevelComponents == 'function') {
+		if('tearDownLevelComponents' in this) {
 			this.tearDownLevelComponents();
 		}
 		

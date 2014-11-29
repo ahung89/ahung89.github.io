@@ -13,8 +13,8 @@ function startGame() {
     // game.state gets the StateManager object for the game (naming is a bit misleading)
     game.state.add('Boot', require('./game/states/Boot')); 
     game.state.add('Preloader', require('./game/states/Preloader')); 
-    game.state.add('LevelOne', require('./game/states/LevelOne')); // Adds the state to the game and assigns it a key.
-    game.state.add('LevelTwo', require('./game/states/Leveltwo')); 
+    game.state.add('LevelOne', require('./game/states/levels/LevelOne')); // Adds the state to the game and assigns it a key.
+    game.state.add('LevelTwo', require('./game/states/levels/LevelTwo')); 
 
     game.state.start('Boot');
 }

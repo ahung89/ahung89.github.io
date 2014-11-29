@@ -1,7 +1,6 @@
-require('../Common');
+require('../../Common');
 
-var Player = require('../Player');
-var LandDog = require('../enemies/LandDog');
+var LandDog = require('../../enemies/LandDog');
 var Level = require('./Level');
 
 // Indices of tile types that represent empty space
