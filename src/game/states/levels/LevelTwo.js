@@ -42,9 +42,9 @@ LevelTwo.prototype = {
 	},
 
 	createEnemies: function() {
-		this.spawnEnemies(Bird, this.birdSpawnLocations);
-		this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
-		this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
+		// this.spawnEnemies(Bird, this.birdSpawnLocations);
+		// this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
+		// this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
 	},
 
 	spawnEnemies: function(EnemyType, spawnLocations) {
