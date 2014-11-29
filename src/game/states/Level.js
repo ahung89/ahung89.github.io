@@ -15,6 +15,25 @@ Level.prototype = {
 
 		this.map = game.add.tilemap(tilemapKey);
 		this.map.addTilesetImage(tilesetImage, tilesetImageKey);
+	},
+
+	restart: function() {
+		this.resetCamera();
+
+		this.enemies.forEach(function(enemy) {
+			enemy.sprite.kill();
+		}, this);
+
+		if(typeof tearDownLevelComponents == 'function') {
+			this.tearDownLevelComponents();
+		}
+		
+		this.create();
+	},
+
+	resetCamera: function() {
+		game.camera.x = this.startingCameraPosX;
+    	game.camera.y = this.startingCameraPosY;
 	}
 };
 

@@ -1,4 +1,4 @@
-var ProjectileEnemy = require('./mixins/ProjectileEnemy');
+var ProjectileEnemy = require('./types/ProjectileEnemy');
 
 function GunDog(x, y) {
 	Enemy.call(this, x, y, 'left', 'baddie', [0, 1], [2, 3], 0);

@@ -1,6 +1,6 @@
 require('../Common');
 
-var Enemy = require('./mixins/Enemy');
+var Enemy = require('./types/Enemy');
 
 function LandDog(x, y) {
 	Enemy.call(this, x, y, 'right', 'baddie', [0, 1], [2, 3], 150);

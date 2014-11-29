@@ -11,9 +11,9 @@ gulp.task('default', ['connect', 'copylibs', 'compile']);
 
 paths = {
 	libs: [
-		'js/lib/phaser.min.js'
+		'./src/lib/phaser.min.js'
 	],
-	entry: './js/Main.js',
+	entry: './src/Main.js',
 	dist: './dist/'
 };
 
@@ -39,7 +39,7 @@ gulp.task('compile', function() { // Split watchify into separate step?
 
 gulp.task('copylibs', function() {
 	gulp.src(paths.libs)
-		.pipe(gulp.dest(paths.dist + 'js/lib'))
+		.pipe(gulp.dest(paths.dist + './src/lib'))
 });
 
 gulp.task('connect', function() {

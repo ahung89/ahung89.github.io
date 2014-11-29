@@ -1,9 +1,9 @@
 require('../Common');
 
 var Player = require('../Player');
-var Bird = require('../enemies/Birds')
-var GunDog = require('../enemies/GunDogs')
-var Phoenix = require('../enemies/Phoenixes')
+var Bird = require('../enemies/Bird')
+var GunDog = require('../enemies/GunDog')
+var Phoenix = require('../enemies/Phoenix')
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 

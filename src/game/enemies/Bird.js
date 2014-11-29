@@ -1,4 +1,4 @@
-var Enemy = require('./mixins/Enemy');
+var Enemy = require('./types/Enemy');
 
 function Bird(x, y) {
 	Enemy.call(this, x, y, 'right', 'bird', [2, 3], [6, 7], 150);

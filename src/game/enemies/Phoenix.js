@@ -1,4 +1,4 @@
-var ProjectileEnemy = require('./mixins/ProjectileEnemy');
+var ProjectileEnemy = require('./types/ProjectileEnemy');
 
 function Phoenix(x, y) {
 	Enemy.call(this, x, y, 'right', 'phoenix', [2, 3], [6, 7], 150);

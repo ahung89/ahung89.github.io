@@ -1,12 +1,24 @@
+require('../Common');
+
+var Player = require('../Player');
+var LandDog = require('../enemies/LandDog');
+var Level = require('./Level');
+
 // Indices of tile types that represent empty space
-var EMPTY_SPACE_TILES = [21];
 var PADDLE_SPEED = 130;
 
-LevelOne = function(game, landDogs) {
-	this.game = game;
-    this.landDogs = landDogs;
- 
-    this.map = null;
+LevelOne = function() {
+	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
+	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
+
+	this.startingCameraPosX = 0;
+	this.startingCameraPosY = 0;
+	this.spawnPosX = 32;
+	this.spawnPosY = 150;
+
+	this.enemies = [];
+
+	this.map = null;
     this.layer = null;
     this.movingPlatforms = null;
 
@@ -20,35 +32,35 @@ LevelOne = function(game, landDogs) {
 }
 
 LevelOne.prototype = {
-	preload: function() {
-		this.game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
-		this.game.load.image('platform', 'assets/sprites/paddle-small.png');
-	},
-
+	
 	create: function() {
-		this.game.physics.arcade.setBoundsToWorld();
-
-		this.map = this.game.add.tilemap('levelOne');
-		this.map.addTilesetImage('platformer_tiles_doubled', 'levelOneTiles');
+		this.initLevel('levelOne', 'platformer_tiles_doubled', 'levelOneTiles');
 
 		this.setTileCollisions();
 
 		//	The argument must match the layers.name field in your json file.
 		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
 		this.layer = this.map.createLayer('World');
+		this.layer.resizeWorld();
 
 		this.createPlatforms();
+		this.createEnemies(LandDog, this.landDogSpawnLocations);
 
-		this.layer.resizeWorld();
+		player.create();
+	},
+
+	createEnemies: function(EnemyType, spawnSettings) {
+		spawnSettings.forEach(function(location) {
+			this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
+		}, this);
 	},
 
 	createPlatforms: function() {
-		 this.movingPlatforms = game.add.group();
+		this.movingPlatforms = game.add.group();
 
 		 this.movingPlatformSettings.forEach(function(settings) {
 		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
-		 	this.game.physics.arcade.enable(platform);
+		 	game.physics.arcade.enable(platform);
 		 	platform.enableBody = true;
 		 	if(settings.initialDirection === 'right') {
 		 		platform.leftBounds = platform.body.x;
@@ -78,33 +90,35 @@ LevelOne.prototype = {
 	},
 
 	update: function() {
-		game.physics.arcade.collide(this.landDogs.enemies, this.layer);
+		player.update();
+
 		this.movePlatforms();
 		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
-		game.physics.arcade.collide(this.landDogs.enemies, this.movingPlatforms);
+		
+		this.enemies.forEach(function(enemy) {
+			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
+			enemy.update();
+		}, this);
 	},
 
 	movePlatforms: function() {
 		this.movingPlatforms.forEach(function(platform) {
-		if(platform.body.position.x < platform.leftBounds) {
-			platform.body.velocity.x *= -1;
-			platform.body.position.x += 1;
-		}	
-		if(platform.body.position.x > platform.rightBounds) {
-			platform.body.velocity.x *= -1;
-			platform.body.position.x -= 1;
-		} 
-	})
+			if(platform.body.position.x < platform.leftBounds) {
+				platform.body.velocity.x *= -1;
+				platform.body.position.x += 1;
+			}	
+			if(platform.body.position.x > platform.rightBounds) {
+				platform.body.velocity.x *= -1;
+				platform.body.position.x -= 1;
+			} 
+		})
 	},
 
-	restart: function() {
-		this.killAllPlatforms();
-		this.createPlatforms();
+	tearDownLevelComponents: function() {
+		this.movingPlatforms.destroy();
 	},
+};
 
-	killAllPlatforms: function() {
-		this.movingPlatforms.forEach(function(platform) {
-			platform.kill();
-		});
-	}
-}
+$.extend(LevelOne.prototype, Level.prototype);
+
+module.exports = LevelOne;
