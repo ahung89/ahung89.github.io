@@ -32,17 +32,7 @@ LevelOne = function() {
 }
 
 LevelOne.prototype = {
-	preload: function() {
-		game.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-		game.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
-
-		game.load.image('platform', 'assets/sprites/paddle-small.png');
-		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
-
-		player = new Player(this.spawnPosX, this.spawnPosY);
-		player.preload();
-	},
-
+	
 	create: function() {
 		this.initLevel('levelOne', 'platformer_tiles_doubled', 'levelOneTiles');
 

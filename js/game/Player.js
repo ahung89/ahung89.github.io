@@ -11,13 +11,7 @@ Player = function(xSpawnPos, ySpawnPos) {
 };
  
 Player.prototype = {
- 
-    preload: function () {
-        //  The dimensions are the dimensions of each frame in the spritesheet.
-        game.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
-        game.load.audio('jump', 'assets/sounds/jump.wav'); 
-    },
- 
+    
     create: function () {
         this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 

@@ -4,6 +4,10 @@ Level = function() {
 };
 
 Level.prototype = {
+	preload: function() {
+		player = new Player(this.spawnPosX, this.spawnPosY);
+	},
+	
 	initLevel: function(tilemapKey, tilesetImage, tilesetImageKey) {
 		level = this;
 

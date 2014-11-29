@@ -32,15 +32,7 @@ LevelTwo= function() {
 
 LevelTwo.prototype = {
 	preload: function() {
-		game.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
-		game.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
-		game.load.spritesheet('phoenix', 'assets/sprites/phoenixsprite.png', 48, 32);
-		game.load.image('fireball', 'assets/sprites/fireball.png');
-		game.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);
-		game.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
-
 		player = new Player(this.spawnPosX, this.spawnPosY);
-		player.preload();
 	},
 
 	create: function() {
