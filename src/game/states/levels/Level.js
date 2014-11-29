@@ -19,6 +19,7 @@ Level.prototype = {
 		this.map.addTilesetImage(tilesetImage, tilesetImageKey);
 
 		this.setTileCollisions();
+		this.buildLevelComponents();
 	},
 
 	restart: function() {
@@ -35,10 +36,7 @@ Level.prototype = {
 			this.tearDownLevelComponents();
 		}
 
-		if('buildLevelComponents' in this) {
-			this.buildLevelComponents();
-		}
-		
+		this.buildLevelComponents();
 		this.enemies = [];
 		player.create();
 		this.createEnemies();

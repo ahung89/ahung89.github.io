@@ -17,4 +17,4 @@ FallingPlatformLevel.prototype = {
 	}
 }
 
-modules.exports = FallingPlatformLevel;
+module.exports = FallingPlatformLevel;

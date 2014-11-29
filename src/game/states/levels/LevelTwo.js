@@ -6,6 +6,7 @@ var Phoenix = require('../../enemies/Phoenix');
 
 var Level = require('./Level');
 var VineLevel = require('./VineLevel');
+var FallingPlatformLevel = require('./FallingPlatformLevel');
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
@@ -15,6 +16,10 @@ LevelTwo= function() {
 	this.birdSpawnLocations = [{x: 4, y:45}];
 	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
+
+	this.fallingPlatformLocations = [{x: 15, y:42}];
+
+	FallingPlatformLevel.call(this, this.fallingPlatformLocations);
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
@@ -75,10 +80,15 @@ LevelTwo.prototype = {
 		this.map.setTileIndexCallback(92, player.killPlayer, player);
 
 		this.setVineCollisions();
+	},
+
+	buildLevelComponents: function() {
+		this.createPlatforms();
 	}
 }
 
 $.extend(LevelTwo.prototype, Level.prototype);
 $.extend(LevelTwo.prototype, VineLevel.prototype);
+$.extend(LevelTwo.prototype, FallingPlatformLevel.prototype);
 
 module.exports = LevelTwo;

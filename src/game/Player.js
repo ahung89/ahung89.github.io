@@ -16,7 +16,7 @@ Player.prototype = {
         this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
-        this.sprite = game.add.sprite(120 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
+        // this.sprite = game.add.sprite(120 * TILE_SIZE, 4 * TILE_SIZE, 'dude');
 
         this.initializePlayerPhysics();
         this.initializePlayerAnimations();
