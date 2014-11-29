@@ -62,7 +62,6 @@ LevelOne.prototype = {
 		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
 		 	game.physics.arcade.enable(platform);
 		 	platform.enableBody = true;
-		 	platform.body.gravity.y = 50;
 
 		 	if(settings.initialDirection === 'right') {
 		 		platform.leftBounds = platform.body.x;
