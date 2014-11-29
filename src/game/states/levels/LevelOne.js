@@ -39,14 +39,17 @@ LevelOne.prototype = {
 		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
 		this.layer = this.map.createLayer('World');
 		this.layer.resizeWorld();
-
+		this.createEnemies();
 		this.createPlatforms();
-		this.createEnemies(LandDog, this.landDogSpawnLocations);
 
 		player.create();
 	},
 
-	createEnemies: function(EnemyType, spawnSettings) {
+	createEnemies: function() {
+		this.spawnEnemies(LandDog, this.landDogSpawnLocations);
+	},
+
+	spawnEnemies: function(EnemyType, spawnSettings) {
 		spawnSettings.forEach(function(location) {
 			this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
 		}, this);
@@ -59,6 +62,8 @@ LevelOne.prototype = {
 		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
 		 	game.physics.arcade.enable(platform);
 		 	platform.enableBody = true;
+		 	platform.body.gravity.y = 50;
+
 		 	if(settings.initialDirection === 'right') {
 		 		platform.leftBounds = platform.body.x;
 		 		platform.rightBounds = platform.body.x + (TILE_SIZE * settings.territorySize);
@@ -114,6 +119,10 @@ LevelOne.prototype = {
 	tearDownLevelComponents: function() {
 		this.movingPlatforms.destroy();
 	},
+
+	buildLevelComponents: function() {
+		this.createPlatforms();
+	}
 };
 
 $.extend(LevelOne.prototype, Level.prototype);
