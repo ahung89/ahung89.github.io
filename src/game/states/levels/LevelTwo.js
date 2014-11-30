@@ -17,7 +17,7 @@ LevelTwo= function() {
 	this.phoenixSpawnLocations = [{x: 8, y: 41}];
 	this.gunDogSpawnLocations = [{x: 15, y:45}];
 
-	this.fallingPlatformLocations = [{x: 15, y:44}];
+	this.fallingPlatformLocations = [{x: 3, y:45}];
 
 	FallingPlatformLevel.call(this, this.fallingPlatformLocations);
 
