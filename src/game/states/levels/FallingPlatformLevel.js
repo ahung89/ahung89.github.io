@@ -1,5 +1,7 @@
 var PLATFORM_CHECK_RAY_LENGTH = 16;
 var PLATFORM_LENGTH = 128;
+var PLATFORM_SIDE_CUSHION = 1;
+var PLATFORM_DROP_DELAY_MILLISECONDS = 200;
 
 FallingPlatformLevel = function(fallingPlatformSettings) {
 	this.fallingPlatforms = null;
@@ -28,11 +30,9 @@ FallingPlatformLevel.prototype = {
 
 	dropIfNecessary: function(platform, player) {
 		if(this.checkPlayerOnPlatform(platform, player)) {
-			console.log("Drop, NIGGA.");
-			
 			if(!platform.dropping) {
 				platform.dropping = true;
-				game.time.events.add(800, function(platform) {
+				game.time.events.add(PLATFORM_DROP_DELAY_MILLISECONDS, function(platform) {
 					platform.body.gravity.y = 150;
 				}, this, platform);
 			}
@@ -43,7 +43,8 @@ FallingPlatformLevel.prototype = {
 		var playerLeftRay = new Phaser.Line(player.body.x, player.body.bottom, player.body.x, player.body.bottom + PLATFORM_CHECK_RAY_LENGTH);
 		var playerRightRay = new Phaser.Line(player.body.x + player.body.width, player.body.bottom, player.body.x + player.body.width, player.body.bottom + PLATFORM_CHECK_RAY_LENGTH);
 
-		var platformRay = new Phaser.Line(platform.body.center.x - PLATFORM_LENGTH / 2, platform.body.center.y, platform.body.center.x + PLATFORM_LENGTH, platform.body.center.y);
+		var platformRay = new Phaser.Line(platform.body.center.x - PLATFORM_LENGTH / 2 + PLATFORM_SIDE_CUSHION, platform.body.center.y, platform.body.center.x + PLATFORM_LENGTH / 2 - PLATFORM_SIDE_CUSHION,
+		 platform.body.center.y);
 
 		return playerLeftRay.intersects(platformRay) != null ||
 			   playerRightRay.intersects(platformRay);
