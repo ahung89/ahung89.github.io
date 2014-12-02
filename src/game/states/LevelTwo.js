@@ -15,8 +15,8 @@ LevelTwo= function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
 	this.birdSpawnLocations = [];
-	this.phoenixSpawnLocations = [];
-	this.gunDogSpawnLocations = [{x: 26, y:44, direction: 'left'}];
+	this.phoenixSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:15, y:32, direction: 'right'}];
+	this.gunDogSpawnLocations = [{x: 26, y:43, direction: 'left'}, {x: 13, y: 33, direction: 'right'}];
 	this.landDogSpawnLocations = [{x: 17, y: 46, direction: 'left'}];
 
 	this.fallingPlatformLocations = [{x: 3, y:45}];

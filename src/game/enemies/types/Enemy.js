@@ -4,7 +4,7 @@ Enemy = function(x, y, direction, image, leftAnimations, rightAnimations, speed)
 
 	this.sprite.animations.add('left', leftAnimations, 10, true);
 	this.sprite.animations.add('right', rightAnimations, 10, true);
-	this.sprite.frame = 1;
+	this.sprite.frame = direction == 'left' ? leftAnimations[0] : rightAnimations[0];
 	this.sprite.body.collideWorldBounds = true;
 
 	this.previousXPosition = x;
