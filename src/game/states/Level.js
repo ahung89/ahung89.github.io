@@ -1,4 +1,4 @@
-var Player = require('../../Player');
+var Player = require('../Player');
 
 Level = function() {
 };
@@ -17,9 +17,6 @@ Level.prototype = {
 
 		this.map = game.add.tilemap(tilemapKey);
 		this.map.addTilesetImage(tilesetImage, tilesetImageKey);
-
-		this.setTileCollisions();
-		this.buildLevelComponents();
 	},
 
 	restart: function() {

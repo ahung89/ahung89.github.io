@@ -1,7 +1,7 @@
 var Enemy = require('./types/Enemy');
 
-function Bird(x, y) {
-	Enemy.call(this, x, y, 'right', 'bird', [2, 3], [6, 7], 150);
+function Bird(x, y, direction) {
+	Enemy.call(this, x, y, direction, 'bird', [2, 3], [6, 7], 150);
 };
 
 Bird.prototype = {

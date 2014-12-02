@@ -1,14 +1,15 @@
-require('../../Common');
+require('../Common');
 
-var LandDog = require('../../enemies/LandDog');
+var LandDog = require('../enemies/LandDog');
 var Level = require('./Level');
 
 // Indices of tile types that represent empty space
 var PADDLE_SPEED = 130;
 
 LevelOne = function() {
-	this.landDogSpawnLocations = [{x:10, y:10}, {x:18, y:8}, {x:27, y:8}, {x:38, y:10},
-	{x:43, y:10}, {x: 72, y:5}, {x: 126, y:5}, {x: 142, y:5}, {x: 146, y:5}];
+	this.landDogSpawnLocations = [{x:10, y:10, direction: 'right'}, {x:18, y:8, direction: 'right'}, {x:27, y:8, direction: 'right'}, 
+	{x:38, y:10, direction: 'right'}, {x:43, y:10, direction: 'right'}, {x: 72, y:5, direction: 'right'}, {x: 126, y:5, direction: 'right'}, 
+	{x: 142, y:5, direction: 'right'}, {x: 146, y:5, direction: 'right'}];
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
@@ -18,6 +19,8 @@ LevelOne = function() {
 	this.map = null;
     this.layer = null;
     this.movingPlatforms = null;
+
+    this.emptySpaceTiles = [21];
 
     //Territory size is the number of tiles that the platform will move before turning around.
     this.movingPlatformSettings = [{x:98, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},

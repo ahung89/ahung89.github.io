@@ -1,5 +1,3 @@
-var EMPTY_SPACE_TILES = [21];
-
 Phaser.Physics.Arcade.Body.prototype.checkWorldBounds = function () {
             if (this.position.x < this.game.physics.arcade.bounds.x && this.game.physics.arcade.checkCollision.left)
             {
@@ -53,7 +51,7 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
 
     //If the sprite isn't about to step onto a platform, check if it's about to step onto an empty space tile. If so, then it is at a cliff.
     var tile = level.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
-    if(this.isTouchingGround() && tile && EMPTY_SPACE_TILES.indexOf(tile.index) > -1)     {
+    if(this.isTouchingGround() && tile && level.emptySpaceTiles.indexOf(tile.index) > -1)     {
         return true;
     }
 };

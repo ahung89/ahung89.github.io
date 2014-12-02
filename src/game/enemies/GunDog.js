@@ -1,7 +1,7 @@
 var ProjectileEnemy = require('./types/ProjectileEnemy');
 
-function GunDog(x, y) {
-	Enemy.call(this, x, y, 'left', 'baddie', [0, 1], [2, 3], 0);
+function GunDog(x, y, direction) {
+	Enemy.call(this, x, y, direction, 'baddie', [0, 1], [2, 3], 0);
 	ProjectileEnemy.call(this, 1000, 0, 'baddie');
 
  	this.sprite.body.gravity.y = 300;

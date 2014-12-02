@@ -1,23 +1,28 @@
-require('../../Common');
+require('../Common');
 
-var Bird = require('../../enemies/Bird');
-var GunDog = require('../../enemies/GunDog');
-var Phoenix = require('../../enemies/Phoenix');
+var Bird = require('../enemies/Bird');
+var GunDog = require('../enemies/GunDog');
+var Phoenix = require('../enemies/Phoenix');
+var LandDog = require('../enemies/LandDog');
 
 var Level = require('./Level');
-var VineLevel = require('./VineLevel');
-var FallingPlatformLevel = require('./FallingPlatformLevel');
+var VineLevel = require('./level_types/VineLevel');
+var FallingPlatformLevel = require('./level_types/FallingPlatformLevel');
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
 LevelTwo= function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
-	this.birdSpawnLocations = [{x: 4, y:45}];
-	this.phoenixSpawnLocations = [{x: 8, y: 41}];
-	this.gunDogSpawnLocations = [{x: 15, y:45}];
+	this.birdSpawnLocations = [];
+	this.phoenixSpawnLocations = [];
+	this.gunDogSpawnLocations = [{x: 26, y:44, direction: 'left'}];
+	this.landDogSpawnLocations = [{x: 17, y: 46, direction: 'left'}];
 
 	this.fallingPlatformLocations = [{x: 3, y:45}];
+	this.movingPlatforms = [];
+
+	this.emptySpaceTiles = [1];
 
 	FallingPlatformLevel.call(this, this.fallingPlatformLocations);
 
@@ -31,11 +36,14 @@ LevelTwo= function() {
 
 LevelTwo.prototype = {
 	create: function() {
-		player.create();
-
 		this.initLevel('levelTwo', 'area01_level_tiles', 'levelTwoTiles');
+
 		this.createLayers();
 		this.createEnemies();
+		this.setTileCollisions();
+		this.buildLevelComponents();
+
+		player.create();
 	},
 
 	createLayers: function() {
@@ -47,14 +55,15 @@ LevelTwo.prototype = {
 	},
 
 	createEnemies: function() {
-		// this.spawnEnemies(Bird, this.birdSpawnLocations);
-		// this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
-		// this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
+		this.spawnEnemies(Bird, this.birdSpawnLocations);
+		this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
+		this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
+		this.spawnEnemies(LandDog, this.landDogSpawnLocations);
 	},
 
-	spawnEnemies: function(EnemyType, spawnLocations) {
-		spawnLocations.forEach(function(location) {
-			this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
+	spawnEnemies: function(EnemyType, spawnSettings) {
+		spawnSettings.forEach(function(settings) {
+			this.enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
 		}, this);
 	},
 

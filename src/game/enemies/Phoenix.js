@@ -1,7 +1,7 @@
 var ProjectileEnemy = require('./types/ProjectileEnemy');
 
-function Phoenix(x, y) {
-	Enemy.call(this, x, y, 'right', 'phoenix', [2, 3], [6, 7], 150);
+function Phoenix(x, y, direction) {
+	Enemy.call(this, x, y, direction, 'phoenix', [2, 3], [6, 7], 150);
 	ProjectileEnemy.call(this, 1000, 0, 'fireball');
 
 	this.projectileSpeed = 300;

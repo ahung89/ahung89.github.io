@@ -14,6 +14,7 @@ FallingPlatformLevel.prototype = {
 
 		 this.fallingPlatformSettings.forEach(function(settings) {
 		 	var platform = this.fallingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
+
 		 	game.physics.arcade.enable(platform);
 		 	platform.enableBody = true;
 		 	platform.dropping = false;
