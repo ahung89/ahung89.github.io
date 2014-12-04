@@ -35,8 +35,9 @@ Level.prototype = {
 
 		this.buildLevelComponents();
 		this.enemies = [];
-		player.create();
+		
 		this.createEnemies();
+		player.create();
 	},
 
 	resetCamera: function() {

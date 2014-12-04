@@ -18,7 +18,7 @@ Phaser.Physics.Arcade.Body.prototype.checkWorldBounds = function () {
                 this.velocity.y *= -this.bounce.y;
                 this.blocked.up = true;
             }
-        };
+};
 
 Phaser.Sprite.prototype.isTouchingGround = function() {
     return this.body.onFloor() || this.body.wasTouching.down === true;
