@@ -22,7 +22,13 @@ Level.prototype = {
 	restart: function() {
 		this.resetCamera();
 
-		this.enemies.forEach(function(enemy) {
+		var tempEnemies = this.enemies;
+
+		// Reset enemies BEFORE killing projectiles to prevent an enemy with a destroyed projectile group to attempt
+		// to fire.
+		this.enemies = [];
+
+		tempEnemies.forEach(function(enemy) {
 			enemy.sprite.kill();
 
 			if('killProjectiles' in enemy) 
@@ -34,7 +40,6 @@ Level.prototype = {
 		}
 
 		this.buildLevelComponents();
-		this.enemies = [];
 		
 		this.createEnemies();
 		player.create();
