@@ -26,4 +26,9 @@ LandDog.prototype = {
 
 $.extend(LandDog.prototype, Enemy.prototype);
 
+// If I wanted to use Object.create instead of extend, I'd do:
+// LandDog.prototype = Object.create(Enemy.prototype);
+// LandDog.prototype.update = function() {...}
+// LandDog.prototype.changeDirectionAtCliff = function() {...}
+
 module.exports = LandDog;

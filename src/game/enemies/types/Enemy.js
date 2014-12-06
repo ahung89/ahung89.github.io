@@ -1,5 +1,5 @@
-Enemy = function(x, y, direction, image, leftAnimations, rightAnimations, speed) {
-	this.sprite = game.add.sprite(x, y, image);
+Enemy = function(x, y, direction, spritesheetKey, leftAnimations, rightAnimations, speed) {
+	this.sprite = game.add.sprite(x, y, spritesheetKey);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
 	this.sprite.animations.add('left', leftAnimations, 10, true);

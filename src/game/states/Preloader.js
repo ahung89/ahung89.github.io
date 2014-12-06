@@ -26,6 +26,9 @@ Preloader.prototype = {
 
     // Load enemies.
     this.load.spritesheet('baddie', 'assets/sprites/baddie.png', 32, 32);
+    this.load.spritesheet('missile', 'assets/sprites/missile.png', 48, 21);
+    this.load.spritesheet('gun', 'assets/sprites/greycannon.png', 60, 51);
+    this.load.spritesheet('gun2', 'assets/sprites/greencannon.png', 89, 93);
     this.load.spritesheet('phoenix', 'assets/sprites/phoenixsprite.png', 48, 32);
     this.load.image('fireball', 'assets/sprites/fireball.png');
     this.load.spritesheet('bird', 'assets/sprites/bluebirdsprite.png', 48, 32);

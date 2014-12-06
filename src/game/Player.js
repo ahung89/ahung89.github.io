@@ -137,8 +137,8 @@ Player.prototype = {
     },
 
     killPlayer: function() {
-        this.sprite.kill();
-        level.restart();
+        // this.sprite.kill();
+        // level.restart();
     }
 };
 
