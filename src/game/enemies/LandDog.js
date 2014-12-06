@@ -3,7 +3,7 @@ require('../Common');
 var Enemy = require('./types/Enemy');
 
 function LandDog(x, y, direction) {
-	Enemy.call(this, x, y, direction, 'baddie', [0, 1], [2, 3], 150);
+	Enemy.call(this, x, y, direction, 'wolf', [2, 3], [0, 1], 150);
 
 	this.sprite.body.gravity.y = 300;
 };

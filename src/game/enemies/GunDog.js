@@ -1,9 +1,9 @@
 var ProjectileEnemy = require('./types/ProjectileEnemy');
 
-var BULLET_Y_OFFSET = 30;
+var BULLET_Y_OFFSET = 22;
 
 function GunDog(x, y, direction) {
-	Enemy.call(this, x, y, direction, 'gun2', [0], [1], 0);
+	Enemy.call(this, x, y, direction, 'gunship', [0], [1], 0);
 	ProjectileEnemy.call(this, 1000, 0, 'missile');
 
  	// this.sprite.body.gravity.y = 300;
