@@ -6,7 +6,7 @@ Enemy = function(x, y, direction, spritesheetKey, leftAnimations, rightAnimation
 	this.sprite.animations.add('right', rightAnimations, 10, true);
 	this.sprite.frame = direction == 'left' ? leftAnimations[0] : rightAnimations[0];
 
-	this.previousXPosition = x;
+	this.previousXPosition;
 	this.currentDirection = direction;
 	this.speed = speed;
 }
@@ -27,7 +27,7 @@ Enemy.prototype = {
 	},
 
 	moveLaterally : function() {
-		if(this.previousXPosition == this.sprite.body.position.x) {
+		if(this.sprite.body.position.x == this.previousXPosition) {
 			this.changeDirection();
 		}
 

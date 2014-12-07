@@ -3,7 +3,7 @@ require('../Common');
 var Bird = require('../enemies/Bird');
 var GunDog = require('../enemies/GunDog');
 var Phoenix = require('../enemies/Phoenix');
-var LandDog = require('../enemies/LandDog');
+var Wolf = require('../enemies/Wolf');
 
 var Level = require('./Level');
 var VineLevel = require('./level_types/VineLevel');
@@ -14,12 +14,11 @@ var VINE_TILE_INDICES = [36, 37, 56, 57];
 LevelTwo= function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
-	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}];
+	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}];
 	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}];
-	this.gunDogSpawnLocations = [{x: 820, y: 1417, direction: 'left', exactLocation: true}, {x: 448, y: 1246, direction: 'right', exactLocation: true}];
-	this.landDogSpawnLocations = [{x: 20, y: 46, direction: 'right'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'}];
+	this.gunDogSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'}];
+	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'}];
 
-	// this.fallingPlatformLocations = [{x: 3, y:45}];
 	this.fallingPlatformLocations = [];
 	this.movingPlatforms = [];
 
@@ -30,11 +29,8 @@ LevelTwo= function() {
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
 
-	// this.spawnPosX = 33 * TILE_SIZE;
-	// this.spawnPosY = 16 * TILE_SIZE;
-
-	this.spawnPosX = 8 * TILE_SIZE;
-	this.spawnPosY = 47 * TILE_SIZE;
+	this.spawnPosX = 4  * TILE_SIZE;
+	this.spawnPosY = 45 * TILE_SIZE;
 };
 
 
@@ -65,16 +61,12 @@ LevelTwo.prototype = {
 		this.spawnEnemies(Bird, this.birdSpawnLocations);
 		this.spawnEnemies(Phoenix, this.phoenixSpawnLocations);
 		this.spawnEnemies(GunDog, this.gunDogSpawnLocations);
-		this.spawnEnemies(LandDog, this.landDogSpawnLocations);
+		this.spawnEnemies(Wolf, this.wolfSpawnLocations);
 	},
 
 	spawnEnemies: function(EnemyType, spawnSettings) {
 		spawnSettings.forEach(function(settings) {
-			if(settings.exactLocation) {
-				this.enemies.push(new EnemyType(settings.x, settings.y, settings.direction));
-			} else {
-				this.enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
-			}
+			this.enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
 		}, this);
 	},
 
