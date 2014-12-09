@@ -91,6 +91,7 @@ LevelTwo.prototype = {
 		this.map.setCollisionBetween(61, 62);
 		this.map.setCollisionBetween(70, 72);
 		this.map.setCollision(75);
+		this.map.setCollision(92);
 		this.map.setCollisionBetween(112, 114);
 		this.map.setCollisionBetween(121, 125);
 
@@ -100,10 +101,14 @@ LevelTwo.prototype = {
 		this.setVineCollisions();
 	},
 
+	// This callback function will be called in the physics arcade system's separateTile method, which automatically 
+	// passes the colliding sprite body and the tile as arg1 and arg2.
 	handleSpikeCollision: function(sprite, tile) {
 		if(sprite === player.sprite) {
 			player.killPlayer();
 		}
+
+		return true;  // Return true so that collision handling physics will be applied after this callback.
 	},
 
 	tearDownLevelComponents: function() {
