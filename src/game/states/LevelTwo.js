@@ -17,7 +17,7 @@ LevelTwo= function() {
 	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}];
 	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}];
 	this.gunDogSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'}];
-	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'}];
+	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'}, {x: 57, y: 29, direction: 'left'}];
 
 	this.fallingPlatformLocations = [];
 	this.movingPlatforms = [];
@@ -29,8 +29,11 @@ LevelTwo= function() {
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
 
-	this.spawnPosX = 4  * TILE_SIZE;
-	this.spawnPosY = 45 * TILE_SIZE;
+	// this.spawnPosX = 4  * TILE_SIZE;
+	// this.spawnPosY = 45 * TILE_SIZE;
+
+	this.spawnPosX = 44  * TILE_SIZE;
+	this.spawnPosY = 16 * TILE_SIZE;
 };
 
 
@@ -92,9 +95,15 @@ LevelTwo.prototype = {
 		this.map.setCollisionBetween(121, 125);
 
 		// Spikes
-		this.map.setTileIndexCallback(92, player.killPlayer, player);
+		this.map.setTileIndexCallback(92, this.handleSpikeCollision, player);
 
 		this.setVineCollisions();
+	},
+
+	handleSpikeCollision: function(sprite, tile) {
+		if(sprite === player.sprite) {
+			player.killPlayer();
+		}
 	},
 
 	tearDownLevelComponents: function() {
