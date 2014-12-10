@@ -14,13 +14,13 @@ var VINE_TILE_INDICES = [36, 37, 56, 57];
 LevelTwo= function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
-	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
+	this.birdSpawnLocations = [{x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
 		{x:44, y:27, direction: 'right'}, {x:54, y:23, direction: 'left'}, {x:47, y:31, direction: 'right'}];
 	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}, {x: 56, y: 37, direction: 'right'},
-		{x: 56, y: 11, direction: 'left', initialDelay: 1500}, {x: 63, y: 35, direction: 'right', initialDelay: 1000}, {x: 71, y: 36, direction: 'left', initialDelay: 3000},
+		{x: 63, y: 35, direction: 'right', initialDelay: 1000}, {x: 71, y: 36, direction: 'left', initialDelay: 3000},
 		{x: 70, y: 38, direction: 'left', initialDelay: 4500}];
 	this.gunShipSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
-		{x: 38, y: 46, direction: 'right'}];
+		{x: 43, y: 34, direction: 'right'}, {x: 38, y: 46, direction: 'right'}];
 	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
 	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
 	 {x: 81, y: 35, direction: 'right'}];
@@ -36,8 +36,12 @@ LevelTwo= function() {
 	this.startingCameraPosY = 0;
 
 	// The beginning
-	this.spawnPosX = 4  * TILE_SIZE;
-	this.spawnPosY = 45 * TILE_SIZE;
+	// this.spawnPosX = 4  * TILE_SIZE;
+	// this.spawnPosY = 45 * TILE_SIZE;
+
+	// Right before the two phoenixes
+	this.spawnPosX = 43  * TILE_SIZE;
+	this.spawnPosY = 16 * TILE_SIZE;
 
 	// Right before the 4 phoenixes
 	// this.spawnPosX = 47  * TILE_SIZE;
