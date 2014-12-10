@@ -14,12 +14,17 @@ var VINE_TILE_INDICES = [36, 37, 56, 57];
 LevelTwo= function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
-	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}];
-	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}];
-	this.gunDogSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'}];
-	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'}, {x: 57, y: 29, direction: 'left'}];
+	this.birdSpawnLocations = [{x:14, y:20, direction: 'right'}, {x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
+		{x:44, y:27, direction: 'right'}, {x:54, y:23, direction: 'left'}, {x:47, y:31, direction: 'right'}];
+	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}, {x: 56, y: 37, direction: 'right'},
+		{x: 56, y: 11, direction: 'left'}, {x: 63, y: 35, direction: 'right'}, {x: 71, y: 36, direction: 'left'}, {x: 70, y: 38, direction: 'left'}];
+	this.gunDogSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
+		{x: 38, y: 46, direction: 'right'}];
+	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
+	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
+	 {x: 81, y: 35, direction: 'right'}];
 
-	this.fallingPlatformLocations = [];
+	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
 	this.movingPlatforms = [];
 
 	this.emptySpaceTiles = [1];
@@ -29,11 +34,16 @@ LevelTwo= function() {
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
 
+	// The beginning
 	// this.spawnPosX = 4  * TILE_SIZE;
 	// this.spawnPosY = 45 * TILE_SIZE;
 
-	this.spawnPosX = 44  * TILE_SIZE;
-	this.spawnPosY = 16 * TILE_SIZE;
+	// Right before the 4 phoenixes
+	// this.spawnPosX = 47  * TILE_SIZE;
+	// this.spawnPosY = 40 * TILE_SIZE;
+
+	this.spawnPosX = 75  * TILE_SIZE;
+	this.spawnPosY = 42 * TILE_SIZE;
 };
 
 
@@ -108,7 +118,7 @@ LevelTwo.prototype = {
 			player.killPlayer();
 		}
 
-		return true;  // Return true so that collision handling physics will be applied after this callback.
+		return true;  // Return something so that collision handling physics will be applied after this callback.
 	},
 
 	tearDownLevelComponents: function() {
