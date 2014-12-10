@@ -43,4 +43,13 @@ Enemy.prototype = {
 	}
 };
 
+Enemy.spawn = function(EnemyType, spawnSettings) {
+	var enemies = [];
+	spawnSettings.forEach(function(settings) {
+		enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
+	}, this);
+
+	return enemies;
+};
+
 module.exports = Enemy;

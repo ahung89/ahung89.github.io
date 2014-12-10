@@ -49,13 +49,7 @@ LevelOne.prototype = {
 	},
 
 	createEnemies: function() {
-		this.spawnEnemies(LandDog, this.landDogSpawnLocations);
-	},
-
-	spawnEnemies: function(EnemyType, spawnSettings) {
-		spawnSettings.forEach(function(location) {
-			this.enemies.push(new EnemyType(location.x * TILE_SIZE, location.y * TILE_SIZE));
-		}, this);
+		this.enemies.push.apply(this.enemies, Enemy.spawn(LandDog, this.landDogSpawnLocations));
 	},
 
 	createPlatforms: function() {

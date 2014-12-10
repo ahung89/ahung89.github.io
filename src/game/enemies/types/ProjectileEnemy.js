@@ -1,8 +1,12 @@
 var Enemy = require('./Enemy');
 
-ProjectileEnemy = function (fireRate, nextFire, projectileImage) {
+ProjectileEnemy = function (fireRate, initialDelay, projectileImage) {
+	if(!initialDelay) {
+		initialDelay = 0;
+	}
+
 	this.fireRate = fireRate;
-	this.nextFire = nextFire;
+	this.nextFire = game.time.now + initialDelay;
 	this.projectileImage = projectileImage;
 
 	this.projectiles = game.add.group();
@@ -31,6 +35,15 @@ ProjectileEnemy.prototype = {
 	handleProjectileCollisions: function() {
 		game.physics.arcade.overlap(this.projectiles, player.sprite, player.killPlayer, null, player);
 	}
+};
+
+ProjectileEnemy.spawn = function(EnemyType, spawnSettings) {
+	var enemies = [];
+	spawnSettings.forEach(function(settings) {
+		enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay));
+	}, this);
+
+	return enemies;
 };
 
 module.exports = ProjectileEnemy;

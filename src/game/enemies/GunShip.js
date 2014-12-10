@@ -2,15 +2,15 @@ var ProjectileEnemy = require('./types/ProjectileEnemy');
 
 var BULLET_Y_OFFSET = 22;
 
-function GunDog(x, y, direction) {
+function GunShip(x, y, direction, initialDelay) {
 	Enemy.call(this, x, y, direction, 'gunship', [0], [1], 0);
-	ProjectileEnemy.call(this, 1400, 0, 'missile');
+	ProjectileEnemy.call(this, 1400, initialDelay, 'missile');
 
  	// this.sprite.body.gravity.y = 300;
 	this.sprite.anchor.set(0.5);
 }
 
-GunDog.prototype = {
+GunShip.prototype = {
 	update: function() {
 		// this.handleCollisions();
 		this.handleProjectileCollisions();
@@ -25,7 +25,7 @@ GunDog.prototype = {
 	}
 }
 
-$.extend(GunDog.prototype, ProjectileEnemy.prototype);
-$.extend(GunDog.prototype, Enemy.prototype);
+$.extend(GunShip.prototype, ProjectileEnemy.prototype);
+$.extend(GunShip.prototype, Enemy.prototype);
 
-module.exports = GunDog;
+module.exports = GunShip;
