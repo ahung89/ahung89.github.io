@@ -7,7 +7,7 @@ var Level = require('./Level');
 var PADDLE_SPEED = 130;
 
 LevelOne = function() {
-	this.landDogSpawnLocations = [{x:10, y:10, direction: 'right'}, {x:18, y:8, direction: 'right'}, {x:27, y:8, direction: 'right'}, 
+	this.landDogSpawnSettings = [{x:10, y:10, direction: 'right'}, {x:18, y:8, direction: 'right'}, {x:27, y:8, direction: 'right'}, 
 	{x:38, y:10, direction: 'right'}, {x:43, y:10, direction: 'right'}, {x: 72, y:5, direction: 'right'}, {x: 126, y:5, direction: 'right'}, 
 	{x: 142, y:5, direction: 'right'}, {x: 146, y:5, direction: 'right'}];
 
@@ -49,7 +49,7 @@ LevelOne.prototype = {
 	},
 
 	createEnemies: function() {
-		this.enemies.push.apply(this.enemies, Enemy.spawn(LandDog, this.landDogSpawnLocations));
+		this.enemies.push.apply(this.enemies, LandDog.spawn(this.landDogSpawnSettings));
 	},
 
 	createPlatforms: function() {
