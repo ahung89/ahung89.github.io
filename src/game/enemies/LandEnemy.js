@@ -13,13 +13,13 @@ LandEnemy.prototype = {
 		this.handleCollisions();
 
 		this.changeDirectionAtCliff();
-		this.moveLaterally();
+		this.move();
 	},
 
 	changeDirectionAtCliff: function() {
 		if((this.currentDirection == 'left' && this.sprite.checkForCliff('left', level.movingPlatforms))
 				|| (this.currentDirection == 'right' && this.sprite.checkForCliff('right', level.movingPlatforms))) {
-			this.changeDirection();
+			this.flip();
 		}
 	}
 };

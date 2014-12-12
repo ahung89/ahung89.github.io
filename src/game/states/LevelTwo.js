@@ -11,17 +11,18 @@ var FallingPlatformLevel = require('./level_types/FallingPlatformLevel');
 
 var VINE_TILE_INDICES = [36, 37, 56, 57];
 
-LevelTwo= function() {
+LevelTwo = function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
-	this.birdSpawnLocations = [{x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
+	this.birdSpawnSettings = [{x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
 		{x:44, y:27, direction: 'right'}, {x:54, y:23, direction: 'left'}, {x:47, y:31, direction: 'right'}];
-	this.phoenixSpawnLocations = [{x: 47, y: 11, direction: 'right'}, {x: 56, y: 11, direction: 'left'}, {x: 56, y: 37, direction: 'right'},
+	this.phoenixSpawnSettings = [{x: 47, y: 11, direction: 'right', patrolBounds: {xMin: 45 * TILE_SIZE, xMax: 58 * TILE_SIZE}}, 
+	{x: 56, y: 11, direction: 'left', patrolBounds: {xMin: 45 * TILE_SIZE, xMax: 58 * TILE_SIZE}}, {x: 56, y: 37, direction: 'right'},
 		{x: 63, y: 35, direction: 'right', initialDelay: 1000}, {x: 71, y: 36, direction: 'left', initialDelay: 3000},
 		{x: 70, y: 38, direction: 'left', initialDelay: 4500}];
-	this.gunShipSpawnLocations = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
+	this.gunShipSpawnSettings = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
 		{x: 43, y: 34, direction: 'right'}, {x: 38, y: 46, direction: 'right'}];
-	this.wolfSpawnLocations = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
+	this.wolfSpawnSettings = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
 	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
 	 {x: 81, y: 35, direction: 'right'}];
 
@@ -42,6 +43,9 @@ LevelTwo= function() {
 	// Right before the two phoenixes
 	this.spawnPosX = 43  * TILE_SIZE;
 	this.spawnPosY = 16 * TILE_SIZE;
+
+	// 	this.spawnPosX = 51  * TILE_SIZE;
+	// this.spawnPosY = 14 * TILE_SIZE;
 
 	// Right before the 4 phoenixes
 	// this.spawnPosX = 47  * TILE_SIZE;
@@ -76,10 +80,10 @@ LevelTwo.prototype = {
 	},
 
 	createEnemies: function() {
-		this.enemies.push.apply(this.enemies, Enemy.spawn(Bird, this.birdSpawnLocations));
-		this.enemies.push.apply(this.enemies, Enemy.spawn(Wolf, this.wolfSpawnLocations));
-		this.enemies.push.apply(this.enemies, ProjectileEnemy.spawn(Phoenix, this.phoenixSpawnLocations));
-		this.enemies.push.apply(this.enemies, ProjectileEnemy.spawn(GunShip, this.gunShipSpawnLocations));
+		this.enemies.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
+		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
+		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
+		this.enemies.push.apply(this.enemies, GunShip.spawn(this.gunShipSpawnSettings));
 	},
 
 	update: function() {

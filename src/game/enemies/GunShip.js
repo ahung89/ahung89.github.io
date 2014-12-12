@@ -25,6 +25,15 @@ GunShip.prototype = {
 	}
 }
 
+GunShip.spawn = function(spawnSettings) {
+	var enemies = [];
+	spawnSettings.forEach(function(settings) {
+		enemies.push(new GunShip(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay));
+	}, this);
+
+	return enemies;
+}
+
 $.extend(GunShip.prototype, ProjectileEnemy.prototype);
 $.extend(GunShip.prototype, Enemy.prototype);
 

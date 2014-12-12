@@ -37,13 +37,4 @@ ProjectileEnemy.prototype = {
 	}
 };
 
-ProjectileEnemy.spawn = function(EnemyType, spawnSettings) {
-	var enemies = [];
-	spawnSettings.forEach(function(settings) {
-		enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay));
-	}, this);
-
-	return enemies;
-};
-
 module.exports = ProjectileEnemy;

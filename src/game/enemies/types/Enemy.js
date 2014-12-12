@@ -1,4 +1,4 @@
-Enemy = function(x, y, direction, spritesheetKey, leftAnimations, rightAnimations, speed) {
+Enemy = function(x, y, direction, spritesheetKey, leftAnimations, rightAnimations, speed, patrolBounds) {
 	this.sprite = game.add.sprite(x, y, spritesheetKey);
 	game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
@@ -9,6 +9,7 @@ Enemy = function(x, y, direction, spritesheetKey, leftAnimations, rightAnimation
 	this.previousXPosition;
 	this.currentDirection = direction;
 	this.speed = speed;
+	this.patrolBounds = patrolBounds;
 }
 
 Enemy.prototype = {
@@ -18,7 +19,7 @@ Enemy.prototype = {
 		game.physics.arcade.overlap(this.sprite, player.sprite, player.killPlayer, null, player);
 	},
 
-	changeDirection: function() {
+	flip: function() {
 		if(this.currentDirection == 'left') {
 			this.currentDirection = 'right';
 		} else {
@@ -26,9 +27,13 @@ Enemy.prototype = {
 		}
 	},
 
-	moveLaterally : function() {
+	move: function() {
 		if(this.sprite.body.position.x == this.previousXPosition) {
-			this.changeDirection();
+			this.flip();
+		}
+
+		if(this.patrolBounds && this.patrolBoundsReached()) {
+			this.flip();
 		}
 
 		this.previousXPosition = this.sprite.body.position.x;
@@ -40,16 +45,12 @@ Enemy.prototype = {
 			this.sprite.body.velocity.x = this.speed;
 			this.sprite.animations.play('right');
 		}
+	},
+
+	patrolBoundsReached: function() {
+		return this.currentDirection == 'left' && this.sprite.body.position.x < this.patrolBounds.xMin
+			|| this.currentDirection == 'right' && this.sprite.body.position.x > this.patrolBounds.xMax;
 	}
-};
-
-Enemy.spawn = function(EnemyType, spawnSettings) {
-	var enemies = [];
-	spawnSettings.forEach(function(settings) {
-		enemies.push(new EnemyType(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
-	}, this);
-
-	return enemies;
 };
 
 module.exports = Enemy;

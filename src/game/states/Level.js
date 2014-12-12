@@ -42,6 +42,8 @@ Level.prototype = {
 		this.buildLevelComponents();
 		
 		this.createEnemies();
+
+		//player = new Player();
 		player.create();
 	},
 

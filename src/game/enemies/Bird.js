@@ -7,9 +7,18 @@ function Bird(x, y, direction) {
 Bird.prototype = {
 	update: function() {
 		this.handleCollisions();
-		this.moveLaterally();
+		this.move();
 	}
 }
+
+Bird.spawn = function(spawnSettings) {
+	var enemies = [];
+	spawnSettings.forEach(function(settings) {
+		enemies.push(new Bird(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
+	}, this);
+
+	return enemies;
+};
 
 $.extend(Bird.prototype, Enemy.prototype);
 
