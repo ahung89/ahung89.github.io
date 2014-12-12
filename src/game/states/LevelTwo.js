@@ -43,8 +43,8 @@ LevelTwo = function() {
 	this.spawnPosY = 45 * TILE_SIZE;
 
 	// Right before the two phoenixes
-	// this.spawnPosX = 43  * TILE_SIZE;
-	// this.spawnPosY = 16 * TILE_SIZE;
+	this.spawnPosX = 43  * TILE_SIZE;
+	this.spawnPosY = 16 * TILE_SIZE;
 
 	// 	this.spawnPosX = 51  * TILE_SIZE;
 	// this.spawnPosY = 14 * TILE_SIZE;
