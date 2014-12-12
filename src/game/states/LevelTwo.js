@@ -39,12 +39,12 @@ LevelTwo = function() {
 	this.startingCameraPosY = 0;
 
 	// The beginning
-	// this.spawnPosX = 4  * TILE_SIZE;
-	// this.spawnPosY = 45 * TILE_SIZE;
+	this.spawnPosX = 4  * TILE_SIZE;
+	this.spawnPosY = 45 * TILE_SIZE;
 
 	// Right before the two phoenixes
-	this.spawnPosX = 43  * TILE_SIZE;
-	this.spawnPosY = 16 * TILE_SIZE;
+	// this.spawnPosX = 43  * TILE_SIZE;
+	// this.spawnPosY = 16 * TILE_SIZE;
 
 	// 	this.spawnPosX = 51  * TILE_SIZE;
 	// this.spawnPosY = 14 * TILE_SIZE;
@@ -57,8 +57,8 @@ LevelTwo = function() {
 	// this.spawnPosY = 42 * TILE_SIZE;
 
 	//Final section
-	this.spawnPosX = 76 * TILE_SIZE;
-	this.spawnPosY = 32 * TILE_SIZE;
+	// this.spawnPosX = 76 * TILE_SIZE;
+	// this.spawnPosY = 32 * TILE_SIZE;
 };
 
 

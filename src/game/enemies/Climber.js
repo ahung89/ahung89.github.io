@@ -14,7 +14,6 @@ Climber.prototype = {
 Climber.spawn = function(spawnSettings) {
 	var enemies = [];
 	spawnSettings.forEach(function(settings) {
-		console.log("spawning a climber");
 		enemies.push(new Climber(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.patrolBounds));
 	}, this);
 
