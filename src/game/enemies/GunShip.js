@@ -6,7 +6,6 @@ function GunShip(x, y, direction, initialDelay) {
 	Enemy.call(this, x, y, direction, 'gunship', [0], [1], 0);
 	ProjectileEnemy.call(this, 1400, initialDelay, 'missile');
 
- 	// this.sprite.body.gravity.y = 300;
 	this.sprite.anchor.set(0.5);
 }
 

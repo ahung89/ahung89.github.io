@@ -4,6 +4,7 @@ var Bird = require('../enemies/Bird');
 var GunShip = require('../enemies/GunShip');
 var Phoenix = require('../enemies/Phoenix');
 var Wolf = require('../enemies/Wolf');
+var Climber = require('../enemies/Climber');
 
 var Level = require('./Level');
 var VineLevel = require('./level_types/VineLevel');
@@ -16,8 +17,8 @@ LevelTwo = function() {
 
 	this.birdSpawnSettings = [{x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
 		{x:44, y:27, direction: 'right'}, {x:54, y:23, direction: 'left'}, {x:47, y:31, direction: 'right'}];
-	this.phoenixSpawnSettings = [{x: 47, y: 11, direction: 'right', patrolBounds: {xMin: 45 * TILE_SIZE, xMax: 58 * TILE_SIZE}}, 
-	{x: 56, y: 11, direction: 'left', patrolBounds: {xMin: 45 * TILE_SIZE, xMax: 58 * TILE_SIZE}}, {x: 56, y: 37, direction: 'right'},
+	this.phoenixSpawnSettings = [{x: 47, y: 11, direction: 'right', patrolBounds: {min: 45 * TILE_SIZE, max: 58 * TILE_SIZE}}, 
+	{x: 56, y: 11, direction: 'left', patrolBounds: {min: 45 * TILE_SIZE, max: 58 * TILE_SIZE}}, {x: 56, y: 37, direction: 'right'},
 		{x: 63, y: 35, direction: 'right', initialDelay: 1000}, {x: 71, y: 36, direction: 'left', initialDelay: 3000},
 		{x: 70, y: 38, direction: 'left', initialDelay: 4500}];
 	this.gunShipSpawnSettings = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
@@ -25,6 +26,7 @@ LevelTwo = function() {
 	this.wolfSpawnSettings = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
 	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
 	 {x: 81, y: 35, direction: 'right'}];
+	this.climberSpawnSettings = [{x: 75, y: 30, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}}];
 
 	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
 	this.movingPlatforms = [];
@@ -53,6 +55,10 @@ LevelTwo = function() {
 
 	// this.spawnPosX = 75  * TILE_SIZE;
 	// this.spawnPosY = 42 * TILE_SIZE;
+
+	//Final section
+	this.spawnPosX = 76 * TILE_SIZE;
+	this.spawnPosY = 32 * TILE_SIZE;
 };
 
 
@@ -84,6 +90,7 @@ LevelTwo.prototype = {
 		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
 		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
 		this.enemies.push.apply(this.enemies, GunShip.spawn(this.gunShipSpawnSettings));
+		this.enemies.push.apply(this.enemies, Climber.spawn(this.climberSpawnSettings));
 	},
 
 	update: function() {
