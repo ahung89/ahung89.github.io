@@ -103,6 +103,13 @@ LevelTwo.prototype = {
 		this.checkFallingPlatformCollisions();
 	},
 
+	render: function() {
+		if(window.debugging == true) {
+			game.debug.body(player.sprite);
+		}
+    },
+
+
 	setTileCollisions: function() {
 		this.map.setCollisionBetween(2, 8);
 		this.map.setCollisionBetween(24, 27);

@@ -14,6 +14,7 @@ Player.prototype = {
     
     create: function () {
         this.sprite = new Phaser.Sprite(game, this.xSpawnPos, this.ySpawnPos, 'dude');
+
         game.world.addAt(this.sprite, 3);
         // this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
@@ -24,6 +25,10 @@ Player.prototype = {
         this.initializePlayerAnimations();
         this.initializePlayerControls();
         this.initializePlayerAudio();
+
+        this.sprite.body.setSize(26, 38, 3, 10);
+
+        // original size of sprite: height 48, width 32
         
         game.camera.follow(player.sprite);
     },
