@@ -8,12 +8,21 @@ module.exports = Preloader;
 Preloader.prototype = {
 
   preload: function () {
-    this.asset = this.add.sprite(320, 240, 'preloader');
-    this.asset.anchor.setTo(0.5, 0.5);
+    var centerX = game.camera.width / 2;
+    var centerY = game.camera.height / 2;
+
+    this.loading = game.add.sprite(centerX, centerY - 20, 'loading');
+    this.loading.anchor.setTo(0.5, 0.5);
+
+    this.barBg = game.add.sprite(centerX, centerY + 40, 'load_progress_bar_dark');
+    this.barBg.anchor.setTo(0.5, 0.5);
+
+    this.bar = game.add.sprite(centerX - 192, centerY + 40, 'load_progress_bar');
+    this.bar.anchor.setTo(0, 0.5);
+    this.load.setPreloadSprite(this.bar);
 
     // onLoadComplete is dispatched when the final file in the load queue has been loaded/failed. addOnce adds that function as a callback, but only to fire once.
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
-    this.load.setPreloadSprite(this.asset);
 
     // Load tiles.
     this.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
@@ -21,7 +30,7 @@ Preloader.prototype = {
     this.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 
-    // Load paddle.
+    // Loagameddle.
     this.load.image('platform', 'assets/sprites/paddle-small.png');
 
     // Load background.
@@ -40,10 +49,6 @@ Preloader.prototype = {
     this.load.spritesheet('dude', 'assets/sprites/dude.png', 32, 48);
     this.load.audio('jump', 'assets/sounds/jump.wav'); 
 
-  },
-
-  create: function () {
-    this.asset.cropEnabled = false;
   },
 
   update: function () {
