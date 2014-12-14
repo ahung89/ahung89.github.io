@@ -26,7 +26,13 @@ LevelTwo = function() {
 	this.wolfSpawnSettings = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
 	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
 	 {x: 81, y: 35, direction: 'right'}];
-	this.climberSpawnSettings = [{x: 75, y: 30, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}}];
+	this.climberSpawnSettings = [{x: 75, y: 30, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}}, 
+	{x: 75, y: 15, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+	{x: 81, y: 27, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+	{x: 81, y: 22, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+	{x: 81, y: 17, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+	{x: 81, y: 12, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+	{x: 87, y: 14, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 17 * TILE_SIZE}}];
 
 	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
 	this.movingPlatforms = [];
