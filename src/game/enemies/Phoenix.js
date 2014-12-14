@@ -22,8 +22,8 @@ Phoenix.prototype = {
 
 			if(game.time.now > this.nextFire) {
 				this.fire(this.sprite.body.position.x + this.sprite.body.width / 2,
-				 this.sprite.body.position.y + this.sprite.body.height, 0, 
-				 this.projectileSpeed);
+				this.sprite.body.position.y + this.sprite.body.height, 0, 
+				this.projectileSpeed);
 			}
 	}
 }

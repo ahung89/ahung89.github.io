@@ -31,8 +31,9 @@ Level.prototype = {
 		tempEnemies.forEach(function(enemy) {
 			enemy.sprite.kill();
 
-			if('killProjectiles' in enemy) 
+			if('killProjectiles' in enemy) { 
 				enemy.killProjectiles();
+			}
 		}, this);
 
 		if('tearDownLevelComponents' in this) {
@@ -43,7 +44,6 @@ Level.prototype = {
 		
 		this.createEnemies();
 
-		//player = new Player();
 		player.create();
 	},
 

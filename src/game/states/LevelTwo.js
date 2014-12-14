@@ -16,12 +16,12 @@ LevelTwo = function() {
 	VineLevel.call(this, VINE_TILE_INDICES, 'Foreground', 15, 10);
 
 	this.birdSpawnSettings = [{x:26, y:35, direction: 'left'}, {x:15, y:32, direction: 'right'}, {x:0, y:27, direction: 'right'}, 
-		{x:44, y:27, direction: 'right'}, {x:54, y:23, direction: 'left'}, {x:47, y:31, direction: 'right'}];
+		{x:44, y:27, direction: 'right'}, {x:47, y:31, direction: 'right'}];
 	this.phoenixSpawnSettings = [{x: 47, y: 11, direction: 'right', patrolBounds: {min: 45 * TILE_SIZE, max: 58 * TILE_SIZE}}, 
 	{x: 56, y: 11, direction: 'left', patrolBounds: {min: 45 * TILE_SIZE, max: 58 * TILE_SIZE}}, {x: 56, y: 37, direction: 'right'},
 		{x: 63, y: 35, direction: 'right', initialDelay: 1000}, {x: 71, y: 36, direction: 'left', initialDelay: 3000},
-		{x: 70, y: 38, direction: 'left', initialDelay: 4500}];
-	this.gunShipSpawnSettings = [{x: 29, y: 44, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
+		{x: 70, y: 38, direction: 'left', initialDelay: 4500}, {x:54, y:23, direction: 'left'}];
+	this.gunShipSpawnSettings = [{x: 29, y: 45, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
 		{x: 43, y: 34, direction: 'right'}, {x: 38, y: 46, direction: 'right'}];
 	this.wolfSpawnSettings = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
 	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
@@ -59,6 +59,9 @@ LevelTwo = function() {
 	//Final section
 	// this.spawnPosX = 76 * TILE_SIZE;
 	// this.spawnPosY = 32 * TILE_SIZE;
+
+	// this.spawnPosX = 17  * TILE_SIZE;
+	// this.spawnPosY = 27 * TILE_SIZE;
 };
 
 

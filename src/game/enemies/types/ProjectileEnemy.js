@@ -17,6 +17,10 @@ ProjectileEnemy = function (fireRate, initialDelay, projectileImage, projectileS
 
 ProjectileEnemy.prototype = {
 	fire: function(xPos, yPos, xVelocity, yVelocity) {
+		if(!this.projectiles.exists) { // During level restart, projectiles are destroyed and recreated.
+			return false;
+		}
+
 		this.nextFire = game.time.now + this.fireRate;
 
 		var projectile = this.projectiles.create(xPos, yPos, this.projectileImage);

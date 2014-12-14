@@ -9,7 +9,6 @@ Player = function(xSpawnPos, ySpawnPos) {
     this.cursors = null;
     this.jumpButton = null;
     this.jumpSound = null;
-    this.climbing = false;
     this.xSpawnPos = xSpawnPos;
     this.ySpawnPos = ySpawnPos;
     this.yGravity = 400;
@@ -30,6 +29,8 @@ Player.prototype = {
         this.initializePlayerAnimations();
         this.initializePlayerControls();
         this.initializePlayerAudio();
+
+        this.climbing = false;
 
         this.sprite.body.setSize(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_X_OFFSET, PLAYER_Y_OFFSET);
 
