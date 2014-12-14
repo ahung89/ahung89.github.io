@@ -47,6 +47,20 @@ Level.prototype = {
 		player.create();
 	},
 
+	render: function() {
+		if(window.debugging == true) {
+			game.debug.body(player.sprite);
+			this.enemies.forEach(function(enemy) {
+				game.debug.body(enemy.sprite);
+				if(enemy.projectiles) {
+					enemy.projectiles.forEach(function(projectile) {
+						game.debug.body(projectile);
+					}, this);
+				}
+			}, this);
+		}
+    },
+
 	resetCamera: function() {
 		game.camera.x = this.startingCameraPosX;
     	game.camera.y = this.startingCameraPosY;

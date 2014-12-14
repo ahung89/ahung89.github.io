@@ -1,3 +1,8 @@
+var PLAYER_WIDTH = 20;
+var PLAYER_HEIGHT = 36;
+var PLAYER_X_OFFSET = 5;
+var PLAYER_Y_OFFSET = 12;
+
 Player = function(xSpawnPos, ySpawnPos) {
     game = game;
     this.sprite = null;
@@ -26,7 +31,7 @@ Player.prototype = {
         this.initializePlayerControls();
         this.initializePlayerAudio();
 
-        this.sprite.body.setSize(26, 38, 3, 10);
+        this.sprite.body.setSize(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_X_OFFSET, PLAYER_Y_OFFSET);
 
         // original size of sprite: height 48, width 32
         
