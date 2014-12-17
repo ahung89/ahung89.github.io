@@ -16,5 +16,9 @@ Menu.prototype = {
 	update: function () {
 		arrow.animate();
 		arrow.move();
+
+		if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			buttons.buttons[arrow.arrow.currentButton - 1].callback();
+		}
 	}
 }

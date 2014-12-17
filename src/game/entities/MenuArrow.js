@@ -37,7 +37,7 @@ module.exports = {
 
 	temporarilyDisableMovement: function() {
 		this.arrow.canMove = false;
-		game.time.events.add(255, (function() {
+		game.time.events.add(150, (function() {
 			this.arrow.canMove = true;
 		}), this);
 	}
