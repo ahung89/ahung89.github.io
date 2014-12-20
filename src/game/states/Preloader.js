@@ -31,11 +31,13 @@ Preloader.prototype = {
 
   loadAssets: function () {
     // Load menu images.
-    this.load.image('menu_title', 'assets/sprites/menu/menu_game_title.png');
-    this.load.image('menu_arrow', 'assets/sprites/menu/menu_arrow.png');
+    this.load.image('menu_title', 'assets/sprites/menu/title.png');
     this.load.image('menu_button1', 'assets/sprites/menu/menu_button.png');
     this.load.image('menu_button2', 'assets/sprites/menu/menu_button2.png');
     this.load.image('menu_button3', 'assets/sprites/menu/menu_button3.png');
+    this.load.image('play_button', 'assets/sprites/menu/play_button.png');
+    this.load.image('how_to_button', 'assets/sprites/menu/how_to_button.png');
+    this.load.image('credits_button', 'assets/sprites/menu/credits_button.png');
 
     // Load tiles.
     this.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
