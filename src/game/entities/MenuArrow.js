@@ -1,3 +1,5 @@
+var buttons = require('./MenuButtons.js');
+
 module.exports = {
 	yOffsets: {
 		1: - 40,
@@ -24,12 +26,14 @@ module.exports = {
 	move: function() {
 		if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && this.arrow.canMove && this.arrow.currentButton < 3) {
 			this.arrow.currentButton++;
+			buttons.setSelectedAnimation(buttons.buttons[this.arrow.currentButton - 1].button);
 			this.arrow.position.y = game.camera.height / 2  + this.yOffsets[this.arrow.currentButton];
 			this.temporarilyDisableMovement();
 		}
 
 		if(game.input.keyboard.isDown(Phaser.Keyboard.UP) && this.arrow.canMove && this.arrow.currentButton > 1) {
 			this.arrow.currentButton--;
+			buttons.setSelectedAnimation(buttons.buttons[this.arrow.currentButton - 1].button);
 			this.arrow.position.y = game.camera.height / 2  + this.yOffsets[this.arrow.currentButton];
 			this.temporarilyDisableMovement();
 		}
