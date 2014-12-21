@@ -9,6 +9,8 @@ Boot.prototype = {
     this.load.image('load_progress_bar_dark', 'assets/sprites/preloader/progress_bar_bg.png');
     this.load.image('load_progress_bar', 'assets/sprites/preloader/progress_bar_fg.png');
     this.load.image('city', 'assets/backgrounds/landscape.png');
+    this.load.image('how_to_menu', 'assets/sprites/menu/how_to_menu.png');
+    this.load.image('credits_menu', 'assets/sprites/menu/credits_menu.png');
   },
 
   create: function () {
