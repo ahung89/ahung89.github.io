@@ -1,4 +1,4 @@
-var buttons = require('./MenuButtons.js');
+var MenuButtons = require('./MenuButtons.js');
 
 module.exports = {
 	yOffsets: {
@@ -7,7 +7,9 @@ module.exports = {
 		3: 160
 	},
 
-	draw: function() {
+	draw: function(buttons) {
+		this.buttons = buttons;
+
 		// Draw the sprite.
 		this.arrow = game.add.sprite(game.camera.width / 2 - 110, game.camera.height / 2 - 40, 'wolf');
 		this.arrow.anchor.setTo(0.5, 0.5);
@@ -26,14 +28,14 @@ module.exports = {
 	move: function() {
 		if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && this.arrow.canMove && this.arrow.currentButton < 3) {
 			this.arrow.currentButton++;
-			buttons.setSelectedAnimation(buttons.buttons[this.arrow.currentButton - 1].button);
+			this.buttons.setSelectedAnimation(this.buttons.buttons[this.arrow.currentButton - 1]);
 			this.arrow.position.y = game.camera.height / 2  + this.yOffsets[this.arrow.currentButton];
 			this.temporarilyDisableMovement();
 		}
 
 		if(game.input.keyboard.isDown(Phaser.Keyboard.UP) && this.arrow.canMove && this.arrow.currentButton > 1) {
 			this.arrow.currentButton--;
-			buttons.setSelectedAnimation(buttons.buttons[this.arrow.currentButton - 1].button);
+			this.buttons.setSelectedAnimation(this.buttons.buttons[this.arrow.currentButton - 1]);
 			this.arrow.position.y = game.camera.height / 2  + this.yOffsets[this.arrow.currentButton];
 			this.temporarilyDisableMovement();
 		}

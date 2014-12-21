@@ -1,26 +1,16 @@
-module.exports = {
-	buttons: [
-		//The callbacks are inline because javascript does not allow you to refer to other properties of the
-		//object from within a property. In other words, if I had a function named startLevelOne, I wouldn't be able to set
-		//the callback to this.startLevelOne. It would be undefined.
-		{key: 'play_button', yOffset: -40, callback: function() {game.state.start('LevelOne')}},
-		{key: 'how_to_button', yOffset: 60, callback: function() {game.state.start('LevelTwo')}},
-		{key: 'credits_button', yOffset: 160, callback: function() {
-			var menu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'credits_menu');
-			menu.anchor.setTo(.5, .5);
-		}}
-	],
+var MenuButtons = function() {
+	this.buttons = [];
+	this.scaleTween = null;
+	this.subMenu = null;
+}
 
-	scaleTween: null,
-
-	angleTween: null,
-
+MenuButtons.prototype = {
 	draw: function () {
-		this.buttons.forEach(function(button) {
-			button.button = this.addButton(button.key, button.yOffset, button.callback);
-		}, this);
+		this.buttons.push(this.addButton('play_button', -40, function() {game.state.start('LevelTwo')}));
+		this.buttons.push(this.addButton('how_to_button', 60, this.showHowTo));
+		this.buttons.push(this.addButton('credits_button', 160, this.showCredits));
 
-		this.setSelectedAnimation(this.buttons[0].button);
+		this.setSelectedAnimation(this.buttons[0]);
 	},
 
 	addButton: function (key, yOffset, callback) {
@@ -28,6 +18,7 @@ module.exports = {
 		button.anchor.setTo(.5, .5);
 		button.scale.x = .5;
 		button.scale.y = .5;
+		button.callbackFunction = callback;
 		return button;
 	},
 
@@ -47,5 +38,41 @@ module.exports = {
 			button.scale.x = .5;
 			button.scale.y = .5;
 		}, this);
+	},
+
+	showCredits: function() {
+		if(this.subMenu != null) {
+			return;
+		}
+
+		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'credits_menu');
+		this.subMenu.anchor.setTo(0.5, 0.5);
+
+		game.input.keyboard.callbackContext = this;
+
+		game.input.keyboard.onDownCallback = function() {
+			this.subMenu.kill();
+			this.subMenu = null;
+			game.input.keyboard.onDownCallback = null;
+		};
+	},
+
+	showHowTo: function() {
+		if(this.subMenu != null) {
+			return;
+		}
+
+		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'how_to_menu');
+		this.subMenu.anchor.setTo(0.5, 0.5);
+
+		game.input.keyboard.callbackContext = this;
+
+		game.input.keyboard.onDownCallback = function() {
+			this.subMenu.kill();
+			this.subMenu = null;
+			game.input.keyboard.onDownCallback = null;
+		};
 	}
 }
+
+module.exports = MenuButtons;
