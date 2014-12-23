@@ -14,7 +14,7 @@ var MenuButtons = function(buttonSettings) {
 
 MenuButtons.prototype = {
 	addButton: function (key, yOffset, callback) {
-		var button = game.add.button(game.camera.width / 2, game.camera.height / 2 + yOffset, key, callback, this);
+		var button = game.add.image(game.camera.width / 2, game.camera.height / 2 + yOffset, key);
 		button.anchor.setTo(.5, .5);
 		button.scale.x = .5;
 		button.scale.y = .5;

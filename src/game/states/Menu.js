@@ -79,8 +79,6 @@ Menu.prototype = {
 
 		game.input.keyboard.callbackContext = this;
 
-		console.log(this);
-
 		game.input.keyboard.onDownCallback = function() {
 			this.subMenu.kill();
 			this.subMenu = null;
