@@ -9,6 +9,8 @@ Menu.prototype = {
 	create: function () {
 		this.buttons = new MenuButtons();
 
+		this.justExitedSubmenu = false;
+
 		var bg = game.add.tileSprite(0, -10, 810, 613, 'city');
 		bg.fixedToCamera = true;
 
@@ -20,7 +22,14 @@ Menu.prototype = {
 	},
 
 	update: function () {
-		if(this.subMenu == null) {
+		if(this.justExitedSubmenu) {
+		  	if(!(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)
+		 	|| game.input.keyboard.isDown(Phaser.Keyboard.UP)
+		  	|| game.input.keyboard.isDown(Phaser.Keyboard.DOWN))) {
+		  		this.justExitedSubmenu = false;
+		  	}
+		}
+		else {
 			arrow.animate();
 			arrow.move();
 

@@ -53,6 +53,7 @@ MenuButtons.prototype = {
 		game.input.keyboard.onDownCallback = function() {
 			this.subMenu.kill();
 			this.subMenu = null;
+			this.justExitedSubmenu = true;
 			game.input.keyboard.onDownCallback = null;
 		};
 	},
@@ -70,6 +71,7 @@ MenuButtons.prototype = {
 		game.input.keyboard.onDownCallback = function() {
 			this.subMenu.kill();
 			this.subMenu = null;
+			this.justExitedSubmenu = true;
 			game.input.keyboard.onDownCallback = null;
 		};
 	}
