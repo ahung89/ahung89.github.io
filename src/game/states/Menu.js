@@ -7,7 +7,10 @@ module.exports = Menu;
 
 Menu.prototype = {
 	create: function () {
-		this.buttons = new MenuButtons();
+		this.buttonSettings = [
+			{key: 'play_button', yOffset: -40, callback: this.startLevelOne},
+			{key: 'how_to_button', yOffset: 60, callback: this.showHowTo},
+			{key: 'credits_button', yOffset: 160, callback: this.showCredits}];
 
 		this.justExitedSubmenu = false;
 
@@ -17,7 +20,7 @@ Menu.prototype = {
 		this.gameTitle = game.add.image(game.camera.width / 2, game.camera.height / 2 - 150, 'menu_title');
 		this.gameTitle.anchor.setTo(0.5, 0.5);
 
-		this.buttons.draw();
+		this.buttons = new MenuButtons(this.buttonSettings);
 		arrow.draw(this.buttons);
 	},
 
@@ -39,7 +42,50 @@ Menu.prototype = {
 				// What was the scope when I was doing that? Not sure. Just experimented though and I have a theory. Because the dot
 				// operator is right after a Phaser.Button object (trace back through and you'll see why), that became the scope
 				// for the callback function. So I think it's just whatever the dot operator is attached to. Side note - console.log(this) is super useful.
+				// Doesn't work so hot if concatenated like so though: console.log("context: " + this).
 			}
 		}
+	},
+
+	startLevelOne: function() {
+		game.state.start("LevelTwo");
+	},
+
+	showHowTo: function() {
+		if(this.subMenu != null) {
+			return;
+		}
+
+		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'how_to_menu');
+		this.subMenu.anchor.setTo(0.5, 0.5);
+
+		game.input.keyboard.callbackContext = this;
+
+		game.input.keyboard.onDownCallback = function() {
+			this.subMenu.kill();
+			this.subMenu = null;
+			this.justExitedSubmenu = true;
+			game.input.keyboard.onDownCallback = null;
+		};
+	},
+
+	showCredits: function() {
+		if(this.subMenu != null) {
+			return;
+		}
+
+		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'credits_menu');
+		this.subMenu.anchor.setTo(0.5, 0.5);
+
+		game.input.keyboard.callbackContext = this;
+
+		console.log(this);
+
+		game.input.keyboard.onDownCallback = function() {
+			this.subMenu.kill();
+			this.subMenu = null;
+			this.justExitedSubmenu = true;
+			game.input.keyboard.onDownCallback = null;
+		};
 	}
 }
