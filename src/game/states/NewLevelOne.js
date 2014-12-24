@@ -4,6 +4,9 @@ var Wolf = require('../enemies/Wolf');
 var Bird = require('../enemies/Bird');
 var Phoenix = require('../enemies/Phoenix');
 var Level = require('./Level');
+var PlatformLevel = require('./level_types/PlatformLevel');
+
+var PADDLE_SPEED = 130;
 
 NewLevelOne = function() {
 	this.wolfSpawnSettings = [
@@ -20,10 +23,17 @@ NewLevelOne = function() {
 	this.birdSpawnSettings = [
 		{x: 71, y: 10, direction: 'right', patrolBounds: {min: 70 * TILE_SIZE, max: 79 * TILE_SIZE}}];
 
+	this.movingPlatformSettings = [
+		{x: 78, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'}
+	];
+
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
-	this.spawnPosX = 32;
-	this.spawnPosY = 300;
+	// this.spawnPosX = 32;
+	// this.spawnPosY = 300;
+
+	this.spawnPosX = 74 * TILE_SIZE;
+	this.spawnPosY = 9 * TILE_SIZE;
 
 	this.map = null;
     this.layer = null;
@@ -45,6 +55,7 @@ NewLevelOne.prototype = {
 		this.setTileCollisions();
 		this.createLayers();
 		this.createEnemies();
+		this.createPlatforms();
 
 		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
@@ -74,13 +85,26 @@ NewLevelOne.prototype = {
 
 	update: function() {
 		player.update();
-		
+		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
+
+		this.movePlatforms();
+
 		this.enemies.forEach(function(enemy) {
+			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
 			enemy.update();
 		});
+	},
+
+	tearDownLevelComponents: function() {
+		this.movingPlatforms.destroy();
+	},
+
+	buildLevelComponents: function() {
+		this.createPlatforms();
 	}
 };
 
 module.exports = NewLevelOne;
 
 $.extend(NewLevelOne.prototype, Level.prototype);
+$.extend(NewLevelOne.prototype, PlatformLevel.prototype);

@@ -1,6 +1,7 @@
 require('../Common');
 
 var LandDog = require('../enemies/LandDog');
+var PlatformLevel = require('./level_types/PlatformLevel');
 var Level = require('./Level');
 
 // Indices of tile types that represent empty space
@@ -52,28 +53,6 @@ LevelOne.prototype = {
 		this.enemies.push.apply(this.enemies, LandDog.spawn(this.landDogSpawnSettings));
 	},
 
-	createPlatforms: function() {
-		this.movingPlatforms = game.add.group();
-
-		 this.movingPlatformSettings.forEach(function(settings) {
-		 	var platform = this.movingPlatforms.create(TILE_SIZE * settings.x, TILE_SIZE * settings.y, 'platform');
-		 	game.physics.arcade.enable(platform);
-		 	platform.enableBody = true;
-
-		 	if(settings.initialDirection === 'right') {
-		 		platform.leftBounds = platform.body.x;
-		 		platform.rightBounds = platform.body.x + (TILE_SIZE * settings.territorySize);
-		 		platform.body.velocity.x = settings.speed;
-		 	} else if(settings.initialDirection === 'left') {
-		 		platform.leftBounds = platform.body.x - (TILE_SIZE * settings.territorySize);
-		 		platform.rightBounds = platform.body.x;
-		 		platform.body.velocity.x = settings.speed * -1;
-		 	}
-
-		 	platform.body.immovable = true; //So that it doesn't fall when you jump on it.
-		 }, this);
-	},
-
 	setTileCollisions: function() {
 		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID (inclusive at both ends of the range)
 		//	These numbers refer to the gid, or the index of the tile in the tileset (where the first tile is 1)
@@ -99,19 +78,6 @@ LevelOne.prototype = {
 		}, this);
 	},
 
-	movePlatforms: function() {
-		this.movingPlatforms.forEach(function(platform) {
-			if(platform.body.position.x < platform.leftBounds) {
-				platform.body.velocity.x *= -1;
-				platform.body.position.x += 1;
-			}	
-			if(platform.body.position.x > platform.rightBounds) {
-				platform.body.velocity.x *= -1;
-				platform.body.position.x -= 1;
-			} 
-		})
-	},
-
 	tearDownLevelComponents: function() {
 		this.movingPlatforms.destroy();
 	},
@@ -122,5 +88,6 @@ LevelOne.prototype = {
 };
 
 $.extend(LevelOne.prototype, Level.prototype);
+$.extend(LevelOne.prototype, PlatformLevel.prototype);
 
 module.exports = LevelOne;
