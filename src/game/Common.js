@@ -51,7 +51,7 @@ Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
 
     //If the sprite isn't about to step onto a platform, check if it's about to step onto an empty space tile. If so, then it is at a cliff.
     var tile = level.map.getTileWorldXY(this.body.position.x + offsetX, this.body.position.y + this.body.height);
-    if(this.isTouchingGround() && tile && level.emptySpaceTiles.indexOf(tile.index) > -1)     {
+    if((this.isTouchingGround() && tile && level.emptySpaceTiles.indexOf(tile.index) > -1) || tile == null)     {
         return true;
     }
 };

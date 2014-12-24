@@ -3,8 +3,6 @@ var MenuButtons = function(buttonSettings) {
 	this.scaleTween = null;
 	this.subMenu = null;
 
-	console.log(this);
-
 	buttonSettings.forEach(function(button) {
 		this.buttons.push(this.addButton(button.key, button.yOffset, button.callback));
 	}, this);

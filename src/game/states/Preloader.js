@@ -42,11 +42,15 @@ Preloader.prototype = {
     this.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 
+    this.load.tilemap('newLevelOne', 'assets/levels/newLevelOne.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('newLevelOneTiles', 'assets/tiles/area02_level_tiles.png');
+
     // Load paddle.
     this.load.image('platform', 'assets/sprites/misc/paddle-small.png');
 
-    // Load background.
+    // Load backgrounds.
     this.load.image('space', 'assets/backgrounds/space.png');
+    this.load.image('forest', 'assets/backgrounds/forest.jpg');
 
     // Load enemies.
     this.load.spritesheet('baddie', 'assets/sprites/enemies/baddie.png', 32, 32);

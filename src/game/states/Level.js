@@ -40,8 +40,10 @@ Level.prototype = {
 			this.tearDownLevelComponents();
 		}
 
-		this.buildLevelComponents();
-		
+		if('buildLevelComponents' in this) {
+			this.buildLevelComponents();
+		}
+
 		this.createEnemies();
 
 		player.create();
