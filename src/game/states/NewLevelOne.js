@@ -3,6 +3,8 @@ require('../Common');
 var Wolf = require('../enemies/Wolf');
 var Bird = require('../enemies/Bird');
 var Phoenix = require('../enemies/Phoenix');
+var Squirrel = require('../enemies/Squirrel');
+
 var Level = require('./Level');
 var PlatformLevel = require('./level_types/PlatformLevel');
 
@@ -17,14 +19,20 @@ NewLevelOne = function() {
 
 	this.phoenixSpawnSettings = [
 		{x: 48, y: 0, direction: 'left', patrolBounds: {min: 48 * TILE_SIZE, max: 58 * TILE_SIZE}},
-		{x: 39, y: 2, direction: 'left', patrolBounds: {min: 39 * TILE_SIZE, max: 48 * TILE_SIZE}}
+		{x: 39, y: 2, direction: 'left', patrolBounds: {min: 39 * TILE_SIZE, max: 48 * TILE_SIZE}},
+		{x: 78, y: 2, direction: 'right', patrolBounds: {min: 78 * TILE_SIZE, max: 100 * TILE_SIZE}}
 	];
 
 	this.birdSpawnSettings = [
 		{x: 71, y: 10, direction: 'right', patrolBounds: {min: 70 * TILE_SIZE, max: 79 * TILE_SIZE}}];
 
 	this.movingPlatformSettings = [
-		{x: 78, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'}
+		{x: 78, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+		{x: 96, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}
+	];
+
+	this.squirrelSpawnSettings = [
+		{x: 114, y: 8, direction: 'left'}
 	];
 
 	this.startingCameraPosX = 0;
@@ -32,8 +40,8 @@ NewLevelOne = function() {
 	// this.spawnPosX = 32;
 	// this.spawnPosY = 300;
 
-	this.spawnPosX = 74 * TILE_SIZE;
-	this.spawnPosY = 9 * TILE_SIZE;
+	this.spawnPosX = 106 * TILE_SIZE;
+	this.spawnPosY = 6 * TILE_SIZE;
 
 	this.map = null;
     this.layer = null;
@@ -47,6 +55,7 @@ NewLevelOne = function() {
 
 NewLevelOne.prototype = {
 	create: function() {
+		// No real reason to use tilesprite instead of static image... doing it just for the hell of it.
 		this.forest = game.add.tileSprite(0, 0, game.camera.width, game.camera.height, 'forest');
 		this.forest.fixedToCamera = true;
 
@@ -74,6 +83,7 @@ NewLevelOne.prototype = {
 		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
 		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
 		this.enemies.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
+		this.enemies.push.apply(this.enemies, Squirrel.spawn(this.squirrelSpawnSettings));
 	},
 
 	setTileCollisions: function() {

@@ -5,6 +5,8 @@ var Enemy = require('./types/Enemy');
 function LandEnemy(x, y, direction, sprite, leftAnimations, rightAnimations, speed) {
 	Enemy.call(this, x, y, direction, sprite, leftAnimations, rightAnimations, speed);
 
+	this.shouldChangeDirectionAtCliff = true;
+
 	this.sprite.body.gravity.y = 300;
 };
 
@@ -12,7 +14,10 @@ LandEnemy.prototype = {
 	update: function() {
 		this.handleCollisions();
 
-		this.changeDirectionAtCliff();
+		if(this.shouldChangeDirectionAtCliff) {
+			this.changeDirectionAtCliff();
+		}
+		
 		this.move();
 	},
 
