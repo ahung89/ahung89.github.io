@@ -9,6 +9,7 @@ var Level = require('./Level');
 var PlatformLevel = require('./level_types/PlatformLevel');
 
 var PADDLE_SPEED = 130;
+var SQUIRREL_SPAWN_RATE = 1300;
 
 NewLevelOne = function() {
 	this.wolfSpawnSettings = [
@@ -31,14 +32,14 @@ NewLevelOne = function() {
 		{x: 96, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}
 	];
 
-	this.squirrelSpawnSettings = [
-		{x: 114, y: 8, direction: 'left'}
+	this.squirrelHoleSettings = [
+		{x: 122, y: 7, direction: 'left'}
 	];
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
-	// this.spawnPosX = 32;
-	// this.spawnPosY = 300;
+	this.spawnPosX = 32;
+	this.spawnPosY = 300;
 
 	this.spawnPosX = 106 * TILE_SIZE;
 	this.spawnPosY = 6 * TILE_SIZE;
@@ -80,10 +81,11 @@ NewLevelOne.prototype = {
 	},
 
 	createEnemies: function() {
+		this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
+
 		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
 		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
 		this.enemies.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
-		this.enemies.push.apply(this.enemies, Squirrel.spawn(this.squirrelSpawnSettings));
 	},
 
 	setTileCollisions: function() {
@@ -103,6 +105,14 @@ NewLevelOne.prototype = {
 			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
 			enemy.update();
 		});
+
+		this.squirrelHoleSettings.forEach(function(settings) {
+			var delay = settings.delay ? settings.delay : 0;
+			if(game.time.now >= this.nextSquirrelSpawnTime + delay) {
+				this.spawnSquirrelAtSquirrelHole(settings);
+				this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
+			}
+		}, this);
 	},
 
 	tearDownLevelComponents: function() {
@@ -111,6 +121,13 @@ NewLevelOne.prototype = {
 
 	buildLevelComponents: function() {
 		this.createPlatforms();
+	},
+
+	spawnSquirrelAtSquirrelHole: function(settings) {
+		var squirrel = new Squirrel(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction);
+		squirrel.checkWorldBounds = true;
+		squirrel.outOfBoundsKill = true;
+		this.enemies.push(squirrel);
 	}
 };
 
