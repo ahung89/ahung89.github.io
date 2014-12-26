@@ -95,11 +95,11 @@ LevelTwo.prototype = {
 	},
 
 	createEnemies: function() {
-		this.enemies.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
-		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
-		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
-		this.enemies.push.apply(this.enemies, GunShip.spawn(this.gunShipSpawnSettings));
-		this.enemies.push.apply(this.enemies, Climber.spawn(this.climberSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
+		Array.prototype.push.apply(this.enemies, GunShip.spawn(this.gunShipSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Climber.spawn(this.climberSpawnSettings));
 	},
 
 	update: function() {

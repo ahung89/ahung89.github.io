@@ -83,9 +83,9 @@ NewLevelOne.prototype = {
 	createEnemies: function() {
 		this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
 
-		this.enemies.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
-		this.enemies.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
-		this.enemies.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
+		Array.prototype.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
 	},
 
 	setTileCollisions: function() {
