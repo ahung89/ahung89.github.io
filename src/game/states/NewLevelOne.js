@@ -41,8 +41,8 @@ NewLevelOne = function() {
 	this.spawnPosX = 32;
 	this.spawnPosY = 300;
 
-	this.spawnPosX = 106 * TILE_SIZE;
-	this.spawnPosY = 6 * TILE_SIZE;
+	// this.spawnPosX = 106 * TILE_SIZE;
+	// this.spawnPosY = 6 * TILE_SIZE;
 
 	this.map = null;
     this.layer = null;
