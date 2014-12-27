@@ -35,7 +35,7 @@ Menu.prototype = {
 		  		this.justExitedSubmenu = false;
 		  	}
 		}
-		else {
+		else if(this.submenu == null) {
 			arrow.animate();
 			arrow.move();
 
@@ -46,40 +46,26 @@ Menu.prototype = {
 	},
 
 	startLevelOne: function() {
-		game.state.start("NewLevelOne");
+		game.state.start("LevelTwo");
 	},
 
 	showHowTo: function() {
-		if(this.subMenu != null) {
-			return;
-		}
-
-		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'how_to_menu');
-		this.subMenu.anchor.setTo(0.5, 0.5);
-
-		game.input.keyboard.callbackContext = this;
-
-		game.input.keyboard.onDownCallback = function() {
-			this.subMenu.kill();
-			this.subMenu = null;
-			this.justExitedSubmenu = true;
-			game.input.keyboard.onDownCallback = null;
-		};
+		this.showSubmenu('how_to_menu');
 	},
 
 	showCredits: function() {
-		if(this.subMenu != null) {
-			return;
-		}
+		this.showSubmenu('credits_menu');
+	},
 
-		this.subMenu = game.add.image(game.camera.width / 2, game.camera.height / 2, 'credits_menu');
-		this.subMenu.anchor.setTo(0.5, 0.5);
+	showSubmenu: function(submenu) {
+		this.submenu = game.add.image(game.camera.width / 2, game.camera.height / 2, submenu);
+		this.submenu.anchor.setTo(0.5, 0.5);
 
 		game.input.keyboard.callbackContext = this;
 
 		game.input.keyboard.onDownCallback = function() {
-			this.subMenu.kill();
-			this.subMenu = null;
+			this.submenu.kill();
+			this.submenu = null;
 			this.justExitedSubmenu = true;
 			game.input.keyboard.onDownCallback = null;
 		};

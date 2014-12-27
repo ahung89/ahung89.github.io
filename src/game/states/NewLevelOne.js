@@ -33,7 +33,9 @@ NewLevelOne = function() {
 	];
 
 	this.squirrelHoleSettings = [
-		{x: 122, y: 7, direction: 'left'}
+		{x: 122, y: 7, direction: 'left', nextSquirrelSpawnTime: 0},
+		{x: 124, y: 10, direction: 'right', nextSquirrelSpawnTime: 1000},
+		{x: 181, y: 5, direction: 'left', nextSquirrelSpawnTime: 2000}
 	];
 
 	this.startingCameraPosX = 0;
@@ -114,9 +116,9 @@ NewLevelOne.prototype = {
 		});
 
 		this.squirrelHoleSettings.forEach(function(settings) {
-			if(game.time.now >= this.nextSquirrelSpawnTime) {
+			if(game.time.now >= settings.nextSquirrelSpawnTime) {
 				this.spawnSquirrelAtSquirrelHole(settings);
-				this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
+				settings.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
 			}
 		}, this);
 	},
