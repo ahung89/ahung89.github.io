@@ -28,13 +28,11 @@ Phoenix.prototype = {
 	}
 }
 
-Phoenix.spawn = function(spawnSettings) {
-	var enemies = [];
+Phoenix.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new Phoenix(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay, settings.patrolBounds));
+		group.add(new Phoenix(settings.x * TILE_SIZE, settings.y * TILE_SIZE, 
+			settings.direction, settings.initialDelay, settings.patrolBounds).sprite);
 	}, this);
-
-	return enemies;
 }
 
 $.extend(Phoenix.prototype, ProjectileEnemy.prototype);

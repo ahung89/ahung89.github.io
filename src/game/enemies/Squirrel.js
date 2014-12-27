@@ -95,7 +95,7 @@ Squirrel.preUpdate = function() {
 
             if (this.outOfBoundsKill)
             {
-                this.kill();
+                this.destroy();
                 return false;
             }
         }

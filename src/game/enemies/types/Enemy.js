@@ -15,6 +15,8 @@ Enemy = function(x, y, direction, spritesheetKey, minDirectionAnimations, maxDir
 	this.currentDirection = direction;
 	this.speed = speed;
 	this.patrolBounds = patrolBounds;
+
+	this.sprite.parentEntity = this;
 }
 
 Enemy.prototype = {

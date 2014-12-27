@@ -10,13 +10,10 @@ function Wolf(x, y, direction) {
 	this.sprite.body.setSize(WOLF_WIDTH, WOLF_HEIGHT, 0, WOLF_Y_OFFSET);
 }
 
-Wolf.spawn = function(spawnSettings) {
-	var enemies = [];
+Wolf.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new Wolf(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
+		group.add(new Wolf(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction).sprite);
 	}, this);
-
-	return enemies;
 };
 
 $.extend(Wolf.prototype, LandEnemy.prototype)

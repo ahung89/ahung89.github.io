@@ -62,6 +62,8 @@ NewLevelOne.prototype = {
 
 		this.initLevel('newLevelOne', 'area02_level_tiles', 'newLevelOneTiles');
 
+		this.enemyGroup = game.add.group();
+
 		this.setTileCollisions();
 		this.createLayers();
 		this.createEnemies();
@@ -83,9 +85,9 @@ NewLevelOne.prototype = {
 	createEnemies: function() {
 		this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
 
-		Array.prototype.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
-		Array.prototype.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
-		Array.prototype.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
+		Wolf.spawn(this.wolfSpawnSettings, this.enemyGroup);
+		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
+		Bird.spawn(this.birdSpawnSettings, this.enemyGroup);
 	},
 
 	setTileCollisions: function() {
@@ -101,14 +103,18 @@ NewLevelOne.prototype = {
 
 		this.movePlatforms();
 
-		this.enemies.forEach(function(enemy) {
-			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
-			enemy.update();
+		this.enemyGroup.forEach(function(enemy) {
+			try {
+				game.physics.arcade.collide(enemy, this.movingPlatforms);
+				enemy.parentEntity.update();
+			} catch (e) {
+				// If game is still in update loop when restarting due to death.
+			}
+			
 		});
 
 		this.squirrelHoleSettings.forEach(function(settings) {
-			var delay = settings.delay ? settings.delay : 0;
-			if(game.time.now >= this.nextSquirrelSpawnTime + delay) {
+			if(game.time.now >= this.nextSquirrelSpawnTime) {
 				this.spawnSquirrelAtSquirrelHole(settings);
 				this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
 			}
@@ -125,9 +131,9 @@ NewLevelOne.prototype = {
 
 	spawnSquirrelAtSquirrelHole: function(settings) {
 		var squirrel = new Squirrel(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction);
-		squirrel.checkWorldBounds = true;
-		squirrel.outOfBoundsKill = true;
-		this.enemies.push(squirrel);
+		squirrel.sprite.checkWorldBounds = true;
+		squirrel.sprite.outOfBoundsKill = true;
+		this.enemyGroup.add(squirrel.sprite);
 	}
 };
 

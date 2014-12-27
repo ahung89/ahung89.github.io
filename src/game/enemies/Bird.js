@@ -17,13 +17,11 @@ Bird.prototype = {
 	}
 }
 
-Bird.spawn = function(spawnSettings) {
-	var enemies = [];
+Bird.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new Bird(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.patrolBounds));
+		group.add(new Bird(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, 
+			settings.patrolBounds).sprite);
 	}, this);
-
-	return enemies;
 };
 
 $.extend(Bird.prototype, Enemy.prototype);

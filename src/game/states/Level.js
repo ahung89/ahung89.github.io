@@ -22,19 +22,15 @@ Level.prototype = {
 	restart: function() {
 		this.resetCamera();
 
-		var tempEnemies = this.enemies;
+		this.enemyGroup.forEach(function(enemy) {
+			enemy.kill();
 
-		// Reset enemies BEFORE killing projectiles to prevent an enemy with a destroyed projectile group to attempt
-		// to fire.
-		this.enemies = [];
-
-		tempEnemies.forEach(function(enemy) {
-			enemy.sprite.kill();
-
-			if('killProjectiles' in enemy) { 
-				enemy.killProjectiles();
+			if('killProjectiles' in enemy.parentEntity) { 
+				enemy.parentEntity.killProjectiles();
 			}
 		}, this);
+
+		this.enemyGroup.destroy();
 
 		if('tearDownLevelComponents' in this) {
 			this.tearDownLevelComponents();
@@ -44,18 +40,20 @@ Level.prototype = {
 			this.buildLevelComponents();
 		}
 
-		this.createEnemies();
-
 		player.create();
+
+		this.enemyGroup = game.add.group();
+
+		this.createEnemies();
 	},
 
 	render: function() {
 		if(window.debugging == true) {
 			game.debug.body(player.sprite);
-			this.enemies.forEach(function(enemy) {
-				game.debug.body(enemy.sprite);
-				if(enemy.projectiles) {
-					enemy.projectiles.forEach(function(projectile) {
+			this.enemyGroup.forEach(function(enemy) {
+				game.debug.body(enemy);
+				if(enemy.parentEntity.projectiles) {
+					enemy.parentEntity.projectiles.forEach(function(projectile) {
 						game.debug.body(projectile);
 					}, this);
 				}
