@@ -1,80 +1,126 @@
 require('../Common');
 
-var LandDog = require('../enemies/LandDog');
-var PlatformLevel = require('./level_types/PlatformLevel');
-var Level = require('./Level');
+var Wolf = require('../enemies/Wolf');
+var Bird = require('../enemies/Bird');
+var Phoenix = require('../enemies/Phoenix');
+var Squirrel = require('../enemies/Squirrel');
 
-// Indices of tile types that represent empty space
+var Level = require('./Level');
+var PlatformLevel = require('./level_types/PlatformLevel');
+
 var PADDLE_SPEED = 130;
+var SQUIRREL_SPAWN_RATE = 1300;
 
 LevelOne = function() {
-	this.landDogSpawnSettings = [{x:10, y:10, direction: 'right'}, {x:18, y:8, direction: 'right'}, {x:27, y:8, direction: 'right'}, 
-	{x:38, y:10, direction: 'right'}, {x:43, y:10, direction: 'right'}, {x: 72, y:5, direction: 'right'}, {x: 126, y:5, direction: 'right'}, 
-	{x: 142, y:5, direction: 'right'}, {x: 146, y:5, direction: 'right'}];
+	this.wolfSpawnSettings = [
+		{x: 18, y: 10, direction: 'right'},
+		{x: 30, y: 8, direction: 'left'},
+		{x: 44, y: 11, direction: 'left'},
+		{x: 142, y: 6, direction: 'left'}
+	];	
+
+	this.phoenixSpawnSettings = [
+		{x: 48, y: 0, direction: 'left', patrolBounds: {min: 48 * TILE_SIZE, max: 58 * TILE_SIZE}},
+		{x: 39, y: 2, direction: 'left', patrolBounds: {min: 39 * TILE_SIZE, max: 48 * TILE_SIZE}},
+		{x: 78, y: 2, direction: 'right', patrolBounds: {min: 78 * TILE_SIZE, max: 100 * TILE_SIZE}},
+		{x: 135, y: 2, direction: 'right', patrolBounds: {min: 135 * TILE_SIZE, max: 149 * TILE_SIZE}}
+	];
+
+	this.birdSpawnSettings = [
+		{x: 71, y: 10, direction: 'right', patrolBounds: {min: 70 * TILE_SIZE, max: 79 * TILE_SIZE}}];
+
+	this.movingPlatformSettings = [
+		{x: 78, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
+		{x: 96, y: 9, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}
+	];
+
+	this.squirrelHoleSettings = [
+		{x: 122, y: 7, direction: 'left', nextSquirrelSpawnTime: 0},
+		{x: 124, y: 10, direction: 'right', nextSquirrelSpawnTime: 1000},
+		{x: 181, y: 5, direction: 'left', nextSquirrelSpawnTime: 2000}
+	];
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
 	this.spawnPosX = 32;
-	this.spawnPosY = 150;
+	this.spawnPosY = 300;
+
+	// this.spawnPosX = 106 * TILE_SIZE;
+	// this.spawnPosY = 6 * TILE_SIZE;
 
 	this.map = null;
     this.layer = null;
-    this.movingPlatforms = null;
+    this.movingPlatforms = [];
 
-    this.emptySpaceTiles = [21];
+    this.forest = null;
+    this.fog = null;
 
-    //Territory size is the number of tiles that the platform will move before turning around.
-    this.movingPlatformSettings = [{x:98, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:120, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
-    {x:124, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:140, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'},
-    {x:144, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'right'},
-    {x:160, y:6, territorySize:6, speed:PADDLE_SPEED, initialDirection:'left'}];
+    this.emptySpaceTiles = [1];
 }
 
 LevelOne.prototype = {
-	
 	create: function() {
-		this.initLevel('levelOne', 'platformer_tiles_doubled', 'levelOneTiles');
+		// No real reason to use tilesprite instead of static image... doing it just for the hell of it.
+		this.forest = game.add.tileSprite(0, 0, game.camera.width, game.camera.height, 'forest');
+		this.forest.fixedToCamera = true;
+
+		this.initLevel('levelOne', 'area02_level_tiles', 'levelOneTiles');
 
 		this.setTileCollisions();
+		this.createLayers();
 
-		//	The argument must match the layers.name field in your json file.
-		//	Creates a TilemapLayer - a TilemapLayer is a set of map data combined with a Tileset.
-		this.layer = this.map.createLayer('World');
-		this.layer.resizeWorld();
+		this.enemyGroup = game.add.group();
 		this.createEnemies();
 		this.createPlatforms();
+
+		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
 		player.create();
 	},
 
+	createLayers: function() {
+		this.background = this.map.createLayer('Background');
+		this.layer = this.map.createLayer('World');
+
+		this.background.resizeWorld();
+		this.layer.resizeWorld();
+	},
+
 	createEnemies: function() {
-		this.enemies.push.apply(this.enemies, LandDog.spawn(this.landDogSpawnSettings));
+		Wolf.spawn(this.wolfSpawnSettings, this.enemyGroup);
+		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
+		Bird.spawn(this.birdSpawnSettings, this.enemyGroup);
 	},
 
 	setTileCollisions: function() {
-		//	setCollisionBetween - this method sets collision on a range of tiles by tile ID (inclusive at both ends of the range)
-		//	These numbers refer to the gid, or the index of the tile in the tileset (where the first tile is 1)
-		this.map.setCollisionBetween(4, 7);
-		this.map.setCollisionBetween(8, 12);
-		this.map.setCollisionBetween(26, 35);
-		this.map.setCollisionBetween(41, 53);
-		this.map.setCollisionBetween(59, 72);
-		this.map.setCollisionBetween(78, 84);
-		this.map.setCollisionBetween(102, 103);
-		this.map.setCollisionBetween(105, 108);
+		this.map.setCollisionBetween(2, 19);
+		this.map.setCollisionBetween(21, 79);
+		this.map.setCollisionBetween(81, 85);
+		this.map.setCollisionBetween(87, 97);
+		this.map.setCollisionBetween(101, 117);
 	},
 
 	update: function() {
 		player.update();
+		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
 
 		this.movePlatforms();
-		game.physics.arcade.collide(player.sprite, this.movingPlatforms);
-		
-		this.enemies.forEach(function(enemy) {
-			game.physics.arcade.collide(enemy.sprite, this.movingPlatforms);
-			enemy.update();
+
+		this.enemyGroup.forEach(function(enemy) {
+			try {
+				game.physics.arcade.collide(enemy, this.movingPlatforms);
+				enemy.parentEntity.update();
+			} catch (e) {
+				// If game is still in update loop when restarting due to death.
+			}
+			
+		});
+
+		this.squirrelHoleSettings.forEach(function(settings) {
+			if(game.time.now >= settings.nextSquirrelSpawnTime) {
+				this.spawnSquirrelAtSquirrelHole(settings);
+				settings.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
+			}
 		}, this);
 	},
 
@@ -84,10 +130,17 @@ LevelOne.prototype = {
 
 	buildLevelComponents: function() {
 		this.createPlatforms();
+	},
+
+	spawnSquirrelAtSquirrelHole: function(settings) {
+		var squirrel = new Squirrel(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction);
+		squirrel.sprite.checkWorldBounds = true;
+		squirrel.sprite.outOfBoundsKill = true;
+		this.enemyGroup.add(squirrel.sprite);
 	}
 };
 
+module.exports = LevelOne;
+
 $.extend(LevelOne.prototype, Level.prototype);
 $.extend(LevelOne.prototype, PlatformLevel.prototype);
-
-module.exports = LevelOne;

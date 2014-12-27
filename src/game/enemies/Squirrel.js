@@ -11,6 +11,7 @@ function Squirrel(x, y, direction) {
 	this.shouldChangeDirectionAtCliff = false;
 
 	this.sprite.body.setSize(SQUIRREL_WIDTH, SQUIRREL_HEIGHT, SQUIRREL_X_OFFSET, SQUIRREL_Y_OFFSET);
+	this.sprite.body.gravity.y = 300;
 }
 
 Squirrel.spawn = function(spawnSettings) {

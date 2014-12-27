@@ -6,8 +6,6 @@ function LandEnemy(x, y, direction, sprite, leftAnimations, rightAnimations, spe
 	Enemy.call(this, x, y, direction, sprite, leftAnimations, rightAnimations, speed);
 
 	this.shouldChangeDirectionAtCliff = true;
-
-	this.sprite.body.gravity.y = 300;
 };
 
 LandEnemy.prototype = {

@@ -46,7 +46,7 @@ Menu.prototype = {
 	},
 
 	startLevelOne: function() {
-		game.state.start("LevelTwo");
+		game.state.start("LevelOne");
 	},
 
 	showHowTo: function() {

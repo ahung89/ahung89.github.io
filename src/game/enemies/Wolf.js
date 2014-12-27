@@ -12,7 +12,7 @@ function Wolf(x, y, direction) {
 
 Wolf.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		group.add(new Wolf(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction).sprite);
+		group.add(new Wolf(settings.x * TILE_SIZE, settings.y * TILE_SIZE - (WOLF_HEIGHT + WOLF_Y_OFFSET - TILE_SIZE), settings.direction).sprite);
 	}, this);
 };
 

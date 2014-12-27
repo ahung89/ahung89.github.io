@@ -38,12 +38,10 @@ Preloader.prototype = {
 
     // Load tiles.
     this.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.image('levelOneTiles', 'assets/tiles/platformer_tiles_doubled.png');
+    this.load.image('levelOneTiles', 'assets/tiles/area02_level_tiles.png');
     this.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 
-    this.load.tilemap('newLevelOne', 'assets/levels/newLevelOne.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.image('newLevelOneTiles', 'assets/tiles/area02_level_tiles.png');
 
     // Load paddle.
     this.load.image('platform', 'assets/sprites/misc/paddle-small.png');
@@ -69,7 +67,7 @@ Preloader.prototype = {
 
   update: function () {
     if (!!this.ready) { // !! is "bang bang you're a boolean". Not sure why it's necessary here....
-      this.game.state.start('NewLevelOne');
+      this.game.state.start('Menu');
     }
   },
 
