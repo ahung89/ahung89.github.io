@@ -78,6 +78,8 @@ LevelTwo.prototype = {
 		bg = game.add.tileSprite(0, 0, 1366, 768, 'space');
 		bg.fixedToCamera = true;
 
+		this.enemyGroup = game.add.group();
+
 		this.createLayers();
 		this.createEnemies();
 		this.setTileCollisions();
@@ -95,19 +97,24 @@ LevelTwo.prototype = {
 	},
 
 	createEnemies: function() {
-		Array.prototype.push.apply(this.enemies, Bird.spawn(this.birdSpawnSettings));
-		Array.prototype.push.apply(this.enemies, Wolf.spawn(this.wolfSpawnSettings));
-		Array.prototype.push.apply(this.enemies, Phoenix.spawn(this.phoenixSpawnSettings));
-		Array.prototype.push.apply(this.enemies, GunShip.spawn(this.gunShipSpawnSettings));
-		Array.prototype.push.apply(this.enemies, Climber.spawn(this.climberSpawnSettings));
+		Bird.spawn(this.birdSpawnSettings, this.enemyGroup);
+		Wolf.spawn(this.wolfSpawnSettings, this.enemyGroup);
+		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
+		GunShip.spawn(this.gunShipSpawnSettings, this.enemyGroup);
+		Climber.spawn(this.climberSpawnSettings, this.enemyGroup);
 	},
 
 	update: function() {
 		player.update();
 		
-		this.enemies.forEach(function(enemy) {
-			enemy.update();
-		});
+		this.enemyGroup.forEach(function(enemy) {
+			try {
+				enemy.parentEntity.update();
+			} catch (e) {
+				// Safe restarting.
+			}
+			
+		}, this);
 
 		this.checkFallingPlatformCollisions();
 	},

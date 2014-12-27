@@ -32,13 +32,10 @@ GunShip.prototype = {
 	}
 }
 
-GunShip.spawn = function(spawnSettings) {
-	var enemies = [];
+GunShip.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new GunShip(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay));
+		group.add(new GunShip(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.initialDelay).sprite);
 	}, this);
-
-	return enemies;
 }
 
 $.extend(GunShip.prototype, ProjectileEnemy.prototype);

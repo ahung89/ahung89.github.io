@@ -11,13 +11,10 @@ Climber.prototype = {
 	}
 };
 
-Climber.spawn = function(spawnSettings) {
-	var enemies = [];
+Climber.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new Climber(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.patrolBounds));
+		group.add(new Climber(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction, settings.patrolBounds).sprite);
 	}, this);
-
-	return enemies;
 };
 
 $.extend(Climber.prototype, Enemy.prototype);

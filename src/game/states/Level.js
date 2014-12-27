@@ -11,8 +11,6 @@ Level.prototype = {
 	initLevel: function(tilemapKey, tilesetImage, tilesetImageKey) {
 		level = this;
 
-		this.enemies = [];
-
 		game.physics.arcade.setBoundsToWorld();
 
 		this.map = game.add.tilemap(tilemapKey);

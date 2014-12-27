@@ -76,6 +76,10 @@ Phaser.Tilemap.prototype.getTilesWithIndex = function(layer, indices) {
     return result;
 };
 
+
+// Two changes: first, made it so that outOfBoundsKill calls sprite.destroy, not just sprite.kill (to make sure it gets removed
+// completely). second, made it so that the parent position isn't factored in for the first if block since this was causing weird
+// stuff to happen with the squirrel generation. Still need to figure out what exactly was happening.
 Phaser.Sprite.prototype.preUpdate = function() {
 
     if (this._cache[4] === 1 && this.exists)

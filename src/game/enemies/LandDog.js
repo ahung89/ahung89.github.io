@@ -4,13 +4,10 @@ function LandDog(x, y, direction) {
 	LandEnemy.call(this, x, y, direction, 'baddie', [0, 1], [2, 3], 150);
 }
 
-LandDog.spawn = function(spawnSettings) {
-	var enemies = [];
+LandDog.spawn = function(spawnSettings, group) {
 	spawnSettings.forEach(function(settings) {
-		enemies.push(new LandDog(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
+		group.add(new LandDog(settings.x * TILE_SIZE, settings.y * TILE_SIZE, settings.direction));
 	}, this);
-
-	return enemies;
 };
 
 $.extend(LandDog.prototype, LandEnemy.prototype);
