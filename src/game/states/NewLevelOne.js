@@ -15,13 +15,15 @@ NewLevelOne = function() {
 	this.wolfSpawnSettings = [
 		{x: 18, y: 10, direction: 'right'},
 		{x: 30, y: 8, direction: 'left'},
-		{x: 44, y: 11, direction: 'left'}
+		{x: 44, y: 11, direction: 'left'},
+		{x: 142, y: 6, direction: 'left'}
 	];	
 
 	this.phoenixSpawnSettings = [
 		{x: 48, y: 0, direction: 'left', patrolBounds: {min: 48 * TILE_SIZE, max: 58 * TILE_SIZE}},
 		{x: 39, y: 2, direction: 'left', patrolBounds: {min: 39 * TILE_SIZE, max: 48 * TILE_SIZE}},
-		{x: 78, y: 2, direction: 'right', patrolBounds: {min: 78 * TILE_SIZE, max: 100 * TILE_SIZE}}
+		{x: 78, y: 2, direction: 'right', patrolBounds: {min: 78 * TILE_SIZE, max: 100 * TILE_SIZE}},
+		{x: 135, y: 2, direction: 'right', patrolBounds: {min: 135 * TILE_SIZE, max: 149 * TILE_SIZE}}
 	];
 
 	this.birdSpawnSettings = [
@@ -64,10 +66,10 @@ NewLevelOne.prototype = {
 
 		this.initLevel('newLevelOne', 'area02_level_tiles', 'newLevelOneTiles');
 
-		this.enemyGroup = game.add.group();
-
 		this.setTileCollisions();
 		this.createLayers();
+
+		this.enemyGroup = game.add.group();
 		this.createEnemies();
 		this.createPlatforms();
 
@@ -85,8 +87,6 @@ NewLevelOne.prototype = {
 	},
 
 	createEnemies: function() {
-		this.nextSquirrelSpawnTime = game.time.now + SQUIRREL_SPAWN_RATE;
-
 		Wolf.spawn(this.wolfSpawnSettings, this.enemyGroup);
 		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
 		Bird.spawn(this.birdSpawnSettings, this.enemyGroup);
@@ -95,7 +95,8 @@ NewLevelOne.prototype = {
 	setTileCollisions: function() {
 		this.map.setCollisionBetween(2, 19);
 		this.map.setCollisionBetween(21, 79);
-		this.map.setCollisionBetween(81, 97);
+		this.map.setCollisionBetween(81, 85);
+		this.map.setCollisionBetween(87, 97);
 		this.map.setCollisionBetween(101, 117);
 	},
 

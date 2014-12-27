@@ -78,9 +78,12 @@ LevelTwo.prototype = {
 		bg = game.add.tileSprite(0, 0, 1366, 768, 'space');
 		bg.fixedToCamera = true;
 
+		this.createLayers();
+
+		// Must be after createLayers since by default z-index is determined by order that entities are added to game.world.
+		// To make enemies not be displayed behind background elements like signs, they must have a higher z-index than the layers.
 		this.enemyGroup = game.add.group();
 
-		this.createLayers();
 		this.createEnemies();
 		this.setTileCollisions();
 		this.buildLevelComponents();

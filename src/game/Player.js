@@ -17,8 +17,6 @@ Player = function(xSpawnPos, ySpawnPos) {
 Player.prototype = {
     
     create: function () {
-        this.sprite = new Phaser.Sprite(game, this.xSpawnPos, this.ySpawnPos, 'dude');
-
         this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
