@@ -78,6 +78,7 @@ LevelOne.prototype = {
 		player.create();
 
 		this.fadeIn();
+		this.displayLevelTitle();
 	},
 
 	createLayers: function() {

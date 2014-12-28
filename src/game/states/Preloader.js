@@ -36,12 +36,14 @@ Preloader.prototype = {
     this.load.image('how_to_button', 'assets/sprites/menu/how_to_button.png');
     this.load.image('credits_button', 'assets/sprites/menu/credits_button.png');
 
+    // Load title screens
+    this.load.image('level_one_title', 'assets/sprites/menu/levelonetitle.png');
+
     // Load tiles.
     this.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelOneTiles', 'assets/tiles/area02_level_tiles.png');
     this.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
-
 
     // Load paddle.
     this.load.image('platform', 'assets/sprites/misc/paddle-small.png');
