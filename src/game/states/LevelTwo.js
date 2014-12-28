@@ -89,6 +89,8 @@ LevelTwo.prototype = {
 		this.buildLevelComponents();
 
 		player.create();
+
+		this.fadeIn();
 	},
 
 	createLayers: function() {

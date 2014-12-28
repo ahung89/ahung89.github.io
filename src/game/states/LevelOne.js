@@ -76,6 +76,8 @@ LevelOne.prototype = {
 		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
 		player.create();
+
+		this.fadeIn();
 	},
 
 	createLayers: function() {

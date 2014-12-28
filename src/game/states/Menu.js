@@ -1,5 +1,6 @@
 var MenuButtons = require('../entities/MenuButtons.js');
 var arrow = require('../entities/MenuArrow.js');
+var FadableState = require('./state_types/FadableState.js');
 
 var Menu = function () {};
 
@@ -46,7 +47,11 @@ Menu.prototype = {
 	},
 
 	startLevelOne: function() {
-		game.state.start("LevelOne");
+		if(!this.changingState) {
+			this.changingState = true;
+			this.fadeOut("LevelOne");
+		}
+		
 	},
 
 	showHowTo: function() {
@@ -71,3 +76,5 @@ Menu.prototype = {
 		};
 	}
 }
+
+$.extend(Menu.prototype, FadableState.prototype);

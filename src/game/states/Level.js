@@ -1,4 +1,5 @@
 var Player = require('../Player');
+var FadableState = require('./state_types/FadableState.js');
 
 Level = function() {
 };
@@ -64,5 +65,7 @@ Level.prototype = {
     	game.camera.y = this.startingCameraPosY;
 	}
 };
+
+$.extend(Level.prototype, FadableState.prototype);
 
 module.exports = Level;
