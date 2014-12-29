@@ -51,7 +51,6 @@ Menu.prototype = {
 			this.changingState = true;
 			this.fadeOut("LevelOne");
 		}
-		
 	},
 
 	showHowTo: function() {
