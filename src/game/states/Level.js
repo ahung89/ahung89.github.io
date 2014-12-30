@@ -1,7 +1,7 @@
 var Player = require('../Player');
 var FadableState = require('./state_types/FadableState.js');
 
-Level = function() {
+function Level() {
 };
 
 Level.prototype = {

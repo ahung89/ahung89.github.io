@@ -46,8 +46,9 @@ Preloader.prototype = {
     this.load.tilemap('levelTwo', 'assets/levels/levelTwo.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('levelTwoTiles', 'assets/tiles/area01_level_tiles.png');
 
-    // Load paddle.
+    // Load miscellaneous sprites/images.
     this.load.image('platform', 'assets/sprites/misc/paddle-small.png');
+    this.load.image('flag', 'assets/sprites/misc/flag.png');
 
     // Load backgrounds.
     this.load.image('space', 'assets/backgrounds/space.png');
