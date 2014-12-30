@@ -39,11 +39,11 @@ Level.prototype = {
 			this.buildLevelComponents();
 		}
 
-		player.create();
-
 		this.enemyGroup = game.add.group();
 
 		this.createEnemies();
+
+		player.create();
 	},
 
 	render: function() {
@@ -81,6 +81,18 @@ Level.prototype = {
 			this.title.destroy();
 		}, this);
 		tween.start();
+	},
+
+	freezeSpritesAndProjectiles: function() {
+		this.enemyGroup.forEach(function(enemy) {
+			enemy.parentEntity.freeze();
+			if('projectiles' in enemy.parentEntity) {
+				enemy.parentEntity.projectiles.forEach(function(projectile) {
+					projectile.body.velocity.x = 0;
+					projectile.body.velocity.y = 0;
+				});
+			}
+		}, this);
 	}
 };
 

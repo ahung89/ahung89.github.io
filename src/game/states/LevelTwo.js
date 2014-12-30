@@ -112,6 +112,10 @@ LevelTwo.prototype = {
 	update: function() {
 		player.update();
 		
+		if(player.deathInitiated) {
+			return;
+		}
+
 		this.enemyGroup.forEach(function(enemy) {
 			try {
 				enemy.parentEntity.update();
@@ -122,6 +126,10 @@ LevelTwo.prototype = {
 		}, this);
 
 		this.checkFallingPlatformCollisions();
+
+		if(player.deathInitiated) {
+			this.freezeSpritesAndProjectiles();
+		}
 	},
 
 	setTileCollisions: function() {

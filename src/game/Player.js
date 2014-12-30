@@ -61,14 +61,18 @@ Player.prototype = {
     },
  
     update: function() {
-        this.updateCollisions();
-
-        if(this.climbing) {
-            this.updateMovementOnVine();
-        } else {
-            this.updateMovement();
+        if(!this.ignorePlayerCollisions) {
+            this.updateCollisions();
         }
 
+        if(!this.deathInitiated) {
+            if(this.climbing) {
+                this.updateMovementOnVine();
+            } else {
+                this.updateMovement();
+            }
+        }
+        
         this.sprite.checkWorldBounds = true;
         if(this.sprite.position.y > game.world.height) {
             this.killPlayer();
@@ -141,11 +145,41 @@ Player.prototype = {
     endClimb: function() {
         this.climbing = false;
         this.sprite.body.gravity.y = this.yGravity;
+    },
 
+    initiateDeath: function() {
+        return;
+
+        // only one death animation can be in progress at once.
+        // This field is reset after the player is killed.
+        if(!this.deathInitiated) {
+            this.deathInitiated = true;
+
+            level.freezeSpritesAndProjectiles();
+
+            this.sprite.body.allowGravity = false;
+            this.sprite.body.velocity.x = 0;
+            this.sprite.body.velocity.y = 0;
+
+            this.sprite.anchor.setTo(0.5, 0.5);
+
+            var tween = game.add.tween(this.sprite);
+            tween.to({angle: 900}, 500, null);
+            tween.onComplete.add(function() {
+                this.sprite.body.allowGravity = true;
+                this.sprite.body.gravity.y = 1000;
+                this.ignorePlayerCollisions = true;
+            }, this);
+            tween.start();
+        }
     },
 
     killPlayer: function() {
         // console.trace();
+        this.ignorePlayerCollisions = false;
+        this.deathInitiated = false;
+        this.sprite.body.gravity.y = this.yGravity;
+
         this.sprite.kill();
         level.restart();
     }

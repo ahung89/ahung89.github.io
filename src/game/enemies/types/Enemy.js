@@ -23,7 +23,13 @@ Enemy.prototype = {
 	handleCollisions: function() {
 		// game.physics.arcade.collide(this.sprite, level.movingPlatforms);
 		game.physics.arcade.collide(this.sprite, level.layer);
-		game.physics.arcade.overlap(this.sprite, player.sprite, player.killPlayer, null, player);
+		game.physics.arcade.overlap(this.sprite, player.sprite, player.initiateDeath, null, player);
+	},
+
+	deathAnimation: function() {
+		var tween = game.add.tween(player.sprite);
+		tween.to({angle: 180}, 500, null);
+		tween.start();
 	},
 
 	flip: function() {
@@ -59,6 +65,12 @@ Enemy.prototype = {
 			}
 			this.sprite.animations.play(this.maxDirection);
 		}
+	},
+
+	freeze: function() {
+		this.sprite.body.velocity.x = 0;
+		this.sprite.body.velocity.y = 0;
+		this.sprite.animations.stop();
 	},
 
 	patrolBoundsReached: function(movementAxisPosition) {

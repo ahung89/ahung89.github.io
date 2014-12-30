@@ -43,7 +43,7 @@ ProjectileEnemy.prototype = {
 	},
 
 	handleProjectileCollisions: function() {
-		game.physics.arcade.overlap(this.projectiles, player.sprite, player.killPlayer, null, player);
+		game.physics.arcade.overlap(this.projectiles, player.sprite, player.initiateDeath, null, player);
 	}
 };
 
