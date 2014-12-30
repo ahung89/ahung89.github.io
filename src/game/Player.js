@@ -155,8 +155,6 @@ Player.prototype = {
     },
 
     initiateDeath: function() {
-        return;
-
         // only one death animation can be in progress at once.
         // This field is reset after the player is killed.
         if(!this.deathInitiated) {
