@@ -65,19 +65,22 @@ Level.prototype = {
     	game.camera.y = this.startingCameraPosY;
 	},
 
-	displayLevelTitle: function() {
-		this.title = game.add.image(game.camera.width / 2, -50, 'level_one_title');
+	displayLevelTitle: function(levelTitle) {
+		game.camera.update();
+
+		this.title = game.add.image(game.camera.view.x + game.camera.width / 2, game.camera.view.y - 50, levelTitle);
 		this.title.anchor.setTo(0.5, 0.5);
 
-		var tween = game.add.tween(this.title).to({y: game.camera.height / 2}, 1000, Phaser.Easing.Bounce.Out, true);
+		var tween = game.add.tween(this.title).to({y: game.camera.view.y + game.camera.height / 2}, 1000, Phaser.Easing.Bounce.Out, true);
 		tween.onComplete.add(function() {
+			this.title.position = new Phaser.Point(game.camera.width / 2, game.camera.height / 2);
 			this.title.fixedToCamera = true;
+
 			fadeTween.start();
 		}, this);
 		
 		var fadeTween = game.add.tween(this.title).to({alpha: 0}, 2000, null);
 		fadeTween.onComplete.add(function() {
-			this.titleFollow = false;
 			this.title.destroy();
 		}, this);
 		tween.start();

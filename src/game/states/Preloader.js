@@ -38,6 +38,7 @@ Preloader.prototype = {
 
     // Load title screens
     this.load.image('level_one_title', 'assets/sprites/menu/levelonetitle.png');
+    this.load.image('level_two_title', 'assets/sprites/menu/leveltwotitle.png');
 
     // Load tiles.
     this.load.tilemap('levelOne', 'assets/levels/levelOne.json', null, Phaser.Tilemap.TILED_JSON);
