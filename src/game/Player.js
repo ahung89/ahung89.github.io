@@ -74,7 +74,14 @@ Player.prototype = {
         }
         
         this.sprite.checkWorldBounds = true;
-        if(this.sprite.position.y > game.world.height) {
+        this.killIfOutOfBounds();
+    },
+
+    killIfOutOfBounds: function() {
+        var maxHeight = this.deathInitiated ? game.camera.view.y + game.camera.height : game.world.height;
+
+        if(this.sprite.position.y > maxHeight) {
+            console.log(maxHeight);
             this.killPlayer();
         }
     },
@@ -148,12 +155,12 @@ Player.prototype = {
     },
 
     initiateDeath: function() {
-        return;
-
         // only one death animation can be in progress at once.
         // This field is reset after the player is killed.
         if(!this.deathInitiated) {
             this.deathInitiated = true;
+
+            game.camera.unfollow();
 
             level.freezeSpritesAndProjectiles();
 
