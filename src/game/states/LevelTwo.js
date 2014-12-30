@@ -154,7 +154,7 @@ LevelTwo.prototype = {
 	// passes the colliding sprite body and the tile as arg1 and arg2.
 	handleSpikeCollision: function(sprite, tile) {
 		if(sprite === player.sprite) {
-			player.killPlayer();
+			player.initiateDeath();
 		}
 
 		return true;  // Return something so that collision handling physics will be applied after this callback.
