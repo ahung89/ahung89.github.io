@@ -87,6 +87,7 @@ Player.prototype = {
 
     updateCollisions: function() {
         game.physics.arcade.collide(this.sprite, level.layer);
+        game.physics.arcade.overlap(this.sprite, level.flag, level.triggerVictory, null, level);
         if(level.foreground != null && level.foreground != undefined) {
             game.physics.arcade.collide(this.sprite, level.foreground);    
         }
@@ -154,6 +155,8 @@ Player.prototype = {
     },
 
     initiateDeath: function() {
+        return;
+
         // only one death animation can be in progress at once.
         // This field is reset after the player is killed.
         if(!this.deathInitiated) {

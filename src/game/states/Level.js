@@ -95,6 +95,11 @@ Level.prototype = {
 				});
 			}
 		}, this);
+	},
+
+	triggerVictory: function() {
+		this.flag.frame = 1;
+		console.log("yuh");
 	}
 };
 

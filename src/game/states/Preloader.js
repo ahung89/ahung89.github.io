@@ -48,7 +48,7 @@ Preloader.prototype = {
 
     // Load miscellaneous sprites/images.
     this.load.image('platform', 'assets/sprites/misc/paddle-small.png');
-    this.load.image('flag', 'assets/sprites/misc/flag.png');
+    this.load.spritesheet('flag', 'assets/sprites/misc/flag.png', 34, 54);
 
     // Load backgrounds.
     this.load.image('space', 'assets/backgrounds/space.png');

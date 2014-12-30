@@ -8,6 +8,8 @@ var Squirrel = require('../enemies/Squirrel');
 var Level = require('./Level');
 var PlatformLevel = require('./level_types/PlatformLevel');
 
+var Flag = require('../entities/Flag');
+
 var PADDLE_SPEED = 130;
 var SQUIRREL_SPAWN_RATE = 1300;
 
@@ -48,6 +50,9 @@ LevelOne = function() {
 	this.spawnPosX = 320;
 	this.spawnPosY = 300;
 
+	this.spawnPosX = 177 * TILE_SIZE;
+	this.spawnPosY = 5 * TILE_SIZE;
+
 
 	// this.spawnPosX = 106 * TILE_SIZE;
 	// this.spawnPosY = 6 * TILE_SIZE;
@@ -76,6 +81,7 @@ LevelOne.prototype = {
 		this.enemyGroup = game.add.group();
 		this.createEnemies();
 		this.createPlatforms();
+		this.createFlag();
 
 		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
@@ -91,6 +97,11 @@ LevelOne.prototype = {
 
 		this.background.resizeWorld();
 		this.layer.resizeWorld();
+	},
+
+	createFlag: function() {
+		this.flag = new Flag(184 * TILE_SIZE, 4 * TILE_SIZE - 54);
+		game.add.existing(this.flag);
 	},
 
 	createEnemies: function() {
