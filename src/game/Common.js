@@ -24,6 +24,13 @@ Phaser.Sprite.prototype.isTouchingGround = function() {
     return this.body.onFloor() || this.body.wasTouching.down === true;
 };
 
+Phaser.Sprite.prototype.freeze = function() {
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
+    this.body.allowGravity = false;
+    this.animations.stop();
+};
+
 Phaser.Sprite.prototype.checkForCliff = function(side, platforms) {
     var offsetX;
 

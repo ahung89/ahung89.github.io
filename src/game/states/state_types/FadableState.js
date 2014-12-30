@@ -6,13 +6,17 @@ module.exports = FadableState;
 
 FadableState.prototype = {
 	createFadeTween: function (alphaFrom, alphaTo) {
-		var graphics = game.add.graphics(0, 0);
-		graphics.beginFill(BLACK_HEX_CODE, 1);
-		graphics.drawRect(0, 0, game.camera.width, game.camera.height);
-		graphics.alpha = alphaFrom;
-		graphics.endFill();
+		if(!this.fadeGraphic) {
+			this.fadeGraphic = game.add.graphics(0, 0);
+			this.fadeGraphic.beginFill(BLACK_HEX_CODE, 1);
+			this.fadeGraphic.drawRect(0, 0, game.camera.width, game.camera.height);
+			this.fadeGraphic.fixedToCamera = true;
+		}
 
-		var tween = game.add.tween(graphics);
+		this.fadeGraphic.alpha = alphaFrom;
+		this.fadeGraphic.endFill();
+
+		var tween = game.add.tween(this.fadeGraphic);
 		tween.to({alpha: alphaTo}, 500, null);
 		return tween;
 	},
@@ -25,19 +29,27 @@ FadableState.prototype = {
 		return this.createFadeTween(0, 1);
 	},
 
-	fadeOut: function(nextState) {
+	fadeOut: function(callback, callbackContext) {
+		callbackContext = callbackContext ? callbackContext : this;
+
 		var fadeOutTween = this.createFadeOutTween();
-			fadeOutTween.onComplete.add(function() {
-				// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
-				// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
-				// won't actually be a fade effect.
-				game.state.start(nextState);
-				// this.createFadeTween('in').start();
-			}, this);
+		
+		if(typeof callback === 'function') {
+			fadeOutTween.onComplete.add(callback, callbackContext);
+		}
+
 		fadeOutTween.start();
 	},
 
-	fadeIn: function() {
-		this.createFadeInTween().start();
+	fadeIn: function(callback, callbackContext) {
+		callbackContext = callbackContext ? callbackContext : this;
+
+		var fadeInTween = this.createFadeInTween();
+
+		if(typeof callback === 'function') {
+			fadeInTween.onComplete.add(callback, this);
+		}
+
+		fadeInTween.start();
 	}
 }

@@ -67,12 +67,6 @@ Enemy.prototype = {
 		}
 	},
 
-	freeze: function() {
-		this.sprite.body.velocity.x = 0;
-		this.sprite.body.velocity.y = 0;
-		this.sprite.animations.stop();
-	},
-
 	patrolBoundsReached: function(movementAxisPosition) {
 		return this.currentDirection == this.minDirection && movementAxisPosition < this.patrolBounds.min
 			|| this.currentDirection == this.maxDirection && movementAxisPosition > this.patrolBounds.max;

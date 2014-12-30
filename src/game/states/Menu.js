@@ -49,7 +49,13 @@ Menu.prototype = {
 	startLevelOne: function() {
 		if(!this.changingState) {
 			this.changingState = true;
-			this.fadeOut("LevelOne");
+			this.fadeOut(function() {
+				// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
+				// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
+				// won't actually be a fade effect.
+				game.state.start("LevelOne");
+				// this.createFadeTween('in').start();
+			});
 		}
 	},
 

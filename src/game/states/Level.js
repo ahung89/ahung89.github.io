@@ -85,11 +85,10 @@ Level.prototype = {
 
 	freezeSpritesAndProjectiles: function() {
 		this.enemyGroup.forEach(function(enemy) {
-			enemy.parentEntity.freeze();
+			enemy.freeze();
 			if('projectiles' in enemy.parentEntity) {
 				enemy.parentEntity.projectiles.forEach(function(projectile) {
-					projectile.body.velocity.x = 0;
-					projectile.body.velocity.y = 0;
+					projectile.freeze();
 				});
 			}
 		}, this);

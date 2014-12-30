@@ -81,7 +81,6 @@ Player.prototype = {
         var maxHeight = this.deathInitiated ? game.camera.view.y + game.camera.height : game.world.height;
 
         if(this.sprite.position.y > maxHeight) {
-            console.log(maxHeight);
             this.killPlayer();
         }
     },
@@ -189,6 +188,7 @@ Player.prototype = {
 
         this.sprite.kill();
         level.restart();
+        level.fadeIn();
     }
 };
 
