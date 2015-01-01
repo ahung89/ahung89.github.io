@@ -5,6 +5,7 @@ var GunShip = require('../enemies/GunShip');
 var Phoenix = require('../enemies/Phoenix');
 var Wolf = require('../enemies/Wolf');
 var Climber = require('../enemies/Climber');
+var Flag = require('../entities/Flag');
 
 var Level = require('./Level');
 var VineLevel = require('./level_types/VineLevel');
@@ -36,7 +37,6 @@ LevelTwo = function() {
 
 	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
 	this.movingPlatforms = [];
-
 	this.emptySpaceTiles = [1];
 
 	FallingPlatformLevel.call(this, this.fallingPlatformLocations);
@@ -88,6 +88,7 @@ LevelTwo.prototype = {
 		this.setTileCollisions();
 		this.buildLevelComponents();
 
+		this.createFlag();
 		player.create();
 
 		this.fadeIn(function() {
@@ -109,6 +110,11 @@ LevelTwo.prototype = {
 		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
 		GunShip.spawn(this.gunShipSpawnSettings, this.enemyGroup);
 		Climber.spawn(this.climberSpawnSettings, this.enemyGroup);
+	},
+
+	createFlag: function() {
+		this.flag = new Flag(96 * TILE_SIZE, 14 * TILE_SIZE - 54);
+		game.add.existing(this.flag);
 	},
 
 	update: function() {
