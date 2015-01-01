@@ -40,12 +40,9 @@ LevelSelect.prototype = {
 	},
 
 	startLevel: function(level) {
-		if(!this.changingState) {
-			this.changingState = true;
-			this.fadeOut(function() {
-				game.state.start(level);
-			});
-		}
+		this.fadeOut(function() {
+			game.state.start(level);
+		});
 	},
 
 	startLevelOne: function() {

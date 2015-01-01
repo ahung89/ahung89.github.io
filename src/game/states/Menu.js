@@ -8,7 +8,7 @@ module.exports = Menu;
 
 Menu.prototype = {
 	create: function () {
-		this.changingState = false;
+		// FYI, create only gets called once even if a state is exited and then re-entered.
 
 		this.buttonYOffsets = {
 			1: - 40,
@@ -17,7 +17,7 @@ Menu.prototype = {
 		};
 
 		this.buttonSettings = [
-			{key: 'play_button', yOffset: -40, callback: this.startLevelOne},
+			{key: 'play_button', yOffset: -40, callback: this.levelSelect},
 			{key: 'how_to_button', yOffset: 60, callback: this.showHowTo},
 			{key: 'credits_button', yOffset: 160, callback: this.showCredits}];
 
@@ -56,14 +56,8 @@ Menu.prototype = {
 		}
 	},
 
-	startLevelOne: function() {
-		if(!this.changingState) {
-			this.changingState = true;
-			// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
-			// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
-			// won't actually be a fade effect.
-			game.state.start("LevelSelect");
-		}
+	levelSelect: function() {
+		game.state.start("LevelSelect");
 	},
 
 	showHowTo: function() {
