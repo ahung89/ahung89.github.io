@@ -15,7 +15,7 @@ FadableState.prototype = {
 		this.fadeGraphic.endFill();
 
 		var tween = game.add.tween(this.fadeGraphic);
-		tween.to({alpha: alphaTo}, 500, null);
+		tween.to({alpha: alphaTo}, 300, null);
 		return tween;
 	},
 
