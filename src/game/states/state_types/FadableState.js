@@ -6,12 +6,10 @@ module.exports = FadableState;
 
 FadableState.prototype = {
 	createFadeTween: function (alphaFrom, alphaTo) {
-		if(!this.fadeGraphic) {
-			this.fadeGraphic = game.add.graphics(0, 0);
-			this.fadeGraphic.beginFill(BLACK_HEX_CODE, 1);
-			this.fadeGraphic.drawRect(0, 0, game.camera.width, game.camera.height);
-			this.fadeGraphic.fixedToCamera = true;
-		}
+		this.fadeGraphic = game.add.graphics(0, 0);
+		this.fadeGraphic.beginFill(BLACK_HEX_CODE, 1);
+		this.fadeGraphic.drawRect(0, 0, game.camera.width, game.camera.height);
+		this.fadeGraphic.fixedToCamera = true;
 
 		this.fadeGraphic.alpha = alphaFrom;
 		this.fadeGraphic.endFill();

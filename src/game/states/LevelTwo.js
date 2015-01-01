@@ -90,8 +90,9 @@ LevelTwo.prototype = {
 
 		player.create();
 
-		this.fadeIn();
-		this.displayLevelTitle('level_two_title');
+		this.fadeIn(function() {
+			this.displayLevelTitle('level_two_title')
+		}, this);
 	},
 
 	createLayers: function() {

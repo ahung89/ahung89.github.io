@@ -87,8 +87,9 @@ LevelOne.prototype = {
 
 		player.create();
 
-		this.fadeIn();
-		this.displayLevelTitle('level_one_title');
+		this.fadeIn(function() {
+			this.displayLevelTitle('level_one_title')
+		}, this);
 	},
 
 	createLayers: function() {
