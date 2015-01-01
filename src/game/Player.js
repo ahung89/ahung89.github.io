@@ -171,10 +171,9 @@ Player.prototype = {
             this.sprite.anchor.setTo(0.5, 0.5);
 
             var tween = game.add.tween(this.sprite);
-            tween.to({angle: 900}, 500, null);
+            tween.to({angle: 540}, 250, null);
             tween.onComplete.add(function() {
-                this.sprite.body.allowGravity = true;
-                this.sprite.body.gravity.y = 1000;
+                this.sprite.body.velocity.y = 700;
                 this.ignorePlayerCollisions = true;
             }, this);
             tween.start();
@@ -185,6 +184,7 @@ Player.prototype = {
         // console.trace();
         this.ignorePlayerCollisions = false;
         this.deathInitiated = false;
+        this.sprite.body.allowGravity = true;
         this.sprite.body.gravity.y = this.yGravity;
 
         this.sprite.kill();

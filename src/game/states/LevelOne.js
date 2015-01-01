@@ -44,7 +44,7 @@ LevelOne = function() {
 
 	this.startingCameraPosX = 0;
 	this.startingCameraPosY = 0;
-	this.spawnPosX = 32;
+	this.spawnPosX = 150;
 	this.spawnPosY = 300;
 
 	// this.spawnPosX = 320;
