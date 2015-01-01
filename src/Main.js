@@ -13,6 +13,7 @@ function startGame() {
     game.state.add('Boot', require('./game/states/Boot')); 
     game.state.add('Preloader', require('./game/states/Preloader')); 
     game.state.add('Menu', require('./game/states/Menu'));
+    game.state.add('LevelSelect', require('./game/states/LevelSelect'));
     game.state.add('LevelOne', require('./game/states/LevelOne')); // Adds the state to the game and assigns it a key.
     game.state.add('LevelTwo', require('./game/states/LevelTwo')); 
 

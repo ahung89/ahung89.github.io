@@ -8,6 +8,8 @@ module.exports = Menu;
 
 Menu.prototype = {
 	create: function () {
+		this.changingState = false;
+
 		this.buttonSettings = [
 			{key: 'play_button', yOffset: -40, callback: this.startLevelOne},
 			{key: 'how_to_button', yOffset: 60, callback: this.showHowTo},
@@ -26,6 +28,8 @@ Menu.prototype = {
 
 		this.buttons = new MenuButtons(this.buttonSettings);
 		arrow.draw(this.buttons);
+
+		this.fadeIn();
 	},
 
 	update: function () {
@@ -53,7 +57,7 @@ Menu.prototype = {
 				// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
 				// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
 				// won't actually be a fade effect.
-				game.state.start("LevelOne");
+				game.state.start("LevelSelect");
 				// this.createFadeTween('in').start();
 			});
 		}
@@ -64,17 +68,7 @@ Menu.prototype = {
 	},
 
 	showCredits: function() {
-		// this.showSubmenu('credits_menu');
-		if(!this.changingState) {
-			this.changingState = true;
-			this.fadeOut(function() {
-				// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
-				// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
-				// won't actually be a fade effect.
-				game.state.start("LevelTwo");
-				// this.createFadeTween('in').start();
-			});
-		}
+		this.showSubmenu('credits_menu');
 	},
 
 	showSubmenu: function(submenu) {

@@ -171,7 +171,7 @@ Player.prototype = {
             this.sprite.anchor.setTo(0.5, 0.5);
 
             var tween = game.add.tween(this.sprite);
-            tween.to({angle: 540}, 250, null);
+            tween.to({angle: 540}, 300, null);
             tween.onComplete.add(function() {
                 this.sprite.body.velocity.y = 700;
                 this.ignorePlayerCollisions = true;

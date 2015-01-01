@@ -36,6 +36,12 @@ Preloader.prototype = {
     this.load.image('how_to_button', 'assets/sprites/menu/how_to_button.png');
     this.load.image('credits_button', 'assets/sprites/menu/credits_button.png');
 
+    // Load level select menu images
+    this.load.image('select_level', 'assets/sprites/menu/select_level.png');
+    this.load.image('forest_of_doom_button', 'assets/sprites/menu/forest_of_doom_button.png');
+    this.load.image('space_park_button', 'assets/sprites/menu/space_park_button.png');
+    this.load.image('back_button', 'assets/sprites/menu/back_button.png');
+
     // Load title screens
     this.load.image('level_one_title', 'assets/sprites/menu/levelonetitle.png');
     this.load.image('level_two_title', 'assets/sprites/menu/leveltwotitle.png');
