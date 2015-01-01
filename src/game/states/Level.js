@@ -97,6 +97,11 @@ Level.prototype = {
 		}, this);
 	},
 
+	createVictoryFlag: function(x, y) {
+		this.flag = new Flag(x, y);
+		game.add.existing(this.flag);
+	},
+
 	triggerVictory: function() {
 		this.flag.frame = 1;
 		this.fadeOut(function() {

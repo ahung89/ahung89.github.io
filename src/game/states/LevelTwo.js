@@ -88,7 +88,7 @@ LevelTwo.prototype = {
 		this.setTileCollisions();
 		this.buildLevelComponents();
 
-		this.createFlag();
+		this.createVictoryFlag(96 * TILE_SIZE, 14 * TILE_SIZE - 54);
 		player.create();
 
 		this.fadeIn(function() {
@@ -110,11 +110,6 @@ LevelTwo.prototype = {
 		Phoenix.spawn(this.phoenixSpawnSettings, this.enemyGroup);
 		GunShip.spawn(this.gunShipSpawnSettings, this.enemyGroup);
 		Climber.spawn(this.climberSpawnSettings, this.enemyGroup);
-	},
-
-	createFlag: function() {
-		this.flag = new Flag(96 * TILE_SIZE, 14 * TILE_SIZE - 54);
-		game.add.existing(this.flag);
 	},
 
 	update: function() {

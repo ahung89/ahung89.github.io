@@ -81,7 +81,7 @@ LevelOne.prototype = {
 		this.enemyGroup = game.add.group();
 		this.createEnemies();
 		this.createPlatforms();
-		this.createFlag();
+		this.createVictoryFlag(184 * TILE_SIZE, 4 * TILE_SIZE - 54);
 
 		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
@@ -98,11 +98,6 @@ LevelOne.prototype = {
 
 		this.background.resizeWorld();
 		this.layer.resizeWorld();
-	},
-
-	createFlag: function() {
-		this.flag = new Flag(184 * TILE_SIZE, 4 * TILE_SIZE - 54);
-		game.add.existing(this.flag);
 	},
 
 	createEnemies: function() {
