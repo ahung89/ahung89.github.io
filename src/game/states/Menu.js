@@ -1,5 +1,5 @@
 var MenuButtons = require('../entities/MenuButtons.js');
-var arrow = require('../entities/MenuArrow.js');
+var MenuArrow = require('../entities/MenuArrow.js');
 var FadableState = require('./state_types/FadableState.js');
 
 var Menu = function () {};
@@ -9,6 +9,12 @@ module.exports = Menu;
 Menu.prototype = {
 	create: function () {
 		this.changingState = false;
+
+		this.buttonYOffsets = {
+			1: - 40,
+			2: 60,
+			3: 160
+		};
 
 		this.buttonSettings = [
 			{key: 'play_button', yOffset: -40, callback: this.startLevelOne},
@@ -27,7 +33,7 @@ Menu.prototype = {
 		this.gameTitle.anchor.setTo(0.5, 0.5);
 
 		this.buttons = new MenuButtons(this.buttonSettings);
-		arrow.draw(this.buttons);
+		this.arrow = new MenuArrow('wolf', game.camera.width / 2 - 110, game.camera.height / 2 - 40, this.buttonYOffsets, [4, 5], this.buttons);
 
 		this.fadeIn();
 	},
@@ -41,11 +47,11 @@ Menu.prototype = {
 		  	}
 		}
 		else if(this.submenu == null) {
-			arrow.animate();
-			arrow.move();
+			this.arrow.animate();
+			this.arrow.move();
 
 			if(game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-				this.buttons.buttons[arrow.arrow.currentButton - 1].callbackFunction.call(this);
+				this.buttons.buttons[this.arrow.arrow.currentButton - 1].callbackFunction.call(this);
 			}
 		}
 	},
@@ -53,13 +59,10 @@ Menu.prototype = {
 	startLevelOne: function() {
 		if(!this.changingState) {
 			this.changingState = true;
-			this.fadeOut(function() {
-				// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
-				// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
-				// won't actually be a fade effect.
-				game.state.start("LevelSelect");
-				// this.createFadeTween('in').start();
-			});
+			// Can't start the fade-in right after this because game.state.start just places the next state into a queue. It doesn't
+			// actually make the call to "create". So the fade will be activated before the maps tiles and stuff get loaded, so there
+			// won't actually be a fade effect.
+			game.state.start("LevelSelect");
 		}
 	},
 

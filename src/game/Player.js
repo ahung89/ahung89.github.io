@@ -187,6 +187,10 @@ Player.prototype = {
         this.sprite.body.allowGravity = true;
         this.sprite.body.gravity.y = this.yGravity;
 
+        if(level.title) {
+            level.title.destroy();
+        }
+
         this.sprite.kill();
         level.restart();
         level.fadeIn();
