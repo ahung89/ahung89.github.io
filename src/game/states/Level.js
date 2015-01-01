@@ -99,7 +99,9 @@ Level.prototype = {
 
 	triggerVictory: function() {
 		this.flag.frame = 1;
-		console.log("yuh");
+		this.fadeOut(function() {
+			game.state.start('Victory');
+		}, this);	
 	}
 };
 

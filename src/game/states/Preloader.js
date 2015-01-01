@@ -42,6 +42,9 @@ Preloader.prototype = {
     this.load.image('space_park_button', 'assets/sprites/menu/space_park_button.png');
     this.load.image('back_button', 'assets/sprites/menu/back_button.png');
 
+    // Load victory screen image
+    this.load.image('level_completed', 'assets/sprites/menu/level_completed.png');
+
     // Load title screens
     this.load.image('level_one_title', 'assets/sprites/menu/levelonetitle.png');
     this.load.image('level_two_title', 'assets/sprites/menu/leveltwotitle.png');

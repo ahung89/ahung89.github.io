@@ -5,7 +5,9 @@ function FadableState() {}
 module.exports = FadableState;
 
 FadableState.prototype = {
-	createFadeTween: function (alphaFrom, alphaTo) {
+	createFadeTween: function (alphaFrom, alphaTo, fadeDuration) {
+		fadeDuration = fadeDuration || 300;
+
 		this.fadeGraphic = game.add.graphics(0, 0);
 		this.fadeGraphic.beginFill(BLACK_HEX_CODE, 1);
 		this.fadeGraphic.drawRect(0, 0, game.camera.width, game.camera.height);
@@ -15,22 +17,22 @@ FadableState.prototype = {
 		this.fadeGraphic.endFill();
 
 		var tween = game.add.tween(this.fadeGraphic);
-		tween.to({alpha: alphaTo}, 300, null);
+		tween.to({alpha: alphaTo}, fadeDuration, null);
 		return tween;
 	},
 
-	createFadeInTween: function() {
-		return this.createFadeTween(1, 0);
+	createFadeInTween: function(fadeDuration) {
+		return this.createFadeTween(1, 0, fadeDuration);
 	},
 
-	createFadeOutTween: function() {
-		return this.createFadeTween(0, 1);
+	createFadeOutTween: function(fadeDuration) {
+		return this.createFadeTween(0, 1, fadeDuration);
 	},
 
-	fadeOut: function(callback, callbackContext) {
+	fadeOut: function(callback, callbackContext, fadeDuration) {
 		callbackContext = callbackContext ? callbackContext : this;
 
-		var fadeOutTween = this.createFadeOutTween();
+		var fadeOutTween = this.createFadeOutTween(fadeDuration);
 		
 		if(typeof callback === 'function') {
 			fadeOutTween.onComplete.add(callback, callbackContext);
@@ -39,10 +41,10 @@ FadableState.prototype = {
 		fadeOutTween.start();
 	},
 
-	fadeIn: function(callback, callbackContext) {
+	fadeIn: function(callback, callbackContext, fadeDuration) {
 		callbackContext = callbackContext ? callbackContext : this;
 
-		var fadeInTween = this.createFadeInTween();
+		var fadeInTween = this.createFadeInTween(fadeDuration);
 
 		if(typeof callback === 'function') {
 			fadeInTween.onComplete.add(callback, this);
