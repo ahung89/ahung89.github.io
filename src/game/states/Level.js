@@ -1,5 +1,7 @@
 var Player = require('../Player');
 var FadableState = require('./state_types/FadableState.js');
+var Flag = require('../entities/Flag');
+var Checkpoint = require('../entities/Checkpoint');
 
 function Level() {
 };
@@ -97,13 +99,41 @@ Level.prototype = {
 		}, this);
 	},
 
+	createCheckpoints: function(checkpointSettings) {
+		checkpointSettings.forEach(function(settings) {
+			var checkpoint = new Checkpoint(settings.x, settings.y - game.cache.getImage('flag').height + TILE_SIZE);
+			this.checkpoints.add(checkpoint);
+		}, this);
+	},
+
+	 // in overlap/collide with group, the group member is the second parameter.
+	triggerCheckpoint: function(sprite1, touchedCheckpoint) { // Physics.Arcade.prototype.overlap automatically passes in both sprites
+		if(touchedCheckpoint.triggered) {
+			return;
+		}
+
+		// Trigger all prior checkpoints if they haven't yet been triggered.
+		for(var x = 0; x < this.checkpoints.children.length; x++) {
+			var checkpoint = this.checkpoints.children[x];
+			if(checkpoint === touchedCheckpoint) {
+				checkpoint.trigger();
+				break;
+			} else if(!checkpoint.triggered) {
+				checkpoint.trigger();
+			}
+		}
+
+ 		player.xSpawnPos = touchedCheckpoint.x;
+ 		player.ySpawnPos = touchedCheckpoint.y;
+	},
+
 	createVictoryFlag: function(x, y) {
-		this.flag = new Flag(x, y);
-		game.add.existing(this.flag);
+		this.victoryFlag = new Flag(x, y);
+		game.add.existing(this.victoryFlag);
 	},
 
 	triggerVictory: function() {
-		this.flag.frame = 1;
+		this.victoryFlag.frame = 1;
 		this.fadeOut(function() {
 			game.state.start('Victory');
 		}, this);	
@@ -111,5 +141,7 @@ Level.prototype = {
 };
 
 $.extend(Level.prototype, FadableState.prototype);
+
+window.invincible = true;
 
 module.exports = Level;

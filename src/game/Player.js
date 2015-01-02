@@ -87,10 +87,12 @@ Player.prototype = {
 
     updateCollisions: function() {
         game.physics.arcade.collide(this.sprite, level.layer);
-        game.physics.arcade.overlap(this.sprite, level.flag, level.triggerVictory, null, level);
+        game.physics.arcade.overlap(this.sprite, level.victoryFlag, level.triggerVictory, null, level);
         if(level.foreground != null && level.foreground != undefined) {
             game.physics.arcade.collide(this.sprite, level.foreground);    
         }
+
+        game.physics.arcade.overlap(this.sprite, level.checkpoints, level.triggerCheckpoint, null, level);
     },
 
     updateMovementOnVine: function() {
@@ -155,6 +157,10 @@ Player.prototype = {
     },
 
     initiateDeath: function() {
+        if(window.invincible) {
+            return;
+        }
+
         // only one death animation can be in progress at once.
         // This field is reset after the player is killed.
         if(!this.deathInitiated) {

@@ -8,8 +8,6 @@ module.exports = Menu;
 
 Menu.prototype = {
 	create: function () {
-		// FYI, create only gets called once even if a state is exited and then re-entered.
-
 		this.buttonYOffsets = {
 			1: - 40,
 			2: 60,

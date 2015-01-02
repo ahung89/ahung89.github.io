@@ -8,8 +8,6 @@ var Squirrel = require('../enemies/Squirrel');
 var Level = require('./Level');
 var PlatformLevel = require('./level_types/PlatformLevel');
 
-var Flag = require('../entities/Flag');
-
 var PADDLE_SPEED = 130;
 var SQUIRREL_SPAWN_RATE = 1300;
 
@@ -50,8 +48,8 @@ LevelOne = function() {
 	// this.spawnPosX = 320;
 	// this.spawnPosY = 300;
 
-	this.spawnPosX = 177 * TILE_SIZE;
-	this.spawnPosY = 5 * TILE_SIZE;
+	// this.spawnPosX = 177 * TILE_SIZE;
+	// this.spawnPosY = 5 * TILE_SIZE;
 
 
 	// this.spawnPosX = 106 * TILE_SIZE;

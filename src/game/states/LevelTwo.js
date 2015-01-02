@@ -5,7 +5,6 @@ var GunShip = require('../enemies/GunShip');
 var Phoenix = require('../enemies/Phoenix');
 var Wolf = require('../enemies/Wolf');
 var Climber = require('../enemies/Climber');
-var Flag = require('../entities/Flag');
 
 var Level = require('./Level');
 var VineLevel = require('./level_types/VineLevel');
@@ -25,15 +24,19 @@ LevelTwo = function() {
 	this.gunShipSpawnSettings = [{x: 29, y: 45, direction: 'left'}, {x: 15, y: 39, direction: 'right'}, {x: 25, y: 37, direction: 'left'}, {x: 13, y: 34, direction: 'right'},
 		{x: 43, y: 34, direction: 'right'}, {x: 38, y: 46, direction: 'right'}];
 	this.wolfSpawnSettings = [{x: 23, y: 46, direction: 'left'}, {x: 10, y: 48, direction: 'left'}, {x: 25, y: 21, direction: 'left'}, {x: 29, y: 19, direction: 'left'},
-	 {x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
-	 {x: 81, y: 36, direction: 'right'}];
+	 	{x: 57, y: 29, direction: 'left'}, {x: 61, y: 44, direction: 'right'}, {x: 64, y: 44, direction: 'right'}, {x: 70, y: 44, direction: 'right'},
+		{x: 81, y: 36, direction: 'right'}];
 	this.climberSpawnSettings = [{x: 75, y: 30, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}}, 
-	{x: 75, y: 15, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
-	{x: 81, y: 27, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
-	{x: 81, y: 22, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
-	{x: 81, y: 17, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
-	{x: 81, y: 12, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
-	{x: 87, y: 14, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 17 * TILE_SIZE}}];
+		{x: 75, y: 15, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+		{x: 81, y: 27, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+		{x: 81, y: 22, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+		{x: 81, y: 17, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+		{x: 81, y: 12, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 31 * TILE_SIZE}},
+		{x: 87, y: 14, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 17 * TILE_SIZE}}];
+
+	this.checkpointSettings = [
+		{x: 47 * TILE_SIZE, y: 41 * TILE_SIZE}
+	];
 
 	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
 	this.movingPlatforms = [];
@@ -52,8 +55,8 @@ LevelTwo = function() {
 	// this.spawnPosX = 43  * TILE_SIZE;
 	// this.spawnPosY = 16 * TILE_SIZE;
 
-	// 	this.spawnPosX = 51  * TILE_SIZE;
-	// this.spawnPosY = 14 * TILE_SIZE;
+	// 	this.spawnPosX = 43  * TILE_SIZE;
+	// this.spawnPosY = 27 * TILE_SIZE;
 
 	// Right before the 4 phoenixes
 	// this.spawnPosX = 47  * TILE_SIZE;
@@ -63,8 +66,8 @@ LevelTwo = function() {
 	// this.spawnPosY = 42 * TILE_SIZE;
 
 	//Final section
-	this.spawnPosX = 76 * TILE_SIZE;
-	this.spawnPosY = 32 * TILE_SIZE;
+	// this.spawnPosX = 76 * TILE_SIZE;
+	// this.spawnPosY = 32 * TILE_SIZE;
 
 	// this.spawnPosX = 17  * TILE_SIZE;
 	// this.spawnPosY = 27 * TILE_SIZE;
@@ -83,12 +86,15 @@ LevelTwo.prototype = {
 		// Must be after createLayers since by default z-index is determined by order that entities are added to game.world.
 		// To make enemies not be displayed behind background elements like signs, they must have a higher z-index than the layers.
 		this.enemyGroup = game.add.group();
+		this.checkpoints = game.add.group();
 
 		this.createEnemies();
 		this.setTileCollisions();
 		this.buildLevelComponents();
 
 		this.createVictoryFlag(96 * TILE_SIZE, 14 * TILE_SIZE - 54);
+		this.createCheckpoints(this.checkpointSettings);
+
 		player.create();
 
 		this.fadeIn(function() {
