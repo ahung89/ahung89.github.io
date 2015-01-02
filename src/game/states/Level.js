@@ -142,6 +142,4 @@ Level.prototype = {
 
 $.extend(Level.prototype, FadableState.prototype);
 
-window.invincible = true;
-
 module.exports = Level;
