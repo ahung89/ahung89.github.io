@@ -12,7 +12,7 @@ var PROJECTILE_SETTINGS = {
 
 function GunShip(x, y, direction, initialDelay) {
 	Enemy.call(this, x, y, direction, 'gunship', [0], [1], 0);
-	ProjectileEnemy.call(this, 1400, initialDelay, 'missile', PROJECTILE_SETTINGS);
+	ProjectileEnemy.call(this, 1400, initialDelay, 'missile', PROJECTILE_SETTINGS, direction);
 
 	this.sprite.anchor.set(0.5);
 }

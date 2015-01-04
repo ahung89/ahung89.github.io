@@ -1,7 +1,8 @@
 var Enemy = require('./Enemy');
 
-ProjectileEnemy = function (fireRate, initialDelay, projectileImage, projectileSizeSettings) {
+ProjectileEnemy = function (fireRate, initialDelay, projectileImage, projectileSizeSettings, direction) {
 	this.projectileSizeSettings = projectileSizeSettings;
+	this.direction = direction;
 
 	if(!initialDelay) {
 		initialDelay = 0;
@@ -31,6 +32,12 @@ ProjectileEnemy.prototype = {
 		projectile.anchor.set(0.5);
 
 		projectile.body.velocity.x = xVelocity;
+
+		if(this.direction == 'right') {
+			projectile.scale.x *= -1;
+		}
+
+		// projectile.body.velocity.x = xVelocity;
 		projectile.body.velocity.y = yVelocity;
 
 		if(this.projectileSizeSettings) {
