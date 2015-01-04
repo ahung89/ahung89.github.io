@@ -17,11 +17,13 @@ VineLevel.prototype = {
 	},
 
 	vineCheck: function() {
-		var withinVineThreshold = Math.abs(player.sprite.body.x - this.worldX) < level.vineThresholdX && Math.abs(player.sprite.body.y - this.worldY) < level.vineThresholdY;
+		// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
+		var climbLocationX = this.worldX + 8;
+
+		var withinVineThreshold = Math.abs(player.sprite.body.x - climbLocationX) < level.vineThresholdX && Math.abs(player.sprite.body.y - this.worldY) < level.vineThresholdY;
 
 		if(!player.climbing && withinVineThreshold) {
-			// worldX and worldY are the coordinates on the map. x and y are the TILE coordinates on the TILEMAP.
-			player.sprite.body.x = this.worldX;
+			player.sprite.body.x = climbLocationX;
 
 			var tileIsVine = true;
 			var lowestVine;

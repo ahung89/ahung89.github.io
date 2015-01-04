@@ -74,13 +74,13 @@ Preloader.prototype = {
     this.load.spritesheet('bird', 'assets/sprites/enemies/bluebirdsprite.png', 48, 32);
 
     // Load assets for main character.
-    this.load.spritesheet('dude', 'assets/sprites/player/dude.png', 32, 48);
+    this.load.spritesheet('dude', 'assets/sprites/player/ninja.png', 32, 45);
     this.load.audio('jump', 'assets/sounds/jump.wav'); 
   },
 
   update: function () {
     if (!!this.ready) { // !! is "bang bang you're a boolean". Not sure why it's necessary here....
-      this.game.state.start('Menu');
+      this.game.state.start('LevelTwo');
     }
   },
 

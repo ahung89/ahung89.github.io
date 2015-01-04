@@ -1,7 +1,7 @@
-var PLAYER_WIDTH = 20;
-var PLAYER_HEIGHT = 36;
-var PLAYER_X_OFFSET = 5;
-var PLAYER_Y_OFFSET = 12;
+var PLAYER_WIDTH = 14;
+var PLAYER_HEIGHT = 44;
+var PLAYER_X_OFFSET = 9;
+var PLAYER_Y_OFFSET = 0;
 
 Player = function(xSpawnPos, ySpawnPos) {
     game = game;
@@ -17,6 +17,8 @@ Player = function(xSpawnPos, ySpawnPos) {
 Player.prototype = {
     
     create: function () {
+        this.facing = 'right';
+
         this.sprite = game.add.sprite(this.xSpawnPos, this.ySpawnPos, 'dude');
 
         //Uncomment the line below to test the platforms.
@@ -47,8 +49,9 @@ Player.prototype = {
     },
 
     initializePlayerAnimations: function() {
-        this.sprite.animations.add('left', [0, 1, 2, 3], 10, true);
-        this.sprite.animations.add('right', [5, 6, 7, 8], 10, true);
+        this.sprite.animations.add('right', [1, 2, 3], 10, true);
+        this.sprite.animations.add('left', [5, 6, 7], 10, true);
+        this.sprite.animations.add('climb', [8, 9], 10, true);
     },
 
     initializePlayerControls: function() {
@@ -107,10 +110,14 @@ Player.prototype = {
             this.sprite.body.x += level.vineThresholdX;
             this.endClimb();
         } else if(this.cursors.up.isDown) {
+            this.sprite.animations.play('climb');
             this.sprite.body.velocity.y = -150;
         } else if(this.cursors.down.isDown) {
+            this.sprite.animations.play('climb');
             this.sprite.body.velocity.y = 150;
-        } 
+        } else {
+            this.sprite.animations.stop();
+        }
 
         if(this.sprite.body.y > level.lowestPointOnCurrentVine + level.vineThresholdY) {
             this.endClimb();
@@ -123,12 +130,14 @@ Player.prototype = {
         if(this.cursors.left.isDown) {
             this.sprite.body.velocity.x = -250;
             this.sprite.animations.play('left');
+            this.facing = 'left';
         } else if(this.cursors.right.isDown) {
             this.sprite.body.velocity.x = 250;
             this.sprite.animations.play('right');
+            this.facing = 'right';
         } else {
             this.sprite.animations.stop();
-            this.sprite.frame = 4;
+            this.sprite.frame = this.facing == 'left' ? 4 : 0;
         }
  
         if (this.jumpButton.isDown && this.sprite.isTouchingGround()) {
@@ -140,6 +149,7 @@ Player.prototype = {
         // TODO: Change the animation
         this.climbing = true;
 
+        this.sprite.frame = 8;
         this.sprite.body.gravity.y = 0;
         this.sprite.body.velocity.y = 0;
         this.sprite.body.velocity.x = 0;
