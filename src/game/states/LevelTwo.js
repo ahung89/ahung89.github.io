@@ -35,7 +35,7 @@ LevelTwo = function() {
 		{x: 87, y: 14, direction: 'down', patrolBounds: {min: 12 * TILE_SIZE, max: 17 * TILE_SIZE}}];
 
 	this.checkpointSettings = [
-		{x: 47 * TILE_SIZE, y: 41 * TILE_SIZE}
+		{x: 44 * TILE_SIZE, y: 17 * TILE_SIZE}
 	];
 
 	this.fallingPlatformLocations = [{x: 82, y: 43}, {x: 89, y: 40}];
