@@ -8,6 +8,8 @@ module.exports = Menu;
 
 Menu.prototype = {
 	create: function () {
+		this.playMusic();
+
 		this.buttonYOffsets = {
 			1: - 40,
 			2: 60,
@@ -34,6 +36,17 @@ Menu.prototype = {
 		this.arrow = new MenuArrow('wolf', game.camera.width / 2 - 110, game.camera.height / 2 - 40, this.buttonYOffsets, [4, 5], this.buttons);
 
 		this.fadeIn();
+	},
+
+	playMusic: function() {
+		if(window.music && window.music.name == "title_theme") {
+			return;
+		} else if(window.music) {
+			music.stop();
+		}
+
+		music = game.add.audio('title_theme', 1, true);
+     	music.play('', 0, 1, true);
 	},
 
 	update: function () {

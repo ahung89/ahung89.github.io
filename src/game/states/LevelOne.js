@@ -85,6 +85,8 @@ LevelOne.prototype = {
 
 		player.create();
 
+		this.playMusic();
+
 		this.fadeIn(function() {
 			this.displayLevelTitle('level_one_title')
 		}, this);

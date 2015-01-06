@@ -97,6 +97,8 @@ LevelTwo.prototype = {
 
 		player.create();
 
+		this.playMusic();
+
 		this.fadeIn(function() {
 			this.displayLevelTitle('level_two_title')
 		}, this);

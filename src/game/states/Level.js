@@ -88,6 +88,12 @@ Level.prototype = {
 		tween.start();
 	},
 
+	playMusic: function() {
+		music.stop();
+		music = game.add.audio('level_theme', 1, true);
+		music.play('', 0, 1, true);
+	},
+
 	freezeSpritesAndProjectiles: function() {
 		this.enemyGroup.forEach(function(enemy) {
 			enemy.freeze();

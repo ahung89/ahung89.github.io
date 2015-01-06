@@ -2,6 +2,7 @@
 window.player;
 window.level;
 window.currentState;
+window.music;
 window.TILE_SIZE = 32;
 window.game = new Phaser.Game(800, 480, Phaser.CANVAS, '');
 window.$ = require('jquery');
