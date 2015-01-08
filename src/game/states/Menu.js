@@ -46,7 +46,7 @@ Menu.prototype = {
 		}
 
 		music = game.add.audio('title_theme', 1, true);
-     	music.play('', 0, 1, true);
+     	music.play('', 0, .5, true);
 	},
 
 	update: function () {

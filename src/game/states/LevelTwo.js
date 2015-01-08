@@ -76,6 +76,8 @@ LevelTwo = function() {
 
 LevelTwo.prototype = {
 	create: function() {
+		this.playMusic();
+
 		this.initLevel('levelTwo', 'area01_level_tiles', 'levelTwoTiles');
 
 		bg = game.add.tileSprite(0, 0, 1366, 768, 'space');
@@ -96,8 +98,6 @@ LevelTwo.prototype = {
 		this.createCheckpoints(this.checkpointSettings);
 
 		player.create();
-
-		this.playMusic();
 
 		this.fadeIn(function() {
 			this.displayLevelTitle('level_two_title')

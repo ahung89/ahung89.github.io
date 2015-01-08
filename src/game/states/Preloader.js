@@ -77,14 +77,11 @@ Preloader.prototype = {
     this.load.spritesheet('dude', 'assets/sprites/player/ninja.png', 32, 45);
     this.load.audio('jump', 'assets/sounds/jump.wav'); 
     this.load.audio('title_theme', 'assets/sounds/title_theme.wav');
-    this.load.audio('level_theme', 'assets/sounds/retrolounge.mp3');
+    this.load.audio('level_theme', 'assets/sounds/retrolounge.ogg');
   },
 
   update: function () {
     if (!!this.ready) { // !! is "bang bang you're a boolean". Not sure why it's necessary here....
-        // Start music
-      // var music = game.add.audio('title_theme', 1, true);
-      // music.play('', 0, 1, true);
       this.game.state.start('Menu');
     }
   },

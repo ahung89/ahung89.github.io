@@ -67,6 +67,8 @@ LevelOne = function() {
 
 LevelOne.prototype = {
 	create: function() {
+		this.playMusic();
+		
 		// No real reason to use tilesprite instead of static image... doing it just for the hell of it.
 		this.forest = game.add.tileSprite(0, 0, game.camera.width, game.camera.height, 'forest');
 		this.forest.fixedToCamera = true;
@@ -84,8 +86,6 @@ LevelOne.prototype = {
 		this.cursors = game.input.keyboard.createCursorKeys(); // make this global?
 
 		player.create();
-
-		this.playMusic();
 
 		this.fadeIn(function() {
 			this.displayLevelTitle('level_one_title')
